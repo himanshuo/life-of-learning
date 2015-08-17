@@ -54,27 +54,37 @@ import (
 //in this case: sigfig is determined by
 // 4326 has 4 at sigfig 1. 2 at sigfig 3
 
+
+func abs(n int) int{
+	if n< 0{
+		return n*-1
+	} else{
+		return n
+	}
+}
+
 func findLargestSigfigLength(list []int) int {
 	if len(list) <1 {
 		panic("no elements in list")
 	}
-	largest := list[0]
+	largest := abs(list[0])
 	for _,v := range list {
-		val := v
-		if val < 0 {
-			val = val*-1
-		}
-		if val > largest {
-			largest = val
+		if abs(v) > largest {
+			largest = abs(v)
 		}
 	}
 	
 	return len(strconv.Itoa(largest))
 }
-
+//valAtSigfig(1433, 3) = 1
+//valAtSigfig(0,0) = 0
+//valAtSigfig(12,2)=0
 func valAtSigfig(num int, sigfig int) int{
-	if len(strconv.Itoa(num)) > sigfig {
-		valString := string(strconv.Itoa(num)[sigfig])
+	num = abs(num)
+	numAsString := strconv.Itoa(num)
+	if len(numAsString) > sigfig {
+		index := len(numAsString) - sigfig - 1
+		valString := string(numAsString[index])
 		val,_ := strconv.Atoi(valString)
 		return val
 	} else {
@@ -97,29 +107,101 @@ func joinBucketsInOrder(buckets [][]int) []int{
 }
 func createBuckets()[][]int{
 	buckets := make([][]int, 0)
-	for i:=0; i<1; i++ {
+	for i:=0; i<10; i++ {
 		buckets = append(buckets, make([]int, 0)) 
 	}
 	return buckets
 }
 
+func appendToFront(list []int, num int) []int {
+	out := make([]int, 0)
+	out = append(out, num)
+	for _,v := range list{
+		out = append(out, v)
+	}
+	return out
+}
+
+//9, 2, -2, 29, 19  
+//2, -2, 9, 29, 19
+//2, -2, 9, 19, 29
+//-2, 2, 9, 19, 29
 func RadixSort( list []int) []int {
 	if len(list) < 2{
 		return list
 	}
 	out := make([]int, len(list))
-	buckets := createBuckets()
+	copy(out, list)
 	largestSigfig := findLargestSigfigLength(list)
 	for sigfig :=0; sigfig < largestSigfig; sigfig++ {
-		for _,v := range list {
+		buckets := createBuckets()
+		for _,v := range out {
 			val := valAtSigfig(v,sigfig)
 			buckets[val] = append(buckets[val], v)
+			
 		}
 		out = joinBucketsInOrder(buckets)
+	}
+	temp := make([]int, len(out))
+	copy(temp, out)
+	out = make([]int, 0)
+	// 3,5,-6, 45, -345 -> -345, -6, 3,5,45
+	for _,v := range temp {
+		if v < 0 {
+			out = appendToFront(out, v)
+		} else{
+			out = append(out, v)
+		}
 	}
 	return out
 }
 
-func main(){
+func indexOfFirstInstance(list []int, num int) int {
+	for i,v := range list{
+		if v == num{
+			return i
+		}
+	}
+	panic("num not in list")
+}
+func indexOfSecondInstance(list []int, num int) int {
+	i := indexOfFirstInstance(list, num) + 1
+	for ; i < len(list); i++{
+		if num==list[i]{
+			return i
+		}
+	}
+	panic("num does not exist in list twice.")
+}
 
+func TwoSum(list []int, target int) (int, int){
+	if len(list) < 1 {
+		panic("list too small")
+	}
+	sortedList := RadixSort(list)
+   	l := 0
+ 	r := len(sortedList) - 1
+ 	for ;sortedList[l] + sortedList[r] !=  target; { 			
+ 			if l > r {
+ 				panic("shouldn't occur")
+ 			} else if sortedList[l] + sortedList[r] < target{
+ 				l = l+1
+ 			} else {
+ 				r = r-1
+ 			}
+ 	}
+ 	index1 := indexOfFirstInstance(list,sortedList[l])
+ 	var index2 int
+ 	if sortedList[l] == sortedList[r] {
+		index2 = indexOfSecondInstance(list,sortedList[r])
+	} else {
+		index2 = indexOfFirstInstance(list,sortedList[r])
+	}
+	
+	if index1 < index2 {
+		return index1, index2
+	} else {
+		return index2, index1
+	}
+ 	
 }
