@@ -13,10 +13,10 @@ package leetcode
  
  /*PLAN
   * Cache:
-  * 	internal data structure: map[int]int
+  * 	internal data structure: map[int](int,int)
   * 		key = i suppose this represents the location in memory that the
   * 			user is querying for.
-  * 		value =  the value the user is looking for
+  * 		value =  (the value the user is looking for, num times accessed
   * 	get: 
   * 	set:
   * 
