@@ -1,0 +1,105 @@
+Arrays and Slices
+===========
+
+
+
+
+Arrays are one of the most basic data structures in Golang. They are inefficient. Slices are a wrapper on arrays that make them more efficient.
+
+
+Arrays:  
+
+Array type has
+	length
+	element type
+
+Arrays are of fixed length. You cannot change them. The length is part of the type of the array. 
+Thus, [4]int and [5]int are DISTINCT types.
+
+Example:
+	var a [4]int //creates a variable a that is of type [4]int
+	b := [2]string{"V", "A"} //creates a variable b of type [2]string
+	c := [...]string{"C","A"} //creates a variable c of type [2]string
+	//c is NOT a slice. It is an array of type [2]string. This is NOT variable. This syntax is just a bit confusing. This syntax basically allows the program to INFER the size of the array. 
+
+The zero-value of an array is the zero-value of the element type.
+
+An array variable denotes the ENTIRE array, NOT a pointer to the first element of the array. Thus, when you pas around an array in a function, you are copying the ENTIRE contents of the array and not just a pointer. Thus, you should be careful when using arrays.
+
+Slices:
+
+Slice type has
+	element type
+
+Slices are of variable length. 
+
+Slices can be made with the make function, with signiture make([]T, len, cap). You can use len() and cap() to determine the length and capacity of a slice.
+
+Example:
+	a := []string{"a","b"}//creates a slice of strings. 
+	b := make([]String, 2, 4) //creates a slice of type String with initial length 2 and capacity 4. 
+
+The zero-value of a slice is nil. Note that this is different than an array. The len and cap functions for a nil slice is 0.
+
+A slice can also be formed by slicing an existing array or slice. You can slice by the sliceName[startIndex:endIndex] format. 
+
+Example:
+	b := []byte{'g', 'o', 'l', 'a', 'n', 'g'}
+	c := b[1:4] ;// c is a slice []String{'o', 'l', 'a'}
+	d := [4]String{"hi", "You", "there", "ads"} // array of type [4]String
+	e := c[1:2] //same syntax for creating a slice from an array as with creating a slice from a slice.
+	f  := d[:] //convert an entire array into a slice
+
+Slice Internals:
+
+slice describes an array segment. It has
+	pointer to array
+	length  of segment
+	capacity of segment
+
+slicing a slice does not recreate the array. It changes the starting pointer of the slice, and updates the length and capacity appropriately.
+	The length is updated to reflect the sublice that you choose
+	The capacity uses the starting position of what you choose but uses the ending position of what the original array had.
+Example:
+	s=[]int{0,1,2,3,4} //original slice. Internally, this has vals 5, length=5, capacity=5
+	s = s[2:4] // slice points to 2. length=2 since [2-4) . capacity=3 since internal array starts at 2 and ends at 4
+	s = s[:cap(s)] // slice points to 2. length=3, capacity=3. length increased because now the new slice still starts from 2 but this time, the length of the slice ends at 3 (since cap(previous_s)=3)
+
+Since a slice is just affecting the pointers to another slice, it is important to understand that modifying values access through a secondary will affect the original slice.
+Example:
+	d := []byte{'r','o','a','d'}
+	e := d[2:] //['a','d'], length=2, capacity=2
+	e[1]='Z'
+	//from now on, d={'r','o','a','Z'}, e={'a','Z'}
+
+Copy Function:
+
+To copy a smaller slice into a bigger slice, you have to create a new slice, and copy the contents of the old slice into the new slice. Keep in mind that if you are taking a larger slice and trying to create a smaller slice from that, all you have to do is decrease the length & capacity so its much faster.
+
+The built-in copy function does exactly the described action above. It's signiture is func copy(dst, src []T) int. The output is the number of elements copied.
+
+Append Function:
+
+func append(slice []T, data ...T) []T appends data onto your slice. It is builtin. It appends by 
+
+You can append multiple things onto a slice: 
+	s = append(s, 1,2,3)
+
+You can append a slice onto a slice by adding ... to the end of the slice:
+	s = append(s, g...)
+
+
+Key thing to note: reslicing a slice does NOT make a new copy of the slice. So, if you were doing something where you sliced a large bit of data but then only needed a smaller portion of the data, it is smart to copy the old slice into the new slice. However, you have to be careful to do so by not just using normal reslicing, but actually copying the appropriate amount of the old slice into the new slice. 
+	Doing this correctly will allow you to garbage collect the old slice entirely.
+Example:
+	b := getSliceFromFile(file) //[1,2,3,4...100]
+	//wrong
+	c := b[:10] // c points to just 1 to 10 in previous slice. 11-100 cannot be garbage collected
+	//correct
+	c := make([]byte, 10)
+	copy(c, b) //c points to a newly copied version of 1 to 10. the previous 1-100 slice can now be garbage collected.
+	//correct (using append)
+
+
+
+
