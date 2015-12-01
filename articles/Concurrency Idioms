@@ -1,0 +1,45 @@
+Concurrency Idioms
+============
+
+
+
+Idiots use idioms. Well then, call me  a giant frigging idiot because I will learn and MEMORIZE ALL of them!!!
+
+
+Chaotic Wait:
+	When to use it:
+		you  want to run two functions concurrently but you want to make sure you don't go to the next line / return until both are done.
+	How it works:
+		you create a channel for each function that you want to run concurrently
+		you create an anonymous goroutine for each function
+		you run a single one of your desired functions in a single goroutine
+		you insert into a channel at the end of each anonymous function
+		you wait for output from the channel after all the anonymous function calls 
+	Why this works: 
+		the recievers will wait for the channels to get data exactly where you want them to wait
+		you put the sender at the end of each function call so the function must happen before you send and then recieve data from the channel
+	Potential Issues:
+		the channels will recieve in the order that you ask them to recieve, and not by function completion. In the first example below, c1 MUST recieve before c2 even if someOtherFunction finished first.
+	Example:
+		c1 := make(chan int) //allocate a channel
+		c2 := make(chan int) //allocate another channel
+		go func(){		//run  in background
+			someFunction() //func1
+			c1 <- 1		//signal that function is done
+		}()
+		go func(){		//run  in background
+			someOtherFunction() //func2
+			c2 <-1		//signal that function is done
+		}
+		<-c1			//wait for func1 to be done
+		<-c2			//wait for func2 to be done
+	Cooler:
+		//the benefit of this is that I only had to make 1 goroutine
+		//the reason this works is because the single goroutine works concurrently with the main thread's someOtherFunction()
+		c1 := make(chan int)
+		go func(){
+			someFunction()
+			c1 <- 1
+		}
+		someOtherFunction()
+		<-c1

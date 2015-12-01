@@ -54,7 +54,11 @@ Example:
 	//receiver can get something out of a channel
 	mynum := <- ci
 
-Typically, channels are used with goroutines. Why? Because goroutines need to pass around data. Going back to the gopher example, the gophers in this case are goroutines. The chainsaw that their are passing around is the data. These are nice and organized gophers. When they pass around the chainsaw, they make sure to wrap it in a nice and secure channel. Yea, i know im really stretching that analogy LOL.  
+Typically, channels are used with goroutines. Why? Because goroutines need to pass around data. Going back to the gopher example, the gophers in this case are goroutines. The chainsaw that they're passing around is the data. These are nice and organized gophers. When they pass around the chainsaw, they make sure to wrap it in a nice and secure channel. Yea, i know im really stretching that analogy LOL. 
+
+
+
+
 
 
 *This is a very intro article on goroutines/channels. It is intro in the sense that the material is intro material, as is my understanding. I will certainly update the article if I figure out something I wrote is wrong.
