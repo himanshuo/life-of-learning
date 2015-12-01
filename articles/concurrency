@@ -28,7 +28,33 @@ Channels:
 
 A channel is a DATA STRUCTURE. It goes lots of cool things, yes, however, it is good to think of it primarily as a data structure in order to grasp its full potential.  
 
+A channel DATA STRUCTURE has a type and a buffer size. The type represents the type of the object that a given channel can hold. The buffer size represents the number of items that can be stored in the "internal storage" of a channel.  
+	The buffer size can be >= 0.  This means that you have 0 or more items stored internally. 
+	Noteably, a channel is a DATA STRUCTURE. The type of the channel can be another channel. Thus you can store channels within a channel.
 
+By now your wondering, hmmm, what does a channel actually do? It ships things across itself. 
+Generally, you have two ends to a channel - the sender and the receiver.  The sender puts data into a channel and then the receiver receives it.
+
+Now, how does the buffer size play into this? The sender can ONLY put in data into the channel if the channel isn't full. If the channel is full, the sender has to wait. Similarly, when receiving data, the receiver must wait until there is actually data in the channel for it to receive. If there is no data in there, the receiver cannot receive the data. This is where buffer size becomes SUPER important. The amount of things that you can have stored in the channel is dependent on what the buffer size is. If the buffer size if small, then you will only be able to store a few things. If the buffer size is large, then tons of things will be able to pass the channel at a given time. 
+	Unbuffered Channel: this is when the buffer size is 0. 
+	Unbuffer channel means that you cannot store any items in the internal storage of the channel. This does NOT mean you can't use the channel! When the channel is empty, you can use the channel to directly send data. You are not STORING anything in the channel - you are simply sending it across the channel. You can only send one thing across the channel at a time.
+
+	With both unbuffered or buffered channels (buffer size > 0), the sender and receiver both have to wait until they actually have the ability to put stuff in the channel or receive it. The difference between unbuffered and buffer is that the sender can shove in multiple things (up until it reaches the buffer size) and just have them stored in the intenral storage of the channel. This allows the sender to not have to wait to put things in one by one.  As for the receiver, it now has multiple things that can recieve from - it can get an item from any of the internally stored items or from the item currently being send along the channel at a given moment.
+
+Before moving to more complexities, let me give you some concrete code.
+
+Example:
+	ci := make(chan int) //unbuffered channel of integers
+	cj := make(chan int, 0) //unbuffered channel of integers
+	cs:= make(chan *os.File, 100) //buffered channel of pointers to files
+
+	//sender can put something inside a channel
+	ci <- 8
+
+	//receiver can get something out of a channel
+	mynum := <- ci
+
+Typically, channels are used with goroutines. Why? Because goroutines need to pass around data. Going back to the gopher example, the gophers in this case are goroutines. The chainsaw that their are passing around is the data. These are nice and organized gophers. When they pass around the chainsaw, they make sure to wrap it in a nice and secure channel. Yea, i know im really stretching that analogy LOL.  
 
 
 *This is a very intro article on goroutines/channels. It is intro in the sense that the material is intro material, as is my understanding. I will certainly update the article if I figure out something I wrote is wrong.
