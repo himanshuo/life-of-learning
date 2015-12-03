@@ -5,6 +5,8 @@ Concurrency Idioms
 
 Idiots use idioms. Well then, call me  a giant frigging idiot because I will learn and MEMORIZE ALL of them!!!
 
+Please note that I gave these idioms customized names because its easier to remember them this way. Please appreciate this. lol. It actually takes time to make up a fun and useful name.
+
 
 Chaotic Wait:
 	When to use it:
@@ -33,7 +35,7 @@ Chaotic Wait:
 		}
 		<-c1			//wait for func1 to be done
 		<-c2			//wait for func2 to be done
-	Cooler:
+	Cooler way of doing it:
 		//the benefit of this is that I only had to make 1 goroutine
 		//the reason this works is because the single goroutine works concurrently with the main thread's someOtherFunction()
 		c1 := make(chan int)
@@ -43,3 +45,36 @@ Chaotic Wait:
 		}
 		someOtherFunction()
 		<-c1
+
+Don't Fry my Server:
+	When to use it:
+		you want some handler function to work concurrently for multiple inputs, however, there is some limit to how many concurrent functions you can have running at the same time 
+	How it works:
+		You create a channel that has NumConcurrentHandlers internal storage. 
+		You keep calling your handler function with different data inputs.
+		You make it so that your handler function puts into the channel as it starts and removes from the channel as it ends.
+	Semaphore:
+		You create a 'semaphore' with the channel. A semaphore is a concurrent concept from the traditional non-golang concurrent community. It basically is just something that allows you to make sure you are not running too many concurrent things at once by having each concurrent thing check-in and check-out when it is working.
+		This idiom can also be called the Sempahore idiom because it acts just like a semaphore. 
+		Thus in understanding this idiom, you will understand semaphores. YAY! BONUS POINTS!!!
+	Why this works:
+		Think of the channel in this case as a gopher with a giant billboard. This billboard only has 2 things - the number of max handlers to run and the current number of handlers running.
+		When a handler tries to start, it checks to see how many handlers are already running by looking at this billboard. If there are too many, then it waits. If not, the handler goes ahead and lets the gopher know that it is going to start and then starts. The gopher appropriately then adds 1 to the number of current handlers running. When the handler ends, it lets the gopher know and the gopher reduces the count by 1. 
+		In non-analogy terms, the semaphore's job is to store the number of handlers currently running. If this number reaches the max, new handlers will have to wait until the semaphore allows you enough room. When the handler actually does do work, it adds a 1 to the channel signifying that another handler is doing work. As expected, when the work is done,  this handler removes a 1 from the channel.
+		A cool thing to know is that the semaphore in this case is actually a bunch of 1's stored internally - thats how a channel works. However, I am thinking of it VERY differently in this idiom. I am thinking of it like it is a single number that increases/decreases until it ends the endpoints of 0 and NumConcurrentHandlers.
+	Potential Issues:
+		This idiom only stops you from RUNNING billions of handlers. As requests come in, this idiom will in fact CREATE billions of handlers. It will just not run most of them.
+		The trouble with CREATING billions of handlers is that you might run out of memory as this the stack might eventually get full.
+	Example:
+		var sem = make(chan int, NumConcurrentHandlers) 	//channel with NumConcurrentHandlers internal storage units. sets how much room channel has originally
+		func handler(r *Request){				
+			sem <- 1					//wait until channel has available room
+			DoSomeThing(r)
+			<-sem 				 		//make more room
+		}
+		func Server(queue chan *Request){
+			for{
+				req := <- queue			//get request continuouslly from whatever resource
+				go handler(req)				//call handler repeatedly but make a new thread for each call.
+			}
+		}
