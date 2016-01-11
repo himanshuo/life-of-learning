@@ -122,6 +122,72 @@ common test commands
 
 
 	
+for loops
+	for X in red green blue
+	do
+		echo $X
+	done
+
+	if for loops have spaces, then you need to protect them
+	color1="red"
+	color2="light green"
+	color3="darkish blue"
+	for X in "$color1" "$color2" "$color3"
+		echo "$X"
+	done
+		prints: 
+			red
+			light green
+			darkish blue
+
+	without "" then you would have a different list
+	for X in $color1 $color2 $color3
+	...
+		prints:
+			red
+			light
+			green
+			darkish
+			blue
+
+	{START..END..INCREMENT} syntax:
+		for i in {1...5...2}
+		do
+			echo "$X"
+		done
+		prints
+			1
+			3
+
+
+globbing
+	using wildcard character * creates a list of all files/folders that match with the wildcard
+		echo * # lists all file and folder in cur dir
+		echo *.jpg
+		exho ${HOME}/public/*.jpg # lists all jpg files in home/himanshu/public dir
+	The key use is for doing things on all specific type of files in a given dir
+		for X in *.html
+		do
+			grep -L '<UL>' "$X"
+		done
+
+while loops
+	X=0
+	while [ $X -lt 0 ]
+	do
+		...
+		X=$((X+1))
+	done
 
 
 
+command substitution
+	brace expansion
+		$(commands) expands the output of commands. This allows for nesting so commands can include brace expansions as well
+	backtick expansion
+		`commands` expands the output of commands. This DOES NOT allow for nesting. Probably should just use $() then
+
+	Example
+		files="$(ls)"
+		other_files=`ls /some/dir`
+		x=$(expr 3\* 2 + 4)
