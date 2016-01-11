@@ -78,3 +78,4 @@ Don't Fry my Server:
 				go handler(req)				//call handler repeatedly but make a new thread for each call.
 			}
 		}
+

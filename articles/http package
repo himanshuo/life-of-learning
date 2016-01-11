@@ -1,0 +1,79 @@
+net/http package
+====
+
+
+This is one of the most lauded packages in Golang. It allows developers to quickly start making web requests and serve up a web server.  However, it is a very basic package. For lots of tasks, it is required to extend various portions of this package or create new functions involving this package. This article is meant to help understand the net/http package at a low level - actually architecture of the package, not just how to use it. Seperate articles for common tasks that require extending this package are also listed right below:
+
+1) Stop the running server
+2) Make requests other than GET and POST with a body
+3) DELETE, PATCH, TRACE, OPTIONS, DEBUG requests
+4) 
+
+
+Client Usage:
+	
+Can make Get, Head, Post, PostForm requests easily. Can make HTTP or HTTPS requests easily. DELETE, PATCH, TRACE, OPTIONS, DEBUG requests require more work. 
+
+You must close the response body after you are finished handling the response.
+
+Example: 
+	resp, err := http.Get("http://example.com")
+	defer resp.Body.Close()
+	
+	resp, err := http.Post("http://example.com", "image/jpeg", &buf)
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)				//read body
+
+	resp, err := http.PostForm("http://example.com", url.Values{"k":{"v"}, "k2":{"v2"}})
+	defer resp.Body.Close()
+
+It is smarter to make a http.Client that stores header information so that you can just customize each request afterwards. The specific things that you have control over by doing this are:
+	TLS
+	CAs
+	DisableCompression
+	Transports
+	Headers
+	Redirect Policy
+
+To be honest, I don't understand what some of those things are. I will explore them as I go through the package. I will either add information about those things in this article or write another article and link to it.
+
+Example:
+	client := &http.Client{
+		CheckRedirect: redirectPolicyFunc,
+	}
+	req, err := http.NewRequest("GET", "http://example.com", nil)
+	req.Header.Add("If-None-Match", `W/"wyzzy"`)
+	resp, err := client.Do(req)
+
+Client Internals:
+
+Now that the basic usage is out of the way, lets get under the hood of the client.
+
+Firstly, it seems that there is a default client that anyone has access to. It is what is used for the Get, Post, and PostForm requests that do not need a client by the user.
+	Code from Package:
+		var DefaultClient := &Client{} 
+
+Now, lets understand the Client Struct.
+type Client struct{
+	Transport RoundTripper
+	CheckRedirect func(req *Request, via []*Request) error
+	Jar CookieJar
+	Timeout time.Duration
+}
+Transport RoundTripper
+	Transport is the mechanism by which each HTTP request is made. If Transport is nil, then DefaultTransport is used. DefaultTransport is built into the package as another default variable - just like DefaultClient.
+CheckRedirect func(req *Request, via []*Request) error
+	This is the policy for handling redirects. The user can set CheckRedirect to be a function that they create. The idea is that this function will be called before following any redirects. 
+	The req variable is the request to be made in order to follow the redirect
+	The via variable lists all the previous requests made in order to follow the current redirect chain. The oldest request is first in the via variable.
+	If the user chooses to return an error with their custom function, the client as a whole will return the previous response their Get request had and the error that the user chose to return via their custom CheckRedirect.
+	The default here is to just keep following up to 10 redirects and then just return that 10th requests.
+	To implement the default, you will have to have some sort of external counter variable and then for each request, increase the counter. When the counter is 10, you return the error. Because you are returning an error, the result will be the 10th response + your custom error.
+Jar CookieJar
+	specifies cookie jar 
+	A CookieJar is responsible for managing storage and use of cookies in HTTP requests.
+
+RoundTripper
+
+
+

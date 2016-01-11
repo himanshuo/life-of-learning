@@ -1,0 +1,127 @@
+Bash Basic Syntax
+============
+
+#!/bin/bash
+	To let linux know that you are running a bash script
+
+X="hi"
+X=hi
+X="hi adsf"
+	create variables
+	Common errors are:
+		X = "hi"
+			no space between X and =
+		X=hi adsf
+			no space in string unless you have proper quotations
+
+echo "$X"
+	uses X in echo command
+
+"" versus ''
+	"" actually uses the variables defined inside
+		echo "$X is my name" # Himanshu is my name
+	'' is raw string
+		echo '$X is my name' # $X is my name
+
+$X versus "$X"  
+	assume X=""
+	$X evaluates to nothing
+	"$X" evaulates to "" (the empty string)
+	thus if you do something like
+		if [-n $X]; then 
+			echo "hi"
+		fi
+		where -n tests to see if the argument is non-empty
+		then you will NOT echo hi!!!
+		why? because $X evaluates to nothing in this case. Thus -n is not passed any argument. its like doing if [-n];...
+
+	Thus, you should do something like
+		if [-n "$X"]; then ...
+
+	The point is: whenever you are trying to evaluate a variable, use double quotes.
+
+	Okay, it is WEIRD that if [-n $X] evaulates to if [-n ]. Think about it though:
+		LS="ls"
+		LS_FLAGS="-al"
+
+		$LS $LS_FLAGS $HOME 
+			would evaluate to
+				ls -al /home/himanshu 
+			in the terminal. 
+
+		the above is the SAME idea
+
+${X}abc
+	$Xabc would think the variable you are looking for is Xabc. You are really looking for X so use brackets
+
+if condition1
+then
+	statement1
+	statement2
+	..........
+elif condition2
+then
+	statement3
+	statement4
+	........    
+elif condition3
+then
+	statement5
+	statement6
+	........    
+else
+	statement7
+fi
+
+test command
+	
+[] can be used in place of test
+	if test $X -lt $Y
+	is equivilent to 
+	if [ $X -lt $Y ]
+
+common bugs
+	no spaces between [ and variable in
+		if [ $X -lt $Y ]
+	not using a semicolon or atleast putting then on the next line
+		if [ $X -lt $Y ]; then 
+		OR
+		if [ $X -lt $Y ]
+		then
+	forgetting fi 
+		if ... ; then
+			...
+		fi
+
+	A correct working if then statement is:
+		if [ $X -lt $Y ]; then
+			echo "hi"
+		fi
+
+
+
+common test commands
+	[ -n $mystr ]  # mystr has non-zero length
+	[ -z $mystr ]  # mystr has zero length
+	
+	[ -d $mystr ]  # there exists a directory whose name is mystr
+	[ -f $mystr ]  # there exists a file whose name is mystr
+	
+	# integers
+	[ $X -eq $Y ]  # x = y (x and y are both integers)
+	[ $X -neq $Y ]  # x != y
+	[ $X -lt $Y ]   # x < y
+	[ $X -le $Y ]   # x <= y
+	[ $X -gt $Y ]  # x > y
+	[ $X -ge $Y ]   # x >= y
+
+
+	# strings
+	[ $X = $Y ]  # x equals y as a string
+	[ $X != $Y ]  # x does not equal y as a string
+
+
+	
+
+
+
