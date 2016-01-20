@@ -1,0 +1,47 @@
+Docker
+=======
+
+Docker is like Github
+  There is a remote docker container that you 'pull' and 'run'
+  example 'pull':
+    docker pull tp33/django:1.0
+      tp33 is the user name
+      django is the container to pull
+      1.0 is the version of that container to pull
+  example 'run':
+    docker run -it --name web tp33/django:1.0
+      -i starts interactive container so that you can access it via commandline
+      -t creates pseudo-TTY that attaches stdin and stdout
+      --name specifies the name of the container. In this case, the name is web
+      tp33/django:1.0 is the IMAGE.
+      if you write anything past the given docker run command, then docker will
+        treat that as commands you want to run inside the image
+
+Committing (saving) a container state
+  an IMAGE is a saved state of the container
+    notably, when you commit your container, you only store the diff between
+    the source image and your current image. Thus saving is cheap.
+
+CONTAINERS RUN JOBS. The STATE of a CONTAINER is an IMAGE.
+
+
+Useful Commands:
+  get a container running:
+    docker pull <name_of_container>
+    docker stop <name_of_container>
+    docker start <name_of_container>
+    docker restart <name_of_container>
+    docker kill <name_of_container>
+    docker rm <name_of_container>
+      container must be stopped before you can remove it
+
+  view container information:
+    docker ps
+      see status of RUNNING containers
+    docker ps -a
+      see the status of all containers
+    docker images
+      lists all images
+
+  Commit (save) your current container as new IMAGE
+    docker commit <name_of_container> <some_name_to_call_image>
