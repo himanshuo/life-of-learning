@@ -16,7 +16,11 @@ Docker is like Github
       tp33/django:1.0 is the IMAGE.
       if you write anything past the given docker run command, then docker will
         treat that as commands you want to run inside the image
-
+      --link mysql:db tp33/django:devel
+        this is for linking this docker container to another.
+        mysql:db is <other_container_name>:<host_on_other_container>
+        tp33/django:devel is <this_container_name>:<desired_image_on_this_container>
+        
 Committing (saving) a container state
   an IMAGE is a saved state of the container
     notably, when you commit your container, you only store the diff between
