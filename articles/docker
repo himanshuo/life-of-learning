@@ -45,3 +45,8 @@ Useful Commands:
 
   Commit (save) your current container as new IMAGE
     docker commit <name_of_container> <some_name_to_call_image>
+
+  Restart your container:
+    docker start <name_of_container>
+    then you need to attach to it so that you can work within it in an interactive commandline
+    docker attach <name_of_container>
