@@ -37,3 +37,31 @@ Multitasking is possible for a system with a single core because each process ru
 *Threading* is a way programmers can divide their programs into more independent tasks with the property that when one thread is blocked, another thread can run. It's much faster to switch between threads than it is to switch between processes. This is because threads are "lighter weight" than processes. A thread can use the same IO devices and memory as the process. Thus sharing allows switching between threads to be faster.
 
 If a process is the "master" thread of execution and threads are started and stopped by the process, then starting each thread is to "*fork* off the process" and to terminate the thread is to "*join* the process"
+
+## Instruction-level parallelism
+
+Instruction-level parallelism  attempts to run multiple processor components or *functional units* simultaneously run instructions. There are two main ways to do Instruction-level parallelism - *pipelining* and *multiple issue*.
+
+### Pipelining
+Pipelining is when you have functional units split up into stages and running them like an assembly line. Overall, a single functional unit will take longer, however, when combined with multiple others, the speed increases. Why? Because multiple stages can be done at once thus an instruction can start running before the previous instruction finishes.  
+
+### Multiple Issue
+Multiple issue is when you start multiple instructions simultaneously. Multiple issue processors replicate functional units and try to execute them simultaneously.
+
+For example:
+    for(i=0;i<1000;i++) z[i] = x[i] + y[i]
+With multiple issue, you can calculate z[0] (aka the sum of x[0] and y[0]) and z[1] ( x[1]+y[1]) at the same time. Thus you end up doing two entire lines of code in the same time it normally takes to do one line of code.
+
+If the functional units are scheduled at compile time, then a multiple issue system is using *static* multiple issue. If the functional units are schedule are run time, then the multiple issue system is using *dynamic* multiple issue. *Superscaler* = a computer architecture where several instructions are loaded at once and, as far as possible, are executed simultaneously. Dynamic multiple issue is superscaler.
+
+In order to use multiple issue, a processor must find instructions that can be executed simultaneously. A key way to do so is through *speculation*, where you guess what instruction to run and how and if things work then yay but if things break then you need to have a strategy to fix things.
+
+## Hardware multithreading
+
+Hardware multithreading is just normal threads in a program. The things that are created by a process and you can have multiple threads and they can be run concurrently.
+
+The good thing about *thread-level parallelism* is that it allows for a *courser-grained* (more general) parallelism than instruction level parallelism.
+
+A key requirement of hardware multithreading is that you must be able to switch between threads quickly. This is the reason threads are awesome - because they are easy to switch between. This is why we run a gazillion concurrent threads more often than a gazillion concurrent processes.
+
+ 

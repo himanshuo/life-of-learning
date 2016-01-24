@@ -65,27 +65,76 @@ There are two types of hosts: *clients* and *servers*. Clients tend to be deskto
 
 #### Access Networks
 
-The two most prevalent types of broadband residential access are *digital subscriber line (DSL)* and *cable*. DSL internet access is usually attained from the local telephone company. Thus DSL modems use the existing telephone lines to exchange data with digital subscriber line access multiplexers (DSLAM).
+The two most prevalent types of broadband residential access are *digital subscriber line (DSL)* and *cable*.
+
+##### DSL
+DSL internet access is usually attained from the local telephone company. Thus DSL modems use the existing telephone lines to exchange data with digital subscriber line access multiplexers (DSLAM).
 
 ![](intro/a7ecf7e4bdbb27244e21fd6429e74bf8.png)
 
-When you have DSL, you are actually using a phone line to connect to the internet. On the customer side, you have a splitter than only recieves telephone data and splits that up between phone and internet data. It also takes in home phone and home internet data sends it view the phone line. On the telephone company side, DSLAM converts between telephone and internet messages. 
+When you have DSL, you are actually using a phone line to connect to the internet. On the customer side, you have a splitter than only receives telephone data and splits that up between phone and internet data. It also takes in home phone and home internet data sends it view the phone line. On the telephone company side, DSLAM converts between telephone and internet messages.
 
+The DSL transmission rates for upstream and downstream are different. Thus the access is *asymmetric*.
 
+##### cable internet access
+cable television companies use their existing cable tv infrastructure.
+
+![](intro/412acee62b3fd795492678dbff0c148f.png)
+
+When you have Internet access via cable, your home is connected with a coaxial cable to a fiber node. Each fiber node is then connected to the cable companies cable model termination system (CMTS) via fiber cables. CMTS is then connected to the Internet.
+
+CMTS converts the analog signals sent from the cable models in the homes into digital format.
+
+##### Key Differences between DSL and cable
+* Both DSL and cable convert the home analog data into digital data for use in the Internet. DSL uses DSLAM to do this. Cable uses CMTS to do this.  
+* DSL range is about 5 miles from the central office. cable range is about 500 to 5,000 homes per junction. Thus cable can hold a lot more and is more varied.
+
+##### fiber to the home (FTTH)
+This is an emerging technique where fiber cables are connected directly from the central office to the home. This is supposed to be super fast. This is what Verizon FIOS is.
+
+![](intro/beefb3cc81bc862a74a8941d36d05163.png)
+
+There are two optical-distribution network architectures that perform this splitting - active optical networks (AONs) and passive optical networks (PONs). AONs are basically switched ethernet. PONs are a bit different.
+
+Note, PONs with FTTH is how Verizon FIOS works. Each home has a optical network terminator (ONT) which connects to a neighborhood splitter using fiber cable. Then, the splitter combines optical signals from all the homes into a single, shared optical fiber which then connects to the OLT at Verizons central office. The OLT then converts the optical signals into electrical signals in order to work with the central offices router and connect to the internet.
 
 
 #### Local Area Network (LAN)
-* ethernet
-* mac number is used to identify each host
-* everyone is going to get ... but only one keeps it
+Used to connect smaller regions such as university campuses and homes.
+
+Ethernet is the most prevalent access technology in LAN. Ethernet uses twisted-pair copper wire to connect to an Ethernet switch. The Ethernet switch is then connected to the larger Internet.
+
+At each step of the way, bits are transferred via physical medium such as coaxial cable, twisted-pair copper wire, multimode fiber-optic cable, terrestrial radio spectrum, and satellite radio spectrum. These physical media are either guided or unguided. Guided media sends waves across a solid medium such as fiber-optic cable, a twisted-pair copper wire, or coaxial cable. Unguided media sends waves that propogate in the atomsphere and in outer space. wireless LAN or digital satellite are unguided.
+
+In terms of costs, the materials for this are much cheaper than labor costs. Thus it is best to install cable in each room in a house instead of doing it on demand.
 
 
-#### Wide Area Network (WAN)
-Lots of LAN's put together. WAN = collection of LAN's. Examples include countries, state, school, ...
+#### Physical media
 
-##### Point to Point WAN
-WAN connects numerous routers together. Each router will connect to other networks elsewhere.   
+##### Twisted-Pair Copper Wire
+* least expensive
+* most commonly guided transmission medium
+* >99% of wired connections from telephone handset to local telephone switch use twisted-pair copper
+* consists of 2 insulated copper wires (each is 1mm thick) arranged in a regular spiral pattern. The wires are twisted together in order to reduce interference.
+* multiple wire pairs are bundled together in a cable by wrapping the pairs in a protective shield.
+* Unshielded twisted pair (UTP) is used in computer networks within a building
 
+##### Coaxial Cable
+* 2 copper conductors that are concentric (circles that share same center)
+* special insulation and shielding
+* faster than twisted pair
+* guided
+* can be used as a *shared medium* - multiple end systems can be connected directly to the cable
 
-##### Switch WAN
-Put switch together. Switch WAN is a combination of Point-to-Point WAN's.
+##### Fiber Optics
+* thin, flexible medium that conducts pulses of light. Each pule represents a bit
+* fastest
+
+##### Terrestrial Radio Channels
+* radio channels carry signals in the electromagnetic spectrum
+* can penetrate walls
+* can go long distances
+
+##### Satellite Radio Channels
+* *geostationary satellites* - remain permanently above the same spot above the earth.
+* *low-earth orbiting (LEO) satellites* - closer to the earth. rotate around the earth. communicate with each other along with the earth.
