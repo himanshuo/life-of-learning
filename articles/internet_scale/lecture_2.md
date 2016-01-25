@@ -1,6 +1,5 @@
 Lecture 2
 =============
-* * *
 
 
 ## HTTP and Networks
@@ -50,3 +49,13 @@ Each thread basically performs the following tasks:
 This method of parallelism is called *"embarrassingly"  parallel* because there is no state sharing between threads besides the database. "Embarrassingly" parallel is also very bad because it pushes all scaling problem to the database.
 
 There is a fixed number of threads. This is bad because there may be more requests than threads at one time. In this case, the threads have to wait.  
+
+The fixed number of threads does allow you to determine max_num_requests / second_for_k_threads
+
+
+## Model View Controller (MVC)
+MVC works, but not always. It should not be coped blindly.  
+Apps divided into 3 parts
+* Persistent state (models)
+* actions (controllers)
+* appearance (views)
