@@ -51,3 +51,14 @@ The key difference between VM and container as shown in the picture is that ther
 
 Containers are awesome because
 * they allow you to easily define the environment
+  * Dockerfile is basically just a Makefile for system images
+* they easily replicate a consistent environment
+* they easily package app and dependencies
+
+![](lecture_1/41a6c5124c014795ae9845f562f3ad8c.png)
+
+CONTAINERS RUN JOBS. The STATE of a CONTAINER is an IMAGE. The above picture is telling us that if you are trying to read/write to an image, what you actually do is go from most specific child to more general image. Each image just holds a diff of its configs compared to its parent. Thus you have to bottom bottom to top.
+
+The right side of the picture is showing you that containers are isolated but can talk to each other via a virtual net. Note that each container has its own IP address. Also note that since each container is isolated, its process id's (PIDs) restart numbering.
+
+ 

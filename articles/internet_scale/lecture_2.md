@@ -15,12 +15,14 @@ Steps for fetching a page
 6. Ethernet is used on server
 
 Steps for server to return page
-1. server calls its return_page() function
-2. HTTP protocol (including url) allows server to determine which specific function to run
-3. SSL is used to verify request
-4. TCP is used to connect to requester
-5. IP is used to determine which CPU to connect to
-6. Ethernet is used on server
+1. Ethernet is used on server
+2. IP is used to determine which CPU to connect to
+3. TCP is used to connect to requester
+4. SSL is used to verify request
+5. HTTP protocol (including url) allows server to determine which specific function to run
+6. server calls its return_page() function
+
+Ethernet devices have a unique address called a mac address.
 
 ## HTTP
 
@@ -29,6 +31,13 @@ HTTP is the main way to send files on internet. Clients send commands to servers
 GET is for asking for information  
 POST is for updating data or for forms  
 
+Format of an http url: protocol://host:port/path?args  
+An example is www.google.com/?q=stuff
+* protocol = www
+* host = google.com
+* post = default (80)
+* path = /
+* args = "q=stuff"
 
 ## Apache and threading
 We are using Apache with mod_wsgi and python
@@ -36,6 +45,8 @@ We are using Apache with mod_wsgi and python
 ![](lecture_2/1c52b0c9b1d995eafdd8ff77d38e364a.png)
 
 Apache creates a server with a main process. The main apache process runs a bunch of child processes. Each child process is written in python. When requests come in, they are routed to the child processes. Each child process creates a new thread for each request. The threads all concurrently talk to the database.
+
+Each forked process is just a copy of the process that you make. So in our case, when we make our Django application,
 
 Each thread basically performs the following tasks:
 1. wait for connection
