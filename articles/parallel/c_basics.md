@@ -39,10 +39,12 @@ void * : 4 bytes
 T * : 4 bytes
 double: 8 bytes
 
+int_ptr++ is the same as int_ptr + 1 so it would add 4 to the memory address pointed to by int_ptr
+
 ???
 int a = 3 + int_ptr + char_ptr; //???? is 3 multiplied by 4 or 1?
 
-int_ptr++ ??
+
 
 malloc() and the calloc() ??
 
@@ -61,7 +63,7 @@ T * : 4 bytes
 thus, you have to cast the pointer to a specific type!
 
 int * p = (int * )malloc(sizeof(int));
-
+??calloc
 
 free(p); to free the space allocated by a pointer
 
