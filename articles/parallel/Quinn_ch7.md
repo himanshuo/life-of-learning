@@ -16,6 +16,8 @@ The operations performed by a parallel algorithm can be put into three categorie
 * Computations that can be done in parallel
 * Parallel overhead (communication operations and redundant computations)
 
+
+
 ## Amdahl's Law
 ### Limitations
 ### The Amdahl Effect
