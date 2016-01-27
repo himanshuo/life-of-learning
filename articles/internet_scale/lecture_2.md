@@ -70,3 +70,25 @@ Apps divided into 3 parts
 * Persistent state (models)
 * actions (controllers)
 * appearance (views)
+
+### Models
+* represent "nouns" of your system
+  * Customer, ShippingAddress, Review
+* Each instance of a model corresponds to one record in a DB
+* Represented in Django by a python class
+  * knowns how to create, update, delete itself
+* represents connections to other models
+    * customer has a shipping address
+    * customer has many customerReviews
+
+### Controllers
+
+* Represent the "verbs" of your application
+  * update shipping address, create new account
+* most of your app logic goes here
+* django confusingly calls these views
+
+### Views
+* Views are the "skin" or "look" of your app
+* specifically how to render data models for a specific presentation technology (eg. HTML)
+* in django, represented by templates
