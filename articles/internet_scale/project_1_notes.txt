@@ -1,0 +1,47 @@
+# home.py
+
+from django.http import HttpResponse
+
+
+def index(request):
+	return HttpResponse("This is the home page. Good Job.")
+
+
+
+------------------------------------------------------------------
+
+#urls.py
+
+
+from . import index
+
+urlpatterns = [
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', index, name='home'),
+]
+
+-------------------------------------------------------
+dir structure
+
+foo
+	home.py
+	urls.py
+
+
+
+Command to easily restart django application on apache server:
+kill $(ps | grep httpd | awk '{print $1}'); mod_wsgi-express start-server --working-directory /app/foo --url-alias /static /app/foo/foo/static /app/foo/foo/wsgi.py &
+
+
+# Django Docs
+
+### layout
+		mysite/
+				README.md
+				manage.py
+    		mysite/
+        		__init__.py
+        		settings.py
+        		urls.py
+        		wsgi.py
+				home/

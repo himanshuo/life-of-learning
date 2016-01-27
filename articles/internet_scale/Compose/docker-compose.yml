@@ -1,0 +1,19 @@
+isa-mysql:
+   image: mysql:5.7.10
+   environment:
+    MYSQL_DATABASE: cs4501
+    MYSQL_USER: www
+    DATABASE_PASSWORD: l33tp455w0rd
+    MYSQL_ROOT_PASSWORD: r00tp455w0rd
+isa-models:
+   image: tp33/django:1.2
+   links:
+     - isa-mysql:db
+isa-exp:
+   image: tp33/django:1.2
+   links:
+     - isa-mysql:db
+isa-web:
+   image: tp33/django:1.2
+   links:
+     - isa-mysql:db
