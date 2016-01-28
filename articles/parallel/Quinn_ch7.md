@@ -24,7 +24,34 @@ The operations performed by a parallel algorithm can be put into three categorie
 A sequential program operating on a *single* processor can only do one computation at a time: σ(n) + φ(n)  
 This program does NOT have the κ(n,p) term because it does NOT require any interprocessor communications. In fact, it cannot do any interprocessor communications since it only has 1 processor. Also note that just because you have a single processor does not mean you cannot do any parallel computations - you can use threads.
 
-The best possible parallel execution time occurs when all potential parallel portions of a program are made parallel. There still may be some sequential portions in the program, but it is impossible to make these parallel. These sequential portions take σ(n) time regardless of the number of processors added. 
+The best possible parallel execution time occurs when all potential parallel portions of a program are made parallel. There still may be some sequential portions in the program, but it is impossible to make these parallel. These sequential portions take σ(n) time regardless of the number of processors added. In this best case, the portion of computation that can be executed in parallel divides up perfectly among p processors. Thus time needed to perform these operations is φ(n)/p. You then also have in κ(n,p) for interprocessor communication required for the parallel program. Thus, the best case possible with parallel is: φ(n)/p + κ(n,p) + σ(n)  
+A key thing to note here is the assumption that the parallel portion of the computation is divided perfectly among the processors. If this is not the case, then you will have larger execution time and thus speedup is smaller.
+
+From this, you can create the speedup inequality:  
+![](Quinn_ch7/9a9ae5e27fa6d8d8dc6e471fdbf4c665.png)  
+This inequality is telling us that the speedup will be <= ratio of (largest sequential execution time) / (smallest possible parallel execution)
+
+
+Communication time increases when you add processors.   Computation time decreases when you add processors.  
+There is some optimal point where the two meet. You want to be at that optimal point.
+![](Quinn_ch7/96fb182cc9d08fd34d9dd4e147565e03.png)
+In this picture, the gray/white regions are communication time. The black regions are Computation time. With increasing processors, Communication time increases and Computation time increases. Eventually, the communication time increase over powers the computation time decrease. You want that equilibrium.
+
+
+The *efficiency* of a parallel program is a measure of processor utilization. We define efficiency to be speedup divided by the number of processors used:  
+*Efficiency = speedup/number_of_processors_used*  
+
+When you substitute in the definition of efficiency, you get:  
+![](Quinn_ch7/d99d454fd5600c29a37210a91cc0bdd5.png)
+
+Efficiency is ε
+![](Quinn_ch7/5b817f8c4c329b454a489234500bfac7.png)
+
+
+
+
+
+
 
 
 
