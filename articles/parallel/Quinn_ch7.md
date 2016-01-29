@@ -20,6 +20,7 @@ The operations performed by a parallel algorithm can be put into three categorie
 σ(n) = sequential portion of the computation
 φ(n) = parallel portion of computation
 κ(n,p) = time required for parallel overhead
+ε(n,p) = Efficiency
 
 A sequential program operating on a *single* processor can only do one computation at a time: σ(n) + φ(n)  
 This program does NOT have the κ(n,p) term because it does NOT require any interprocessor communications. In fact, it cannot do any interprocessor communications since it only has 1 processor. Also note that just because you have a single processor does not mean you cannot do any parallel computations - you can use threads.
@@ -44,21 +45,24 @@ The *efficiency* of a parallel program is a measure of processor utilization. We
 When you substitute in the definition of efficiency, you get:  
 ![](Quinn_ch7/d99d454fd5600c29a37210a91cc0bdd5.png)
 
-Efficiency is ε
+Efficiency is ε(n,p)
 ![](Quinn_ch7/5b817f8c4c329b454a489234500bfac7.png)
-
-
-
-
-
-
-
-
+This inequality gives us an upper bounds for efficiency.
+The overall bounds for efficiency are: 0 <= ε(n,p) <= 1
 
 ## Amdahl's Law
-### Limitations
+![](Quinn_ch7/f64f88de9ff7fb6a48b051f88f1a084e.png)
+![](Quinn_ch7/1d791c0ebbd61a29f08b817b41b5d772.png)
+
+![](Quinn_ch7/a7b77e9f1e3fcde93156947608911916.png)
+
+### Limitations of Amdahl's Law
+Amdahl's law ignored overhead associated with introduction of parallelism.
+
+By taking into account the communication time overhead, we realize that Amdahl's law underestimates the the speedup.
 ### The Amdahl Effect
+![](Quinn_ch7/2cb9b2b6ba45836600749beff2257d5c.png)
 ## Gustafson-barsis's Law
+
 ## Karp-Flatt Metric
 ## Isoefficiency Metric
-##
