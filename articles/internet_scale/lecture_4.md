@@ -1,7 +1,7 @@
 Lecture 4
 ============
 
-To succesfully complete a project, you need:
+To successfully complete a project, you need:
 * design docs
   * user stories
   * data model
@@ -38,4 +38,3 @@ To succesfully complete a project, you need:
     * add circuit breakers
       * after N failures/timeouts in S seconds, stop trying to make more requests to all related APIs
     * if non-mandatory services fail, then just do not show those portions of page instead of not loading the page at all
-    *

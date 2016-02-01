@@ -80,9 +80,31 @@ By parallelizing programs, you can run them in a large number of clusters and jo
 A distributed lock manager (DLM) is included in some clustering technology in order to make sure conflicting instructions are not run and screw up the data.
 
 ### Operating System Structure
-*Multiprogramming* is when you run multiple processes at the same time on a single processor. This is done by executing a part of a program, then part of another, and so on. To the user it appears that all programs are executing at the same time.
+*Multiprogramming* is when you run multiple processes at the same time on a single processor. This is done by executing a part of a program, then part of another, and so on. To the user it appears that all programs are executing at the same time. Multiprogramming works by keeping several jobs in memory simultaneously. All jobs are initially kept on disk in the job pool. This pool has all processes residing on disk awaiting allocation of main memory. Then, some jobs from the disk are moved to main memory. The OS picks and begins executing one of the jobs in memory.  Eventually, the job may have to wait for some task, such as IO, to complete. While waiting, the CPU switches and executes another job. When this job needs to wait, the CPU switches to another job... Eventually, the first job will finish waiting and the CPU continues with this job.
 
-##### Key Terms
+*Time sharing* or *multitasking* is when the CPU executes multiples jobs by switching among them, but the switches occur so frequently that the user can interact with each program while it is running. A time sharing OS allows many user to share the computer simultaneously because each command in a time-shared system is really small.
+
+A program loaded into memory is called a *process*.
+
+To choose which process to run from the job pool, you have to use a *job scheduling* algorithm. When a job is selected to be run, CPU loads that job into memory for execution. Having multiple jobs in memory at the same time allows for memory management - you can speed up code this way. A *CPU scheduling* algorithm helps to determine which job from main memory to use to run.
+
+OS must ensure reasonable response time in a time-sharing system. Processes are swapped in and out of main memory to disk . This is called *swapping*. A more common method for ensuring reasonable response time is *virtual memory* where you execute processes that are not completely in memory. Virtual memory allows you to programs that are larger than actual physical memory. Virtual memory also abstracts main memory into a large, uniform array of storage. Thus it separates logical memory from physical memory.
+
+### Operating System Operations
+Modern OS's are *interrupt driven*. If there are no processes to execute, no IO devices, no users to respond to, then the OS will sit there quietly doing nothing. Events are always signaled by occurrence of an *interrupt* or a *trap*.
+
+A trap (or an exception) is a software generated interrupt that occurs either when
+* there is an error (eg. invalid memory access) or when  
+* there is a specific request from a user program that an OS service be performed.    
+
+For each type of interrupt, there is a separate section of code in the OS that handles the interrupt. A key thing that the interrupt handler code has to think about is that this interrupt does not affect other programs that are running.
+
+##### Dual mode and multimode operation
+A *mode bit* helps determine whether the current process is running under *user mode* or *kernel mode*. The OS boots in kernel mode but in order to run a user process, it switches to user mode. kernel mode allows for *privileged instructions* to be run that could potentially harm the OS.
+
+*System calls* while in user mode lead to interrupts that run kernel mode code.
+
+### Key Terms
 *firmware* = EEPROM memory from where startup programs and other system programs are stored.  
 *middleware* = software frameworks that provide additional services to application developers.
 *system processes/system daemons* = processes that are outside of the kernel that run the entire time the kernel is running.
@@ -95,4 +117,8 @@ A distributed lock manager (DLM) is included in some clustering technology in or
 *Direct memory access* = method of transporting data from device controller to memory in block chunks in order to quickly transfer data from an IO device to the memory  
 *graceful degradation* = ability to continue providing service proportional to the level of surviving hardware  
 *fault tolerant* = systems that can suffer a failure of any single component and still continue operation  
-*Multiprogramming* = organizing jobs (code and data)  so that the CPU always has one to execute
+*Multiprogramming* = organizing jobs (code and data)  so that the CPU always has one to execute  
+*Time sharing / multitasking* = CPU executes multiples jobs by switching among them, but the switches occur so frequently that the user can interact with each program while it is running.  
+*Process* = program + execution environment
+*job scheduling* = algorithm used to determine which job to take from disk and load into main memory
+*CPU scheduling* = algorithm used to determine which job to run from main memory
