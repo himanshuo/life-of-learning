@@ -72,7 +72,7 @@ DSL internet access is usually attained from the local telephone company. Thus D
 
 ![](intro/a7ecf7e4bdbb27244e21fd6429e74bf8.png)
 
-When you have DSL, you are actually using a phone line to connect to the internet. On the customer side, you have a splitter that only receives telephone data and splits that up between phone and internet data. It also takes in home phone and home internet data sends it via the phone line. On the telephone company side, DSLAM converts between telephone and internet messages.
+When you have DSL, you are actually using a phone line to connect to the internet. On the customer side, you have a splitter that only receives telephone data and splits that up between phone and internet data (going from central office to home). It also takes in home phone and home internet data sends it via the phone line (going from home to central office). On the telephone company side, DSLAM converts between telephone and internet messages.
 
 The DSL transmission rates for upstream and downstream are different. Thus the access is *asymmetric*.
 
