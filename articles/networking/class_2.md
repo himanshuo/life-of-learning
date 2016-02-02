@@ -46,18 +46,19 @@ Key ideas for human communication
 The above photos show a real TCP/IP example.  
 Firstly, note that the top photo is showing the basic network structure that is being used in this system - A wants to send a packet to B and along the way is a switch that connects to a router. That router is then connected to another switch which finally connects to the destination B.  
 The bottom picture shows what is inside the packet at various stages of the transport.
+
 1. At the *Application Layer*, the payload is determined and put in the packet. This is not shown in the picture.
 2. At the *Transport Layer*, a header is added
 4. At the *Network Layer*, a header is added
 5. At the *Data Link Layer*, a header is added
 6. At the *Physical Layer*, a header is added
 7. Then you go to the switch. Switches work with 2nd layer (Data Link Layer) thus they ONLY look at that header. The switch determines that the packet should go to the router
-8. The router works with the 3rd layer (Network Layer) thus ONLY looks at that header. The router determines that the packet needs to be sent to the second link. (second link not shown)
-9. The second link (not shown) then sends the packet to the destination.
+8. The router works with the 3rd layer (Network Layer) thus ONLY looks at that header. The router determines that the packet needs to be sent to the second switch. (second switch not shown)
+9. The second switch (not shown) then sends the packet to the destination.
 10. The packet goes up the destination side. At each step of going up the destination, the packets headers are looked at to verify any issues.
 
 Key things to note:
-* switch determines where to send packet use the mac number of the destination. Each end system has a mac number.
+* switch determines where to send packet using the mac number of the destination. Each end system has a mac number.
   * in the case of switch 1, the switch determines that there is no end system with the appropriate mac number so just sends it to the router. There are most certainly specific algorithms involved here which we will go over later.
 * switches use only layer 2  - Data Link Layer
 * routers use only layer 3  -  Network Layer

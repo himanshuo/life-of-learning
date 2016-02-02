@@ -3,7 +3,7 @@ The Network Core
 * * *
 
 ## Packet Switching
-End Systems exchange *messages* with each other. Messages can either send data or control information. Messages are broken down into chunks of data called *packets* and individually.
+End Systems exchange *messages* with each other. Messages can either send data or control information. Messages are broken down into chunks of data called *packets*.
 
 Packets are sent through *communication links* and *packet switches*.
 
@@ -30,7 +30,6 @@ In the above image, the transmission rate is R bit/sec and each packet contains 
     L/R sec/edge * N edges = NL/R sec
 
     if P packets are sent, then last packet cannot go until P-1 packet has gone. P-1 packet cannot go until P-2 packet has gone... Thus last packet must wait P seconds. The last packet (like any other packet) will take NL/R sec. Thus
-
     PNL/R sec for P packets to go N-1 routers where each connection takes R bits/sec and each packet carries L bits.
 
 Speed at which packets travel across a network where the routers use store-and-forward packet switching:
@@ -68,4 +67,4 @@ In this picture, the top left computer wants to connect to the bottom right comp
 
 ## Frequency-Division Multiplexing (FDM) vs. Time-Division Multiplexing (TDM)
 
-Frequency-Division multiplexing is when a frequency band is dedicated to a single connection. A 
+Frequency-Division multiplexing is when a frequency band is dedicated to a single connection. A

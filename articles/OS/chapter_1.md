@@ -104,7 +104,49 @@ A *mode bit* helps determine whether the current process is running under *user 
 
 *System calls* while in user mode lead to interrupts that run kernel mode code.
 
-### Key Terms
+##### timer
+The OS has a built in timer to interrupt tasks that are running for too long. The timer is implemented based on a fix-rate clock and a counter. The OS sets the timer before giving the user control, and then the timer will interrrupt if it ticks down to 0. Instructions modifying the timer are most certainly only allowed in kernel mode.
+
+
+##### Process Management
+OS is responsible for
+* scheduling proceses and threads on the CPU
+* creating and deleting both user and system processes
+* suspending and resuming processes
+* providing mechanisms for process synchronization
+* providing mechanisms for process communication
+
+##### storage management
+OS is responsible for
+* creating and deleting files
+* create and deleting directories
+* supporting primitives for manipulating files and directories
+* mapping files onto secondary storage
+* backing up files on stable (nonvolatile) storage media
+
+##### mass storage management
+OS is responsible for
+* free space allocation
+* storage allocation
+* disk scheduling
+
+You can store data in tertiary storage devices. These devices are either WORM (write-once, read-many-times) or RW (read-write) formats.
+
+
+### Protection and Security
+Given multiple users, multiple processes, multiple files, things must be regulated.
+
+*Protection* is any mechanism for controlling access of processes or users to the resources defined by a computer system.
+
+*Security* is defending the server from external and internal attacks. Examples include defending against viruses, worms, denial-of-service attacks.
+
+Protection and security require being able to distinguish between users, usually using a user id. Linux also has group ids. You can *escalate privileges* to gain extra permissions for specific things. A process runs with an *effective user id*.
+
+### Bitmaps
+*Bitmaps* is a data structure used commonly in kernels. A bitmap is a string of n binary digits that can be used to represent the status of n items.  
+
+### Key Terms (this list is NOT EXHAUSTIVE - i got lazy)
+
 *firmware* = EEPROM memory from where startup programs and other system programs are stored.  
 *middleware* = software frameworks that provide additional services to application developers.
 *system processes/system daemons* = processes that are outside of the kernel that run the entire time the kernel is running.

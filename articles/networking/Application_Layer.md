@@ -15,7 +15,7 @@ Multiplexing is when multiple higher layer protocols use a lower level protocol 
 A common protocol hierarchy is:
 FTP and HTTP are built on top of TCP.  
 DNS and SNP are built on top of UDP.
-TCp and UDP are built on top of IP.
+TCP and UDP are built on top of IP.
 
 For example, you have two different devices where one uses FTP to communicate and the other uses HTTP. The two devices can still communicate with each other because the FTP and HTTP are both built from TCP. A MUX can be used to turn your HTTP and FTP communication into the common TCP protocol. Then, once the communication has reached its end destination, a DEMUX can be used to convert it back to its original FTP or HTTP communication.
 
@@ -28,6 +28,7 @@ Note that ISO is just an organization that created this OSI protocol. Also note 
 
 The goal of OSI was to defeat TCP/IP upon inception. It failed.  
 The layers that OSI has are:
+
 1. Application
 2. Presentation
 3. Session
@@ -75,7 +76,7 @@ POSIX (portable operating system interface) is just a bunch of IEEE standards fo
 
 
 The socket interface implements the following functions (note that I added on to his notes using the Berkley sockets interface):
-* Socket() - creates a endpoint (socket) for communication. This returns a file descriptor for the socket.
+* Socket() - creates an endpoint (socket) for communication. This returns a file descriptor for the socket.
 * bind() - assigns a socket to an address. The socket is given an IP address and port number to potentially use.
 * listen() - prepares for incoming connection. It basically just listens for communication.
 * accept() - if communication came in, then a socket needs to establish a proper connection with it in order to properly send/recieve data. I assume this function represents the handshake between the two sockets.
