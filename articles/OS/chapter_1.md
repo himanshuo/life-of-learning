@@ -142,8 +142,8 @@ Given multiple users, multiple processes, multiple files, things must be regulat
 
 Protection and security require being able to distinguish between users, usually using a user id. Linux also has group ids. You can *escalate privileges* to gain extra permissions for specific things. A process runs with an *effective user id*.
 
-### Bitmaps
-*Bitmaps* is a data structure used commonly in kernels. A bitmap is a string of n binary digits that can be used to represent the status of n items.  
+### Computing Environments
+##### Traditional Computing
 
 ### Key Terms (this list is NOT EXHAUSTIVE - i got lazy)
 
