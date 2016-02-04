@@ -47,11 +47,17 @@ int main(int argc, char *argv[])
     double **coords;
     double *q;
     double total_e, current_e, vec2, rij;
-    double a;
+    double a, one_over_a;
+    double *coords_0;
+    double *coords_1;
+    double *coords_2;
+    double coords_0_i_minus_1, coords_1_i_minus_1, coords_2_i_minus_1;
+    double q_i_minus_1;
     FILE *fptr;
     char *cptr;
 
     a = 3.2;
+    one_over_a = 1.0/a;
 
     time0 = clock(); /*Start Time*/
     printf("Value of system clock at start = %ld\n",time0);
@@ -117,15 +123,25 @@ int main(int argc, char *argv[])
        majority of the work. */
     total_e = 0.0;
     cut_count = 0;
+    coords_0 = coords[0];
+    coords_1 = coords[1];
+    coords_2 = coords[2];
+
     for (i=1; i<=natom; ++i)
     {
+        coords_0_i_minus_1 = coords_0[i-1];
+        coords_1_i_minus_1 = coords_1[i-1];
+        coords_2_i_minus_1 = coords_2[i-1];
+
+        q_i_minus_1 = q[i-1];
+
         for (j=1; j<=natom; ++j)
         {
             if ( j < i )   /* Avoid double counting. */
             {
-                vec2 = pow((coords[0][i-1]-coords[0][j-1]),2.0)
-                       + pow((coords[1][i-1]-coords[1][j-1]),2.0)
-                       + pow((coords[2][i-1]-coords[2][j-1]),2.0);
+                vec2 = (coords_0_i_minus_1-coords_0[j-1]) * (coords_0_i_minus_1-coords_0[j-1])
+                       + (coords_1_i_minus_1-coords_1[j-1]) * (coords_1_i_minus_1-coords_1[j-1])
+                       + (coords_2_i_minus_1-coords_2[j-1]) * (coords_2_i_minus_1-coords_2[j-1]);
                 /* X^2 + Y^2 + Z^2 */
                 rij = sqrt(vec2);
                 /* Check if this is below the cut off */
@@ -133,8 +149,8 @@ int main(int argc, char *argv[])
                 {
                     /* Increment the counter of pairs below cutoff */
                     ++cut_count;
-                    current_e = (exp(rij*q[i-1])*exp(rij*q[j-1]))/rij;
-                    total_e = total_e + current_e - 1.0/a;
+                    current_e = (exp(rij*(q_i_minus_1+q[j-1])))/rij;
+                    total_e = total_e + current_e - one_over_a;
                 }
             } /* if (j<i) */
         } /* for j=1 j<=natom */
