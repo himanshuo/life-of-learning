@@ -241,7 +241,7 @@ In effect, this snooping strategy is basically giving exclusive access to a memo
 Shared medium is when you share resources. Some key features of it are:
 * collisions require not sending the message
 * only 1 message is sent at a time
-* message is overbroadcasted
+* messages are over-broadcasted
 * each process listens to each message
 * arbitration is decentralized
 
