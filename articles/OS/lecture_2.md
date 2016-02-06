@@ -95,15 +95,18 @@ Batch systems are those that run a queue of large jobs. Usually you submit a job
 
 Batch systems are efficient for working with large datasets, however, there is a lot of overhead that comes with them. In fact, it is usually the case that the job itself is very quick, the reason the batch system is taking a long time to give you an answer is all the overhead tasks that it performs.
 
-turnaround time - time from when you submit program to when you get output. For batch programs, your submitted program may be fast, but the turnaround time will slow because of all the overhead.
+*turnaround time* - time from when you submit program to when you get final output. For batch programs, your submitted program may be fast, but the turnaround time will slow because of all the overhead.
 
 Batch systems are not good at developing programs, but efficient in running large long running processes.
 
-multiprogramming - having multiple programs in memory at once. This allows for overlapping between CPU and IO
+*multiprogramming* - having multiple programs in memory at once. This allows for overlapping between CPU and IO. You have to have context switches for this. This is good for timesharing systems. It also makes system development easier.  
 
-response time - time for starting program to *first* output. This is related to how much attention the program gets from the CPU.
+*response time* - time for starting program to *first* output. This is related to how much attention the program gets from the CPU.
 
 timesharing - CPU can be switched rapidly from process to process. This doesn't reduce turnaround time, but reduce response time.
+
+An example of a batch system: Job Control Language (JCL)
+* involves loading many fortran program and a COBAL compiler
 
 ### Real-time Systems
 For example: microprocessor in a DVD
