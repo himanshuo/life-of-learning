@@ -209,7 +209,7 @@ runcommand: a function that takes a command, parses it, and executes it
     int runcommand(char * cmd){
       //create variables
       char * argv[max_args];
-      pid_t child_pid, c_pid; //pid_t is a custom type. It is just an int 
+      pid_t child_pid, c_pid; //pid_t is a custom type. It is just an int
       int child_status;
 
       //parse the command and put it inside argv
