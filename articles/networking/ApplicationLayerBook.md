@@ -68,6 +68,7 @@ Think proxy wars. Proxy servers handle requests for other servers. In proxy wars
 fighting, there is a "hidden figure" also involved.
 
 What happens (**Phrasing from book**):
+
 1. Browser est. TCP conn. to Web cache and sends HTTP req. for obj. to cache
 2. Cache checks to see if copy of obj. stored locally. If yes, cache ret/s obj. within HTTP resp. msg to client browser
 3.                                                     If no, cache opens TCP conn. to origin and gets obj from origin server
