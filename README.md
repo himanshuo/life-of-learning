@@ -5,7 +5,7 @@ Note that the way this repo works is that:
 if there is a file:  
 */articles/Networking/myfile.md*  
 then all images for this file are stored in  
-*articles/Netowkring/myfile/...*  
+*articles/Networking/myfile/...*  
 
 
 
