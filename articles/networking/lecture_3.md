@@ -1,4 +1,4 @@
-Application Layer
+Lecture 3 - Application Layer
 ==================
 
 | *Packet Names*  | *Layer*  | *Addresses*  |
@@ -100,7 +100,26 @@ The big question now is, what is inside a socket?
 * 32 bit IP address (thus can handle 2^32 different IP addresses) (note that IPv6 is 128 bit so can handle lots more)
 
 ### Working with IP addresses
-TODO
+An IP address identifies a host.   
+The port number identifies the specific process to access in a host.
+
+
+*server*  
+A server has 2 sockets - local (on server) and client. The socket has just a port number and an IP address.
+
+OS is responsible for determining IP address of server.   
+There are a few specific port numbers that are reserved. These is determined by a certificate authority.
+
+There is no way to determine socket address of client until client contacts you. Thus you do not know client IP address or client port number until you get the client's request and interpret it's headers.
+
+*client*  
+Client also has two sets of sockets - local (client) and server.
+
+The local IP address is chosen by OS. OS chooses port number as well, however, it must verify it with the remote server. 
+
+
+*testing*  
+localhost: 127.0.0.1 is used for testing purposes. When client and server are on same machine, you can use localhost.
 
 ### Transport Layer Protocols
 1. UDP - connectionless, not reliable, doesn't handle error or congestion, message based.

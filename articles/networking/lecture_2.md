@@ -60,8 +60,8 @@ The bottom picture shows what is inside the packet at various stages of the tran
 Key things to note:
 * switch determines where to send packet using the mac number of the destination. Each end system has a mac number.
   * in the case of switch 1, the switch determines that there is no end system with the appropriate mac number so just sends it to the router. There are most certainly specific algorithms involved here which we will go over later.
-* switches use only layer 2  - Data Link Layer
-* routers use only layer 3  -  Network Layer
+* switches use only layer 2 (Data Link Layer), and everything below it
+* routers use only layer 3 (Network Layer), and everything below it
 
 Tasks performed by Transmission Control Protocol (TCP):
 * flow control
