@@ -57,7 +57,9 @@ int main(int argc, char *argv[])
     double coords_1_i_minus_1;
     double coords_2_i_minus_1;
     double q_i_minus_1;
+    double one_over_a;
     a = 3.2;
+    one_over_a = 1.0/a;
 
 
     time0 = clock(); /*Start Time*/
@@ -141,15 +143,17 @@ int main(int argc, char *argv[])
                 vec2 = pow((coords_0_i_minus_1-coords_0[j-1]),2.0)
                        + pow((coords_1_i_minus_1-coords_1[j-1]),2.0)
                        + pow((coords_2_i_minus_1-coords_2[j-1]),2.0);
-                /* X^2 + Y^2 + Z^2 */
-                rij = sqrt(vec2);
+
+                 /* X^2 + Y^2 + Z^2 */
+                 rij = sqrt(vec2);
+
                 /* Check if this is below the cut off */
                 if ( rij <= cut )
                 {
                     /* Increment the counter of pairs below cutoff */
                     ++cut_count;
                     current_e = (exp(rij*q_i_minus_1+rij*q[j-1]))/rij;
-                    total_e = total_e + current_e - 1.0/a;
+                    total_e = total_e + current_e - one_over_a;
                 }
 
         } /* for j=1 j<=natom */

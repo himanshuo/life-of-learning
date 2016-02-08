@@ -7,4 +7,4 @@
 #SBATCH -A parallelcomputing
 
 
-gcc -O3 -o speedup speedup.c -lm; ./speedup large_input.txt 0.5
+gcc -O3 -lm -o speedup speedup.c ; ./speedup large_input.txt 0.5

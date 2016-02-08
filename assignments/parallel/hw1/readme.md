@@ -32,6 +32,8 @@ Value of system clock after coord read and E calc = 11430000
 | 7  | division to multiplication for 1.0/a
 
 
+
+
 ### Test Results
 | Test Name  | Natoms | Optimizations  | Time to read coord file (s)  | Time to calculate E (s)  | Total Execution Time (s)  |
 |---|---|---|---|---|---|
@@ -43,10 +45,4 @@ Value of system clock after coord read and E calc = 11430000
 | less_lookups(coords)  | 20000  | 1,2,4  | 0.0100  | 6.0000  | 6.0100  |
 | less_lookups(q)  | 20000  | 1,2,4,5  | 0.0100  | 5.9500  | 5.9600  |
 | simplify  | 20000  | 1,2,4,5,6  | 0.0100  | 4.3300  | 4.3400  |
-
-
-### Potential Speedup techniques (todo)
-2. convert rij = sqrt(vec2);; if(rij<cut) to if(vec2*vec2 < cut*cut)
-3. division to multiplication (for /rij)
-5. see if you can remove exp
-9. remove unneccessary iterations: for(j: 1->natom) if(j<i) -> for(j=1; j<natom && j<i; ++j)
+| 1.0/a  | 20000  | 1,2,4,5,6,7  | 0.0100  | 4.3100  | 4.3200  |
