@@ -42,10 +42,10 @@ Request Commands (made by client):
 |  USER  |  user id  |  send user name  |
 | PASS  | password  | send password |
 | PORT  | port number  | client chooses a port number |
+| TYPE | A,E,or I | ascii, EBCDIC, image |
 | RETR  | filename(s)  | files to receive |
 | STOR | filename(s) | store files |
 | STRU | F,R,or P | file, record, or page |
-| TYPE | A,E,or I | ascii, EBCDIC, image |
 | MODE | S, B, C  | string, block,  |
 
 
@@ -55,8 +55,8 @@ A given block DIAGRAM
 Response Messages are 3-digit codes.
 Examples:
 
-|Code| Description |
-|...|...|
+|  Code  | Description |
+|  ---  |  ---  |
 |125|data connection already open |
 |150|file status ok|
 |200|command ok|
@@ -79,8 +79,8 @@ Example: code=125, description=data connection already open
 
 
 ### Email
-SMTP (outgoing protocol for email)
-POP3 (incoming protocol for email)
+SMTP (outgoing protocol for email)  
+POP3 (incoming protocol for email)  
 IMAP4 (incoming protocol for email - most popular)
 
 DIAGRAM about mail user agent and the flow of emails
@@ -135,3 +135,12 @@ Has its own headers:
 type of encoding:
 * base64 - groups 6 bits at a time and turns it into an ascii character
 * quoted-printable
+
+### Default ports
+* ssh : 22
+* smtp: 25
+* http: 80
+* https:443
+* ftp
+  * data transfer : 20
+  * control process : 21

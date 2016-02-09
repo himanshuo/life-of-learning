@@ -19,7 +19,8 @@ e-mail system,
 
 SMTP,
 
-POP3, and
+POP3,
+and
 
 
-IMAP4.
+IMAP4
