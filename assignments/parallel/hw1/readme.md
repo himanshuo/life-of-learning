@@ -1,7 +1,7 @@
 Testing Results
 ====================
 ### CORRECT SAMPLE RESULT ON SLURM:
-##### gcc -o original original.c -lm; ./original large_input.txt 0.5
+##### gcc -lm -o original original.c; ./original large_input.txt 0.5
 Value of system clock at start = 0
 Coordinates will be read from file: large_input.txt
 Natom = 20000
