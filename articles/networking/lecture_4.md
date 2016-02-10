@@ -50,3 +50,15 @@ A few examples of headers are
 |3xx|direct client to another url|
 |4xx|error on client side|
 |5xx|error on server side|
+
+
+Make sure to look at cookies and proxy server notes in ApplicationLayerBook notes
+
+
+
+### Make HTTP more secure
+There are two ways to make HTTP more secure
+* HTTP + SSL
+  * certificate authority verifies the html document. SSL also creates a secure connection between sender/reciever
+* HTTP + TLS (transport layer security)
+  * public key/private key encryption can be used when transporting information
