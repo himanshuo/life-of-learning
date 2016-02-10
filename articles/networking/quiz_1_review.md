@@ -8,6 +8,8 @@ A frame goes with the data link layer.
 The datagram goes with the network layer.   
 The segment and user datagram go with the transport layer.
 
+The frame adds a header to the datagram generated at the network layer. The act of taking something and adding onto it is called encapsulating. 
+
 
 3. Packet-switched networks need support for both forwarding and storing capabilities because most packet switches use *store-and-forward transmission* in which the packet switch stores an incoming packet until all of its bits are stored properly on the switch and only then does it forward the packet to the next switch or end system.
 
