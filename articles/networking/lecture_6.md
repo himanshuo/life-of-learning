@@ -125,3 +125,9 @@ SSH-conn provides
 * data transfer
 
 SSH Tunneling (port forwarding) - creates secure tunnel between server and client. FTP can be run on top of ssh which allows ftp to indirectly talk to another ftp server via a secure shell tunnel.
+
+
+
+DNS (domain name service)
+* converts url to ip address
+* all information put on one server
