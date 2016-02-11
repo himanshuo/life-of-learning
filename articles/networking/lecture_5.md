@@ -21,7 +21,7 @@ steps:
 
 It is more efficient to use HTTP than FTP to transfer files.
 
-Can you regular expression such as * to select multiple files. For example, you can do "mget file*" which means get all files that start with "file"
+Can use regular expression such as * to select multiple files. For example, you can do "mget file*" which means get all files that start with "file"
 
 FTP Client: DIAGRAM
 user interface - control
