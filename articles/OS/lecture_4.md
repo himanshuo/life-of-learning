@@ -195,4 +195,4 @@ Sample state transitions:
     * there is an internal timer that keeps track of how long your process is running for in the CPU.
     * When you are supposed to be preempted, a *timer interrupt* is sent to the kernel which stops you from running further.  
     * the interrupt handler will move you from the CPU state to ready state.
-    * in order for interrupt handler to do this, it has to perform a context-switch. 
+    * in order for interrupt handler to do this, it has to perform a context-switch.
