@@ -96,29 +96,45 @@ A batch process is an example of a that is likely going to be in block_s.
 
 
 ### Linux (4 states)
-![](lecture_5/8cb3832f3686bfe4f715aa24a04bf522.png)
+![](lecture_5/38fd179efc09518119c6bbec13bb8133.png)
+
 
 This diagram shows process states in Linux.
 
-Notable things from diagram
+
 * linux only has 4 process states (there are 6 states shown, however zombie and orphan don't count)
 * running is the desirable state
-* interruptable is the temp state that contains resource request/resource release
-* stopped is the state for process that are being too slow- accesses via suspend/activate
-* the resource request/release and suspend/activate here are very different than the 5 state sample  
+  * it is both the ready_a and cpu state of the model
+  * *timer run out interrupt* and *dispatch* both occur in this state. When these events occur, the process remains in this state.
+* interruptable is congruous to block_a
+* stopped is congruous to block_s and ready_s
 
-init is first process.
 
+##### ZOMBIES!!!!
+When a process terminates, it's resources are deallocated by the OS. However, its entry in the process table remains there until it's parent calls wait().
+
+
+*Zombie state* is when a child process calls exit() before its parent invokes wait(). When this happens, the child's entry in the process table remains there, even the child does not actually exist. As soon as the parent calls wait, these resources are released.
+
+*Orphan state* is when the parent does not wait() and just exits. The child process no longer has a parent. Thus it is an orphan. This condition is bad. Linux handles this by sending all orphan processes to the *init process*, which then calls wait() for all the orphans.
+
+##### init process
+init process is first process created on linux
+
+It probably does lots of things, but for now, just know that it's job is to terminate orphan processes by calling wait() on them.
+
+
+### Virtual Address Space
+![](lecture_5/45a6f62e266dcc49ae632d3baee026d1.png)
 
 stack is used for function calls
+
 heap is for dynamically allocated memory
-data
 
 ### Process Context-Switch
-When CPU becomes available, you
-
 This is fundamental to *multiprogramming* - multiple programs in memory.
-To do process-context-switch, you have to
+
+To do process context-switch, you have to
 1. You have to save PCB for preempt-to-be process (done by dispatcher)
 2. Then, restore PCB for dispatch-to-be process (done cooperatively by dispatcher and scheduler). Scheduler provides process.
 
@@ -133,6 +149,8 @@ Context has:
 8. current position of stack pointer
 9. current position of heap pointer
 10. house keeping information (eg. cpu computing time. things that can help you determine priority. If high cpu computing time, then you have  )
+
+
 
 
 ### passive termination
