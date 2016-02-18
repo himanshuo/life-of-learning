@@ -1,9 +1,11 @@
 Lecture 8
 ==========
 
-Key
+Node:
+Key: from hash file
 File Id
 
+Each point is either a node id or a key
 
 
 ring has 32 points

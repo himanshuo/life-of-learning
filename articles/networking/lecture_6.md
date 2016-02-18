@@ -1,7 +1,7 @@
 Lecture 6
 ==========
 
-### MIME (multi purpose mail extensions)
+### MIME (multi purpose internet mail extensions)
 used for sending images, videos, and non-text files for **emails**
 
 

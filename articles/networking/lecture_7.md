@@ -93,29 +93,35 @@ digest = f(m)
 
 # Peer to peer (P2P) approach
 
-examples include
-* napster
 
 when you join a group, then everyone around you knows ip address.
 
 ### Centralized server approach
+Central server holds all the information. It holds
+* each peers IP address
+* list of files on each peer
+
 when you join centralized server, you have to provide
 * your ip address
 * list of files on your server
 * allow file to be downloaded by other peers
 
+When you want a file from this centralized server approach, you contact the central server. The centralized server authenticates you. Then, the server sends you the IP address of the peer to contact and work with.
 
-can use ping and pong to determine whether server is alive.
+##### Problems with this approach
+* centralized information holds too much info
+  * lots of centralized memory
+  * if server goes down, then all information is lost
+* you have to contact centralized server and then also the peer
+* if something changes in a peer, it must be communicated to centralized server
+* all the traffic is going to server
+
+can use 'ping' and 'pong' to determine whether server is alive.
 
 
-issue is that all the traffic is going to server
 
-### distributed
-gnuetella - company that broadcasts message
+### Distributed
 
-extra
-
-new joiners are put on bottom of tree (leaves). they cannot broadcast.
 
 ### dht (distributed hash table)
 figure out hash function that creates no collisions
@@ -125,3 +131,25 @@ figure out hash function that creates no collisions
 
 
 DIAGRAM - really pay attention to this. it is very confusing.
+
+
+
+### Examples
+
+* Client-Server
+  * HTTP
+  * FTP
+  * SMTP
+  * SSH
+  * Telnet
+* P2P
+  * Centralized
+    * napster
+  * Distributed
+    * gnutella
+
+#### gnutella
+gnutella is company that broadcasts message
+* when you join group, you are assigned neighbors
+* if you want to access a file, you ask neighbors. If neighbors don't have it, then broadcasts query to all nodes.
+  * creates a tree of joiners. new joiners are put on bottom of tree (leaves). they cannot broadcast.
