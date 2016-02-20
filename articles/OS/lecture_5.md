@@ -135,8 +135,8 @@ heap is for dynamically allocated memory
 This is fundamental to *multiprogramming* - multiple programs in memory.
 
 To do process context-switch, you have to
-1. You have to save PCB for preempt-to-be process (done by dispatcher)
-2. Then, restore PCB for dispatch-to-be process (done cooperatively by dispatcher and scheduler). Scheduler provides process.
+1. You have to save PCB for *preempt-to-be process* (done by dispatcher)
+2. Then, restore PCB for *dispatch-to-be process* (done cooperatively by dispatcher and scheduler). Scheduler provides process.
 
 Context has:
 1. unique ID of the process (PID)
@@ -145,6 +145,8 @@ Context has:
 4. priority of process (for cpu scheduling)
 5. register save area - area used to save registers
 6. whether the processor is running or not
+  * each CPU has cache
+  * You want to know whether the processor is running so that you can make sure that you can have the same processor be run in order to take advantage of the CPU's cache.  
 7. list of open files (file descriptor of each open file)
 8. current position of stack pointer
 9. current position of heap pointer
@@ -154,7 +156,9 @@ Context has:
 
 
 ### passive termination
-exit()
+child kills itself
+* exit()
+* send signal to end child process
 ### active termination
 done by parent. parent checks status. you can call wait
 
@@ -166,29 +170,35 @@ interprocess communication (IPC) is implemented on multiple nodes on network
 2. message passing
 
 *Shared Memory Approach*  
-For example, say you have a producer-consumer problem. A buffer pool (DIAGRAM) can be used to
+For example, say you have a producer-consumer problem.
 
-struct{
+A buffer pool (DIAGRAM) can be used to share memory.
+You
 
-} item;
-const in BUFFER_SIZE = 10;
-item buffer[BUFFER_SIZE];
-item next_item_produced, next_item_consumed;
 
-the producer process:  
-while(true){
-  while( (in+1) % BUFFER_SIZE == out); //just waits. a way to waste cpu time.  [(n-1)+1] % 10 = 0. UNDERSTAND how to check fullness.  
-  buffer[in] = next_item_produced;
-  in = (in+1) % BUFFER_SIZE;
-}
 
-the consumer process:  
-while(true){
-  while(in == out);
-  next_item_consumed = buffer[out]; // buffer is full so wait
-  out = (out+1) % BUFFER_SIZE;
-  // consume the item
-}
+    struct{
+      ...
+    } item;
+
+    const in BUFFER_SIZE = 10; // buffer pool has 10 things inside it
+    item buffer[BUFFER_SIZE]; // buffer
+    item next_item_produced, next_item_consumed;
+
+    // the producer process:  
+    while(true){
+      while( (in+1) % BUFFER_SIZE == out); //just waits. a way to waste cpu time.  [(n-1)+1] % 10 = 0. UNDERSTAND how to check fullness.  
+      buffer[in] = next_item_produced;
+      in = (in+1) % BUFFER_SIZE;
+    }
+
+    the consumer process:  
+    while(true){
+      while(in == out);
+      next_item_consumed = buffer[out]; // buffer is full so wait
+      out = (out+1) % BUFFER_SIZE;
+      // consume the item
+    }
 
 in is a shared memory location. You don't want to do this.
 you cannot use a counter either. Same shared memory issues occur.
