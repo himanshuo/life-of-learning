@@ -2,10 +2,21 @@ Lecture 7
 ============
 
 ### DNS (Domain Name System)
+Converts url to ip address.
 
 URL -> 128.96.13.5 (ip address)
 
-FTP client -> DNS client -> query -> DNS server
+### How to determine IP address of the server you want to contact
+
+
+* you input some url into the browser(http client)
+* http client -> local DNS client in order to convert url
+* local DNS client -> local DNS server
+* local DNS server -> local DNS client
+* local DNS client -> http client
+
+A few key things are omitted - how does your local DNS server know about 
+
 
 * DNS client(also called resolver) needs to know ip address of DNS server.
 * ISP gives the DNS client the ip address of the DNS server.

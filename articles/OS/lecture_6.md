@@ -37,7 +37,7 @@ code
 
 
     if(fork()==0){
-      dup2(pipes[1], 1);
+      dup2(pipes[1], 1);  //ouput -> pipe's input 
       //we close unused pipes so that default device used is the one that we want
       close(pipes[0]);
       close(pipes[1]);
@@ -93,4 +93,4 @@ socket -------------------> connect -> send / receive -> close
 
 server accept and client connect is called connection point
 
-Usually the close command is initiated by the client. The server usually does not shut down/close. 
+Usually the close command is initiated by the client. The server usually does not shut down/close.

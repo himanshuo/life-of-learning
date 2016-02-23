@@ -150,4 +150,16 @@ Shared medium is when you share resources. Some key features of it are:
 * arbitration is decentralized
 
 Switch medium is when you send multiple message at one time. Some key features of it are:
-* point-to-point messages between pairs of processors 
+* point-to-point messages between pairs of processors
+
+
+### Reasons to not optimize serial performance
+* its time consuming
+* not useful if code is not run often
+* can make code harder to read and debug
+* ooptimized code may not be able to scale
+
+### When to optimize
+* production code that is widely distributed and used
+* often in the research community
+* projects with limited resources

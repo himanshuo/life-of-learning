@@ -1,4 +1,4 @@
-Lecture 6 - Databases, pt2 (cont)
+Lecture 7 - Databases, pt2 (cont)
 ===================================
 
 ### Joins
