@@ -218,19 +218,21 @@ You cannot use a counter either. Same shared memory issues occur. However, with 
 
 
 ##### Message Passing Approach
-The key benefit of this is that *synchronization is done by the OS*. 
+The key benefit of this is that *synchronization is done by the OS*.
 
 *Example code*
-    producer process:  
+    *producer process*:  
 
         while(true){
             // produce a item in item_message
             send(consumer_id, item_message);
         }
 
-    consumer process:  
+    *consumer process*:  
 
         while(true){
           receive(producer, item_message);
           // consume the item in item_message
         }
+
+For an applications developer, message passing code is much simpler.
