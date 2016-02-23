@@ -84,13 +84,13 @@ A batch process is an example of a that is likely going to be in block_s.
 * ready_s -> ready_a : no ready_a processes in main memory, process in ready_s has higher priority than any process ready_a
 * ready_a -> cpu : scheduler
 * cpu -> ready_a : timer run out interrupt
-* cpu -> ready_s :
+* cpu -> ready_s : ? (probably something related to timer running out and the priority being low)
 * cpu -> block_a : resource request
 * block_a -> block_s : wasting memory, process in CPU state wants to use more memory, scheduler determines that it wants to run some ready_a process but to do so more memory is required
 * block_s -> ready_s : desired resource is attained (resource release)
 
 ### schedulers
-* long-term scheduler - if you have a lot of new processes being created, then they remain in the new state. A long-term scheduler determines which of these processes to put into the ready_a state.  
+* long-term scheduler - if you have a lot of new processes being created, then they remain in the new state. A long-term scheduler determines which of these processes to put into the ready_a state.
 * intermediate-term scheduler - suspended substates to active substates
 * short-term scheduler - ready_a to cpu state
 
@@ -154,66 +154,83 @@ Context has:
 
 
 
-
 ### passive termination
 child kills itself
 * exit()
 * send signal to end child process
-### active termination
-done by parent. parent checks status. you can call wait
 
-### network
-interprocess communication (IPC) is implemented on multiple nodes on network
+### active termination
+done by parent. parent checks status.
+* wait
+* waitpid
+
+### Interprocess Communication (IPC)
+interprocess communication (IPC) is implemented on multiple nodes on network or on a single node.
 
 2 approaches to do IPC:
-1. shared memory approach.
+1. shared memory approach
 2. message passing
 
-*Shared Memory Approach*  
-For example, say you have a producer-consumer problem.
+##### Shared Memory Approach
+For example, say you have a producer-consumer problem. For example, a printer and its print jobs.
 
-A buffer pool (DIAGRAM) can be used to share memory.
-You
+A buffer pool can be used to share memory. Each buffer can contain information for each task that needs to be run.
+
+*Example Program*
+
+    Assume that a buffer pool exists with n spots. It has 'in' pointer and 'out' pointer.
 
 
+        struct{
+          ...
+        } item;
 
-    struct{
-      ...
-    } item;
+        const in BUFFER_SIZE = 10; // buffer pool has 10 things inside it
+        item buffer[BUFFER_SIZE]; // buffer
+        item next_item_produced, next_item_consumed;
 
-    const in BUFFER_SIZE = 10; // buffer pool has 10 things inside it
-    item buffer[BUFFER_SIZE]; // buffer
-    item next_item_produced, next_item_consumed;
+        // the producer process:  
+        while(true){
+          while( (in+1) % BUFFER_SIZE == out); //just waits. a way to waste cpu time.
+          //formula to determine if buffer is full: [(n-1)+1] % 10 ==0
+          //logic: (n-1) represents 0 to  n-1 location nums.
+          //        +1 because there are total n spots.
+          //        % buffer_size tells you whether you would have enough to fill buffer
+          //issue: last spot in buffer pool cannot be used because you cannot distinguish between 10 % 10 and 0 % 10 thus we just dont use last spot in buffer pool.
 
-    // the producer process:  
-    while(true){
-      while( (in+1) % BUFFER_SIZE == out); //just waits. a way to waste cpu time.  [(n-1)+1] % 10 = 0. UNDERSTAND how to check fullness.  
-      buffer[in] = next_item_produced;
-      in = (in+1) % BUFFER_SIZE;
-    }
+          buffer[in] = next_item_produced;
+          in = (in+1) % BUFFER_SIZE;
+        }
 
-    the consumer process:  
-    while(true){
-      while(in == out);
-      next_item_consumed = buffer[out]; // buffer is full so wait
-      out = (out+1) % BUFFER_SIZE;
-      // consume the item
-    }
+        // the consumer process:  
+        while(true){
+          while(in == out);
+          next_item_consumed = buffer[out]; // buffer is full so wait
+          out = (out+1) % BUFFER_SIZE;
+          // consume the item
+        }
 
-in is a shared memory location. You don't want to do this.
-you cannot use a counter either. Same shared memory issues occur.
+Problems with this approach:
+* 'in' is a shared memory location. Thus you only can have one thing written to it at a time. This requires some sort of synchronization by the programmer. In addition, a single shared memory location to communicate data back and forth is slow. You don't want to do this.
+* same apply for 'out'
 
-*message passing*  
-producer process:  
+You cannot use a counter either. Same shared memory issues occur. However, with a counter, you can in fact know when the buffer is properly full or empty. You will know if the buffer pool has 10 or 0 spots being used.
 
-    while(true){
-        // produce a item in item_message
-        send(consumer_id, item_message);
-    }
 
-consumer process:  
+##### Message Passing Approach
+The key benefit of this is that *synchronization is done by the OS*. 
 
-    while(true){
-      receive(producer, item_message);
-      // consume the item in item_message
-    }
+*Example code*
+    producer process:  
+
+        while(true){
+            // produce a item in item_message
+            send(consumer_id, item_message);
+        }
+
+    consumer process:  
+
+        while(true){
+          receive(producer, item_message);
+          // consume the item in item_message
+        }
