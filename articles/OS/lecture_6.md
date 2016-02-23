@@ -1,17 +1,9 @@
 Lecture 6
 =============
-KEY website to understand functinos: http://beej.us/guide/bgipc/output/html/multipage/pipes.html
+KEY website to understand functions: http://beej.us/guide/bgipc/output/html/multipage/pipes.html
 
-### Parse
-DIAGRAM on how to parse
-
-
-Note that the diagram is not complete
-* missing how to go to process state from various other states
-* | and > are not complete
-
-To check for end of line, use \n
-
+### Parsing project 1
+The diagram on how to parse the input for project 1 can be found online.
 
 ### How to handle two pipes
 
@@ -37,7 +29,7 @@ code
 
 
     if(fork()==0){
-      dup2(pipes[1], 1);  //ouput -> pipe's input 
+      dup2(pipes[1], 1);  //ouput -> pipe's input
       //we close unused pipes so that default device used is the one that we want
       close(pipes[0]);
       close(pipes[1]);
