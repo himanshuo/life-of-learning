@@ -82,11 +82,18 @@ Again, the criteria is
 ##### 2D meshes
 ![](lecture_4/86c0fb8ad4cf330b42322fbabe993afa.png)
 
+
+
 Features:
 * switches arranged into 2D lattice
 * communication allowed only between neighboring switches
 * direct topology
 * the righthand side image is a variant where you have wraparound connections between switches on edge of mesh
+  * the lefthand side is called a grid, the wraparound version is called a taurus
+  * taurus has rings to shorten diameter by half
+  * grid: diameter is length*(width-1)
+  * taurus: diamter is length*(width-1) / 2
+
 
 
 
@@ -99,94 +106,245 @@ Features:
 
 most machines are hybrid
 
+
 ##### Processor arrays (SIMD/data parallel)
+A *Vector computer* is one that has an instruction set that includes operations on vectors as well as scalars. There are two ways to implement vector computers
+* *pipelined vector processors*: streams data through pipelined arithmetic units. This is generally used for small scale.
+* **processor array**: many identical, synchronized arithmetic processing elements. Genereally for large scale.
+
+
+Motivation for processor array:
+* control units were expensive so a single control unit with lots of computation units was much cheaper.
+* scientific applications have lots of data parallelism
+
+
+An example Processor array diagram:
+
+![](lecture_4/66d21e14288a85d06cfa79fc3535daa8.png)
+
+Things to note:
+* front end computer talks to backend processor array
+* front end has CPU using buses to talk to processor array processors
+* each processor in the processor array has its own small memory unit
+* the is able to take the data the front end gives it and split it up in parallel between all processing units at once
+* the processors are connected via an interconnection network
+
+The front end computer contains the program. It manipulates the data sequentially. It then sends the data to the processor array for fast computations. Thus the front end computer controls the processor array. The processor array does in fact manipulate the data in parallel.
+
+##### Performance of Processor array
+*Performance* : work done per time unit
+
+The performance depends on
+* speed of processing elements
+* utilization of processing elements
+
+Key thing to note is that if you have x processors, then you can run x or less tasks in parallel and thus a single time unit. If you have just x+1, then you end up having to wait double the amount because things cant be done in parallel. If you have x+1 tasks, then x-1 tasks in the second time unit will do nothing.
+
+If then condition expressions are very slow in processor arrays, in that it requires two instead of one time second. What happens is that in the first time second, all the processors that have the if condition be true do their work, while the rest just wait. Then, in the second time unit, the rest do their work while the original group just sits there. Having anything just sit there is bad.
+
+##### Processor Array Shortcomings
+* not all problems are data-parallel
+* speed drops for conditionally executed code
+* do not adapt to multiple users well
+* in the past, processor array did not scale down to starter systems. This is no longer the case.
+* reply on custom VLSI for processors. It is better nowadays to just use the commercial ones because lots of progress has been made to speed them up.
+* expense of control units has dropped
+
+
 ##### Multiprocessors (shared memory)
+Multiprocessor : multiple-CPU computer with shared memory
+
+In this system, the same address on two different CPUs refers to the same memory location
+
+The benefit of this is that it avoids the three problems of processor arrays
+* can be built using commodity CPUs
+* naturally supports multiple users
+* maintain efficiency in condition code
+
+
+![](lecture_4/a22e90f8b361b57ebde58f2d59cb592e.png)
+
+This image shows the difference between a single processor system versus a multiprocessor system. Basically, the multiprocessor duplicates the CPU/cache memory system numerous times. It connects all of them via the bus.
+
+Note that memory is shared between all processes. Thus a given CPU sees the same memory locations as all other processors. However, the picture also shows that some memory units are more accessible than others. This leads to *uniform memory access (UMA) multiprocessors* and *symmetrical multiprocessors (SMP)*.
+
+Uniform memory access (UMA) multiprocessors are those that take the same time to access any memory spot. This is done by having a large chunk of memory is accessible in the same way to each processor.
+
+Symmetrical multiprocessors (SMP) matches memory to CPUs thus the memory that is specific to a given CPU will be much faster to access than other memory.
+
+
+*Private and shared data*  
+The UMA and SMP also imply the usefulness of private versus shared data.
+
+private data: used only by a single processor   
+shared data: used by multiple processors  
+
+Processors can communicate by reading and writing shared data values
+
+
+*shared data challenges*  
+* synchronization
+  * mutual exclusion - two processes shouldn't access same shared memory at the same time
+  * barrier - process must stop at a barrier point and cannot proceed until all other processes reach this barrier point
+* cache coherence
+
+##### Cache coherence problem
+Cache coherence problem:
+![](lecture_4/f6437a3037cdc7c6c48c1221498f439b.png)
+
+![](lecture_4/5e48bb3fd8ca85983b9f1ce5afeb4aaa.png)
+
+![](lecture_4/ec668cdfde7ef4a3a180ec9a210386e0.png)
+
+![](lecture_4/87e56f043b4852f5223c7fea0b2b0af8.png)
+
+write invalidate protocol:
+![](lecture_4/9c4f86b2839b30ba88813910a326fbdb.png)
+
+![](lecture_4/beaca9d029ac62bc20dfeef851405f35.png)
+
+![](lecture_4/ba2d0531845904eb00999ee8ec023ee7.png)
+
+![](lecture_4/08f8d3f8b0cc696fc85ee44c4dd21581.png)
+
+Basically, problem is: cache for a given CPU will not know what has happened to other CPU's and how it is affecting real memory
+
+Solution is: have each cache repeatedly check if someone is writing to the memory location that you have cached. If so, then invalidate your cache value.
+
+#### distributed multiprocessor
+![](lecture_4/9906f56a7947112b3e00e8d989676ce1.png)
+
+Distributed multiprocessors distribute primary memory among processors.
+
+Doing this leads to:
+* increase aggregate memory bandwidth
+* lower avg memory access time
+* allow greater number of processors
+
+This is how you have a multiprocessor that is non-uniform memory access (NUMA).
+
+NUMA also has cache problems.
+* some NUMA multiprocessors do not support the global cache in their hardware
+  * only instruction and private data are stored in cache
+  * fewer access to the fast cache means more access to slow memory
+* cache coherence problem is more difficult to solve because there is no memory bus to "snoop" for
+  * there exists a directory-based protocol to solve this issue
+
+
 ##### Multicomputers (distributed memory)
+Multicomputer just means that memory is distributed among multiple different CPUs
+
+Same address on different processors refers to *different physical memory locations*.
+
+Processors in a multicomputer interact via message passing
+
+You can have either *commercial multicomputers* or *commodity clusters*
+
+*An asymmetrical multicomputer*  
+![](lecture_4/15280e1a7dcd33566fde8431243a2ade.png)
+
+Notably, front end computer connects directly to interconnection network which connects to numerous other computers
+
+Advantages to asymmetrical multicomputers
+* Back end processors dedicated to parallel computations  
+  * easier to understand, model, and tun performance
+* simple back-end OS  - cheap and easy
+
+Disadvantages to asymmetrical multicomputers
+* front end computer is single point of failure
+* single front end computer limits scalability of system
+* primitive OS in backend makes debugging difficult
+* every application requires development of both front end and back end
+
+*Symmetrical Multicomputer*  
+![](lecture_4/1be2b9ece645adde7b905ccd56e65456.png)
+
+features
+* multiple access points to computer.
+* each computer connected to intercommunication network
+* the interconnection network is what is connected to internet
+
+Symmetrical Multicomputer advantages
+* remove the performance bottleneck of having a single front end computer
+* better debugging support
+* every processor executes same program
+
+Symmetrical Multicomputer Disadvantages
+* more difficult to maintain illusion of single parallel computer
+* no simply way to balance program development workload among processors
+* more difficult to achieve high performance while multiple processes on each processor
+
+
+*commodity cluster*  
+A Commodity cluster is very similar to multicomputer.
+
+Feature of commodity cluster:
+* co-located computers
+* dedicated to running parallel jobs
+* no keyboards or displays
+* identical OS on each computer
+* identical local disk images
+
+
+Key difference between commodity cluster and multiple computer.
+* low latency high bandwidth - multi computer
+* high latency low bandwidth - commodity cluster
+
+
+
+
+*Network of workstations*  
+* dispersed computers
+* first priority: person at keyboard
+* parallel jobs run in background
+* different OS on each computer
+* different disk image on each computer
+* users can turn off machines, thus checkpointing and restarting are important
+
+*Distributed Memory programming model*
+* communicating sequential program s
+* disjoint address spaces
+* communicate by sending messages
+* message is an array of bytes
+  * send(dest, char * buf, int len);
+  * receive(&dest, char * buf, int &len);
+
+
 ### Flynn's taxonomy
+Flynn's taxonomy is a way to classify machine based on number of instruction streams and number of data streams.
 
-
-diameter - largest distance between two nodes
-multiply this by latency to get measure
-ex
---[]--[]--[]--[]-- n nodes. diameter is n/2, this is a ring
-|____________ |
-
-bisection width - if i cut the network in half, how many lines are in that half
-- minimum number of edges needed to do this
-- cross bar has best
-number of edges per node
-constant edge length or not
-number of edges
-
-Cost vs Performance
-bus - good cost scalability, poor performance scalability
-crossbar - good perfomance scalability, poor cost perfomance
-Want to strike balance between these
-
-2-D meshes
-can be grid or taurus
-taurus is rings to shorten diameter
-for grid - diameter is dimension * width-1
-
-Vector computers
-instrcution set can operate on vectors as well as scalars
-two ways to implement
-pipelining (used for small scale)
-processor arrays (used for large scale)
-control units were expensive a long time ago. so just one control unit and lots of alus
-performance (work per time unit)
-depends on speed and if vector size fits
-when you hit an if statement. always execute both
-processor units set flag for which one
-so we see speed drops for conditional code
-control units are cheap now
-
-Multiprocessors
-multiple cpus with a single shared memory
-same address on two different cpus refers to the same memory location
-can be built from common cpus, naturally support many users
-efficiency is maintained with conditional code
-
-Centralized - scale out many cpus with a bus
-straightforward, share same primary memory
-
-private data - used only by single processor
-shared data - used by multiple
-challenges: synchronization, cache coherence.
-cache coherence, need to replicate data across caches
-so we have have a cache control protocol to make sure value is the same across by checking if it changes
-if it changes, remove old values from other caches
-
-Distributed
-distribute memory space
-each cpu has its own memory by partitioning memory for each
-based on address to write, cpu can tell which cpu that memory should go to.
-so it uses interconnection network
-no global memory
-effects:
-increases aggregate memory bandwidth. scales linearly
-some accesses are fast and local, other longer and subject to contention
-lower average memory access time
-allows greater number of processors
-also called numas - non uniform memory access
-
-cache coherence problem
-cant snoop traffic over single bus
-harder to do
-
-multicomputer - distributed memory machine
-same address on differenc processors referes to different physical memory locations
-processors interact through message passing
-disadvantages
-single point of failure
-primitive backends make debugging hard
-
-Commodity cluster
-very similar to multicomputer
-low latency high bandwidth - mc
-high latency low bandwidth - cluster
-
-Flynn's taxomny
-classify machine based on num instruction streams and num data streams. single or multiple
 combinations:
 SISD, SIMD, MISD, MIMD
+
+In each of these combinations,
+* S=single
+* I=intruction stream
+* M=multiple
+* D=data stream
+
+##### SISD
+single instruction, single data
+
+this is a single core uniprocessor system
+
+##### SIMD
+single instruction, multiple data
+
+This include things like
+* pipelined vector processors
+* processor arrays
+* GPUs
+
+##### MISD
+multiple instruction, single data
+
+Example: systolic array
+
+These aren't very common.
+
+##### MIMD
+multiple instruction, multiple data
+
+This is most common. Examples include
+* multiprocessor computers that we use on a day to day basis
+* multicomputers - all of the ones that are mentioned in multicomputers section (symmetric/assymetric multicomputer, commodity clusters, network of workstations)

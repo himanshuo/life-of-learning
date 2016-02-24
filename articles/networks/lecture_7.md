@@ -11,20 +11,22 @@ URL -> 128.96.13.5 (ip address)
 
 * you input some url into the browser(http client)
 * http client -> local DNS client in order to convert url
-* local DNS client -> local DNS server
-* local DNS server -> local DNS client
+* local DNS client -> DNS server
+* DNS server -> local DNS client
 * local DNS client -> http client
 
-A few key things are omitted - how does your local DNS server know about 
+A few key things are omitted
+* how do you know where DNS server is? ISP/ttl/dns server proxy
+* how does DNS server know where ip addres of the http client is? recursive/iterative
+
 
 
 * DNS client(also called resolver) needs to know ip address of DNS server.
 * ISP gives the DNS client the ip address of the DNS server.
   * when you connect ISP with DNS for the first time, then your DNS client will be configured to store the DNS servers ip address  
-* ttl (time to line) is used to determine whether the cached DNS server ip address is
-  * ttl is just how long the ip address of the dns server
+* ttl (time to line) is used to determine whether the cached DNS server ip address is still save to use
+  * ttl is just how long the ip address of the dns server is safe for
 * The DNS server then converts the URL to the ip address of the resulting  
-
 
 
 country name (top most level)
