@@ -4,6 +4,8 @@ Goroutines with closures
 You can use goroutines with closures, allowing you to run a program in the main thread and have your variables all set up and defined there, BUT then even if the function has returned, the variables will exist in the goroutine.
 
 Example:
+
+
 	func myfunc(message String){
 		//anonymous function
 		//this anonymous function will run in the background.
