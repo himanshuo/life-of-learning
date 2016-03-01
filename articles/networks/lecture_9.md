@@ -17,7 +17,7 @@ Transport layer sockets require:
 TCP/IP uses 16 bit port numbers. Thus you have 65536 different port numbers possible. This means that you can have a total of 65536 processes running to send your segment to.
 
 *well known port numbers*  
-0 - 2023 port numbers are reserved.
+0 - 1023 port numbers are reserved.
 * 0-1023: well defined (HTTP). These are system ports.
 * 1024-49151: register region port numbers. These are user ports.
 
