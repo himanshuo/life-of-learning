@@ -102,10 +102,29 @@ Receiver received packet. It uses the checksum of the data to determine whether 
 You handle this issue by simply not sending ACK back to sender. The sender will then send you a duplicate copy of the packet.
 
 ##### Out of order packets
-You know if the packets you are receiving are out of order if sequence number is off. You just add assign each packet a number in a sequence. This is done in binary so it's not too space-consuming.
+You know if the packets you are receiving are out of order if *sequence number* is off. You just add assign each packet a number in a sequence. This is done in binary so it's not too space-consuming.
 
-The reciever You can handle this issue by waiting for the . You just wait until the duplicate copy comes in.
+The receiver just stores all the packets in the buffer until all of them have arrived for that given buffer. It *waits* for all of them to arrive before sending it through.
+
+After receiving a packet, the receiver sends a ACK with the next packets sequence number. Thus if the receiver gets a 1 packet, it sends back a 2 ACK.
 
 
 ##### Duplicate Packet
 This occurs if you send a packet but then do not receive an ACK. You will send another copy of the packet. This leads to a duplicate packet being sent the receiver.
+
+The duplicate will be dropped by the receiver. The receiver will send back a ACK with 1 greater than the duplicate packet's sequence number.
+
+### Sliding Window Approach
+This is used to handle error control and flow control at the same time.
+
+There is a buffer in the sender end. The buffer has a start and end pointer. The packets in between the start and end pointer are currently being sent. The sender adds packets to the buffer by increasing the end pointer and immediately sending it. When a ACK for a packet comes in, the start is increased, thus allowing more space in the buffer for packets to be sent.
+
+      input rate to buffer <= output rate to buffer    ->      ok
+      input rate to buffer <= output rate to buffer    ->      you will have data loss
+
+Thus packet loss (based on number of ACK packets that don't come) indicates whether congestion is about to occur or not.
+
+### Connectionless
+This is on UDP.
+
+There is no order. You do not know if a packet is lost or not.
