@@ -85,10 +85,10 @@ The size of the buffer is called the *window size*. The window size can be *enla
 
 ### Error Control
 4 types of bad things that can happen
-* packets can be lost
-* corrupted packets
-* out of order arrival of packets
-* packet is sent in duplicate
+* Lost packets
+* Corrupted packets
+* Out of Order arrival of packets
+* Duplicate packets
 
 
 ##### Lost packets
