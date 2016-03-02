@@ -36,17 +36,19 @@ C knows if something is a pointer so when you index or do any arithmetic involvi
     int * ptr = malloc(sizeof(int)); // assume malloc allocated memory location 0x01
     int b = ptr + 4; //ptr+4 = 0x01 + (0x04 * sizeof(int)) = 0x01 + (0x04 * 4) = 0x01 +  0x10 = 0x11 = 17
 
-char: 1 byte
-bool: 1 byte
-short: 2 bytes
-int: 4 bytes
-float: 4 bytes
-long: 4 bytes
-void * : 4 bytes
-T * : 4 bytes
-double: 8 bytes
+    int_ptr++ is the same as int_ptr + 1 so it would add 4 to the memory address pointed to by int_ptr
 
-int_ptr++ is the same as int_ptr + 1 so it would add 4 to the memory address pointed to by int_ptr
+#### common type sizes
+* char: 1 byte
+* bool: 1 byte
+* short: 2 bytes
+* int: 4 bytes
+* float: 4 bytes
+* long: 4 bytes
+* void * : 4 bytes
+* T * : 4 bytes
+* double: 8 bytes
+
 
 ???
 int a = 3 + int_ptr + char_ptr; //???? is 3 multiplied by 4 or 1?
@@ -55,10 +57,13 @@ int a = 3 + int_ptr + char_ptr; //???? is 3 multiplied by 4 or 1?
 
 malloc() and the calloc() ??
 
-cool idiom: subtract pointers to determine number of elements between those two in an array
+#### cool idiom
+subtract pointers to determine number of elements between those two in an array
 
-null pointer versus void pointer
+#### null pointer versus void pointer
+null pointer is a pointer that has value \x00.
 
+void pointer is a pointer type that can point to anything
 
 #### typed pointers
 typed pointers refer to a specific type
@@ -91,6 +96,7 @@ Auto variables are local variables that are allocated and deallocated when the v
 
 #### parameter passing
 parameters are passed in reverse order on the stack
+
 #### stack
 int main {
     foo(param1, param2)    
@@ -98,11 +104,11 @@ int main {
 
 the stack for the above would look like:
 
-param2
-param1
-ret_main
-ebp_foo
-foo_local_vars
+1. param2
+2. param1
+3. ret_main
+4. ebp_foo
+5. foo_local_vars
 
 
 
@@ -112,9 +118,9 @@ foo_local_vars
 3. call some_func
   * a call consists of a push ret_addr and jmp some_func
   * ret_addr is just the next instruction after this call instruction
-SUBROUTINE STARTS
-*follow callee convention*
-SUBROUTINE ENDS
+SUBROUTINE STARTS  
+*follow callee convention*  
+SUBROUTINE ENDS  
 4. remove params from stack
 5. return value of function is on eax
 6. restore caller-saved registers(eax, ecx, edx)
@@ -123,7 +129,7 @@ SUBROUTINE ENDS
 1. push ebp; mov ebp, esp
 2. allocate space for local variables
 3. push calle-saved register (ebx, edi, esi)
-*function body*
+*function body*  
 4. put ret value at eax
 5. pop callee save registers (ebx, edi, esi)
 6. deallocate local variables
@@ -134,10 +140,11 @@ SUBROUTINE ENDS
 
 ### IO basics
 To read stdin
-    scanf("format string", &var...)
+    * scanf("format string", &var...)
+
 to write to stdout
-    put(str)
-    printf(format_str, vars...)
+    * put(str)
+    * printf(format_str, vars...)
 #### open
 FILE * fopen( const char * filename, const char * mode );
 #### read
@@ -157,5 +164,3 @@ int sscanf(const char * str, const char * format, ...)
 sends formatted output to a stream.
 
 int fprintf(FILE * stream, const char * format, ...)
-
-#### full example
