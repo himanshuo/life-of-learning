@@ -20,7 +20,7 @@ Steps for server to return page
 1. Ethernet is used on server
 2. IP is used to determine which CPU to connect to
 3. TCP is used to connect to requester
-4. SSL is used to verify request
+4. SSL is used to verify request (SSL is a protocol that encryptes data and moves it around a network)
 5. HTTP protocol (including url) allows server to determine which specific function to run
 6. server calls its return_page() function
 
