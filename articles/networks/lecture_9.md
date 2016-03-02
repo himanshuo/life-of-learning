@@ -85,10 +85,10 @@ The size of the buffer is called the *window size*. The window size can be *enla
 
 ### Error Control
 4 types of bad things that can happen
-* packets can be lost
-* corrupted packets
-* out of order arrival of packets
-* packet is sent in duplicate
+* Lost packets
+* Corrupted packets
+* Out of Order arrival of packets
+* Duplicate packets
 
 
 ##### Lost packets
@@ -120,7 +120,7 @@ This is used to handle error control and flow control at the same time.
 There is a buffer in the sender end. The buffer has a start and end pointer. The packets in between the start and end pointer are currently being sent. The sender adds packets to the buffer by increasing the end pointer and immediately sending it. When a ACK for a packet comes in, the start is increased, thus allowing more space in the buffer for packets to be sent.
 
       input rate to buffer <= output rate to buffer    ->      ok
-      input rate to buffer <= output rate to buffer    ->      you will have data loss
+      input rate to buffer > output rate to buffer    ->      you will have data loss
 
 Thus packet loss (based on number of ACK packets that don't come) indicates whether congestion is about to occur or not.
 
