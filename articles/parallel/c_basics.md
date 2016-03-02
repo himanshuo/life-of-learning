@@ -117,10 +117,12 @@ the stack for the above would look like:
 2. push params
 3. call some_func
   * a call consists of a push ret_addr and jmp some_func
-  * ret_addr is just the next instruction after this call instruction
+  * ret_addr is just the next instruction after this call instruction  
+
 SUBROUTINE STARTS  
 *follow callee convention*  
 SUBROUTINE ENDS  
+
 4. remove params from stack
 5. return value of function is on eax
 6. restore caller-saved registers(eax, ecx, edx)
