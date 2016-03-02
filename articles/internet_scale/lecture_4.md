@@ -8,10 +8,10 @@ To successfully complete a project, you need:
 * services
   * It is good to have your services be modular.
   * Benefits of modularity:
-    * abstracting implementation
-    * delineating team boundaries
-    * independent scaling
-    * independent failing
+    * independent FAILING 
+    * independent Scaling
+    * Abstracting implementation
+    * delineating Team boundaries
 * High level design considerations
   * consider building a service for each model in your system
   * strictly enforce only accessing data through services
