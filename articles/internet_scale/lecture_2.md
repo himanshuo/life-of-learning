@@ -7,6 +7,7 @@ Network Layers
 ![](lecture_2/e5752cd01dc8c83b806c63507d053335.png)
 
 Steps for fetching a page
+
 1. Your app makes a fetch_page() request
 2. HTTP protocol is used to send request out to real world
 3. SSL is used to verify your request
@@ -15,10 +16,11 @@ Steps for fetching a page
 6. Ethernet is used on server
 
 Steps for server to return page
+
 1. Ethernet is used on server
 2. IP is used to determine which CPU to connect to
 3. TCP is used to connect to requester
-4. SSL is used to verify request
+4. SSL is used to verify request (SSL is a protocol that encryptes data and moves it around a network)
 5. HTTP protocol (including url) allows server to determine which specific function to run
 6. server calls its return_page() function
 
@@ -49,6 +51,7 @@ Apache creates a server with a main process. The main apache process runs a bunc
 Each forked process is just a copy of the process that you make. So in our case, when we make our Django application,
 
 Each thread basically performs the following tasks:
+
 1. wait for connection
 2. pass to python/django
 3. execute python code
@@ -65,7 +68,7 @@ The fixed number of threads does allow you to determine max_num_requests / secon
 
 
 ## Model View Controller (MVC)
-MVC works, but not always. It should not be coped blindly.  
+MVC works, but not always. It should not be copied blindly.  
 Apps divided into 3 parts
 * Persistent state (models)
 * actions (controllers)
