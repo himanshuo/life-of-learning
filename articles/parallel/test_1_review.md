@@ -39,14 +39,71 @@ Amdahl's Law - measure the maximum potential speedup.
 ### Fosters methodology
 ### Sequential program optimization
 ### High throughput computing
+High-throughput computing - using large amounts of computing power for long periods of time
+
+High throughput computing is about running long-running jobs that require lots of computing power. It is related to things like batch processing.
+
+You can compare high throughput computing to high performance computing. High Performance computing requires large amounts of computing for short period of time. This is to do large problems quickly.
+
+
+Examples of high throughput computing are batch processing, parameter space sweep, embarrassingly parallel problems.
+
+Parameter space sweep is literally just running a program multiple times with varying parameters to get a feel for the output.
+
+Embarrassingly parallel is when you split up a problem by simply repeating it with multiple inputs. Little or no effort is needed to separate the problem into a number of parallel tasks. This occurs because there is little or no dependency between the parallel tasks so little communication is required between them.
+
 ### Basic model
 ### load balancing
+  you want to run tasks in a balanced way else your performance is limited by slowest machine
+  one way to load balance is to make sure that execution time for each task is same
+    NOT the same thing as same each has same load. You want to change around load based on how powerful a give processor is.
+
 ### queuing systems
 ### Shared memory
 ### pThreads
+Posix Threads is an execution model where each flow of work is called a thread and the creation and control over these flows is achieved using the POSIX Threads API.
+
+4 groups of Pthread functions
+* thread management - creating, joining thread
+* mutexes
+* condition variables
+* synchonization between threads using read/write locks and barriers
+
+????PUT IN SOME EXAMPLE USAGES?????
+
 ### synchronization
+synchronization of processes is when multiple processes join up at a certain point to aggregate their information and commit to a certain sequence of actions
+
+
 ### races and deadlock
+race conditions are when two or more threads can access shared data and they try to change it at the same time
+
+deadlock is when different threads are waiting on each other to finish.
+
+
 ### dance hall architectures
+### interconnection networks
+Interconnection networks are used to route data when
+* processors need to access memory
+* processor needs to share data with another
+
+On one extreme is a shared bus interconnection network. A shared bus is when only a single bus exists for all processors to access memory. This makes it so that only a single processor can access memory at a time.
+
+on the other end is a crossbar switch, where each processor has a unique access path to each memory.
+
+For the case that processors share data with each other, a complete interconnection network contains a path from each processor to every other processor.
+
+There are different shapes for interconnection networks, including ring, mesh interconnection network, hypercube, barrel shifter...
+
+multistage interconnection networks
+
+an interconnection network where processing elements are all on one end of the network, while memory elements are on the other end. Switches connect the two types of elements.
+
+network contention
+
+when two or more stations on a network try to access the network media simultaneously
+
+
 ### simple analysis of multistage interconnection networks
 ### hot spots
 ### combining
@@ -106,12 +163,6 @@ for i: 0->10000
   for j: 0->10000
     // load x[i] into cache
     x[i][j] = x[i,j] * y[j,i]
-
-
-### load balancing
-  you want to run tasks in a balanced way else your performance is limited by slowest machine
-  one way to load balance is to make sure that execution time for each task is same
-    NOT the same thing as same each has same load. You want to change around load based on how powerful a give processor is.
 
 
 ### throughput versus bandwidth versus latency
