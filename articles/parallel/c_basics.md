@@ -18,17 +18,17 @@ Dereference pointer
 
 Follow pointer of object
 
-  struct Node{
-    Node * left;
-    int data;
-  }
-  //assume Node is properly created
-  my_node.left = malloc(sizeof(Node)) // my node's left pointer now points to new node
-  my_node->left = malloc(sizeof(Node)) // this is wrong. This would follow the left pointer. And then at that spot it would put in a new pointer instead of a Node object.
+    struct Node{
+      Node * left;
+      int data;
+    }
+    //assume Node is properly created
+    my_node.left = malloc(sizeof(Node)) // my node's left pointer now points to new node
+    my_node->left = malloc(sizeof(Node)) // this is wrong. This would follow the left pointer. And then at that spot it would put in a new pointer instead of a Node object.
 
-  (my_node->left).data = 3; //the -> follows the left pointer. This would allow you to left.data to be 3
+    (my_node->left).data = 3; //the -> follows the left pointer. This would allow you to left.data to be 3
 
-  my_node.left.data; //ERROR. my_node.left is a pointer. pointers do not have data fields.    
+    my_node.left.data; //ERROR. my_node.left is a pointer. pointers do not have data fields.    
 
 #### Pointer arithmetic
 C knows if something is a pointer so when you index or do any arithmetic involving that pointer, C uses the address that pointer is pointing to for the pointer and replaces all constants with sizeof(pointer)
