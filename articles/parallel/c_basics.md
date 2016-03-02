@@ -3,14 +3,21 @@ C Basics
 
 ### Pointers
 Create a pointer
+
     int * ptr;
     char * mystr = malloc(sizeof(char) * len_of_str);
+
 Make a pointer point to something
+
     *ptr = &something_on_heap; //* & is used to get pointer to something. is used to access value that pointer is pointing to.
     ptr = &something_on_heap // make ptr equal to address of something. Probably do not want to do this.
+
 Dereference pointer
+
     int a = *ptr_to_num; //* deferences the ptr_to_num
+
 Follow pointer of object
+
   struct Node{
     Node * left;
     int data;

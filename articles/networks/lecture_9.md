@@ -17,9 +17,9 @@ Transport layer sockets require:
 TCP/IP uses 16 bit port numbers. Thus you have 65536 different port numbers possible. This means that you can have a total of 65536 processes running to send your segment to.
 
 *well known port numbers*  
-0 - 2023 port numbers are reserved.
+0 - 1023 port numbers are reserved.
 * 0-1023: well defined (HTTP). These are system ports.
-* 1024-49151: register region port numbers. These are user ports.
+* 1024-49151: register region port numbers. These ports are registered by OS. These are user ports. Can be used by everyone. **RECORDED BY OS**
 
 The last region of port numbers can be custom. These are called dynamic/private ports. The region is 49152-65535.
 
@@ -128,3 +128,29 @@ Thus packet loss (based on number of ACK packets that don't come) indicates whet
 This is on UDP.
 
 There is no order. You do not know if a packet is lost or not.
+
+A state machine can be used to go from state to state.
+  * sender -> receiver
+  * sender has a conditional request. Sends only if condition is true
+  * on the sender side, you just have to make a packet if the condition is true.
+  * on receiver side, packet starts in ready state and just sends to
+
+### Stop and wait
+
+features:
+* window size = 1
+* supports checksum
+* supports sequence number
+* has timer
+
+Steps:
+1. sender sends packet.
+2. Starts timer.
+3. Waits until ACK comes back.
+
+Determines range of sequence numbers by:
+* if packet arrives safe and sound -> receiver sends ACK message.
+  * Packet number is x.
+  * ACK number is x+1.
+* packet is lost
+* ACK packet arrives, but is wrong number
