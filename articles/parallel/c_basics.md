@@ -119,9 +119,11 @@ the stack for the above would look like:
   * a call consists of a push ret_addr and jmp some_func
   * ret_addr is just the next instruction after this call instruction  
 
+
 SUBROUTINE STARTS  
 *follow callee convention*  
 SUBROUTINE ENDS  
+
 
 4. remove params from stack
 5. return value of function is on eax
