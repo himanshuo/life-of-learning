@@ -7,6 +7,7 @@ Network Layers
 ![](lecture_2/e5752cd01dc8c83b806c63507d053335.png)
 
 Steps for fetching a page
+
 1. Your app makes a fetch_page() request
 2. HTTP protocol is used to send request out to real world
 3. SSL is used to verify your request
@@ -15,6 +16,7 @@ Steps for fetching a page
 6. Ethernet is used on server
 
 Steps for server to return page
+
 1. Ethernet is used on server
 2. IP is used to determine which CPU to connect to
 3. TCP is used to connect to requester
