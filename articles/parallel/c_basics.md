@@ -133,7 +133,11 @@ SUBROUTINE ENDS
 1. push ebp; mov ebp, esp
 2. allocate space for local variables
 3. push calle-saved register (ebx, edi, esi)
+
+
 *function body*  
+
+
 4. put ret value at eax
 5. pop callee save registers (ebx, edi, esi)
 6. deallocate local variables
