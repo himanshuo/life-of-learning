@@ -68,7 +68,7 @@ The fixed number of threads does allow you to determine max_num_requests / secon
 
 
 ## Model View Controller (MVC)
-MVC works, but not always. It should not be coped blindly.  
+MVC works, but not always. It should not be copied blindly.  
 Apps divided into 3 parts
 * Persistent state (models)
 * actions (controllers)
