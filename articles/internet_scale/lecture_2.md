@@ -51,6 +51,7 @@ Apache creates a server with a main process. The main apache process runs a bunc
 Each forked process is just a copy of the process that you make. So in our case, when we make our Django application,
 
 Each thread basically performs the following tasks:
+
 1. wait for connection
 2. pass to python/django
 3. execute python code
