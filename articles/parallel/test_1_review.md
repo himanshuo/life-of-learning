@@ -80,8 +80,26 @@ race conditions are when two or more threads can access shared data and they try
 
 deadlock is when different threads are waiting on each other to finish.
 
+A deadlock situation can arise if all of the following conditions hold simultaneously in a system:
+
+* Mutual exclusion: at least one resource must be held in a non-shareable mode.[1] Only one process can use the resource at any given instant of time.
+* Hold and wait or resource holding: a process is currently holding at least one resource and requesting additional resources which are being held by other processes.
+* No preemption: a resource can be released only voluntarily by the process holding it.
+Circular wait: a process must be waiting for a resource which is being held by another process, which in turn is waiting for the first * process to release the resource. In general, there is a set of waiting processes, P = {P1, P2, …, PN}, such that P1 is waiting for a resource held by P2, P2 is waiting for a resource held by P3 and so on until PN is waiting for a resource held by P1.[1][7]
+
+
+
+mutexes for avoiding writing to same memory and thus avoiding race conditions
+
+semaphores for touching memory in correct order
 
 ### dance hall architectures
+uniformly slow, but scalable architecture.
+
+NUMA machine.
+
+you have processors all connected to interconnection network. Interconnection network then connects to memory.
+
 ### interconnection networks
 Interconnection networks are used to route data when
 * processors need to access memory
@@ -126,6 +144,10 @@ using this pic, say we want to go from 5->3  (101 -> 011).
   from top to bottom, top=0, bottom=7. From column 0, you are at row 5.
     5->4->
 
+omega network is permutation network. there are diff patterns.
+
+shuffle =
+exchange =
 
 ### cache alignment
 UNDERSTAND ALIGNMENT OF VARIABLES IN C.
@@ -174,3 +196,34 @@ latency: time / work
 
 ### consumer/producer problem
 consumer/producer problem. Implement using synchronization things. SO, memorize all of them and how to use them.
+
+
+### Multistage interconnection networks
+omega network
+  lgk(N)
+  depth of network is ...
+  logk N layers
+  at each layer,
+
+
+  just because no contention in switch, doesnt mean no contention. You can have contention at memory. Thus crossbar has contention.
+
+
+### software combining
+1. determine how many
+2. determine num memory units
+3. goal
+
+
+### crossbar complexity
+cost of switch = O(n^2) because kxk switch.
+
+you have to know both cost, and number of path
+
+exactly one path from src to dest. Thus if anything is blocked, then contentions.
+
+depth = logk(n)
+
+have logk(n) stages
+
+cost = num_stages * cost of each stage = logk(n) * n/k switches per stage * cost of each switch = logk(n) * n/k * O(k^2)
