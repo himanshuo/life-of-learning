@@ -62,5 +62,10 @@ TCP is reliable. How do you make it reliable?
 Numbering system is interesting.
 * sequence numbers
   * use byte number for sequence numbers.
-  * 
+  *
 * ACK numbers
+
+
+header : 20-60 bytes
+  * 20 bytes normal, but can have optional extras (40 bytes of options)
+  * first 20 bytes have 
