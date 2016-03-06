@@ -27,3 +27,6 @@ You can only do so much. You can only accomplish goals that are reasonable.
 
 ##### Make a timeline
 Being explicit about when what is supposed to be done allows you to know whether you are still on track. It also lets you know how much more you can do.
+
+##### Be specific
+Be specific about what your tasks are. Concrete tasks allow you have discrete checkpoints to view how close you are to your goal. In addition, when you are feeling lazy, it is much easier to do a small task and complete an entire goal.
