@@ -31,10 +31,17 @@ Locations:
 * Ganges River is in Northeast India
 
 ##### Indus Valley Civilization
-![](overview/5483547a4fb8cab6039d5c85e3af1e68.png)
+![](overview-images/5483547a4fb8cab6039d5c85e3af1e68.png)
 
-The Indus Valley Civilization was centered around the Indus River and matured during 2600 - 1900 BCE.
+The Indus Valley Civilization was centered around the Indus River during 3300 - 1900 BCE. The people were called Harappans.
 
+It's main locations were
+* modern day Gujurat, Haryana, Punjab, and Rajasthan
+* modern day Pakistan
+
+The key urban centers were
+* Dholavira, Kalibangan, Ropar, Rakhigarhi, and Lothal in modern-day India
+* Harappa, Ganeriwala, and Mohenjo-daro in modern-day Pakistan
 
 It's key features were
 * bronze age
@@ -42,3 +49,5 @@ It's key features were
 * roadside drainage system
 * multistoried houses
 * municipal system
+
+The civilization started to gradually decline around 1700 BCE. It is unclear why. The cities were simply abandoned overtime. 
