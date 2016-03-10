@@ -149,7 +149,7 @@ This example uses 2 semaphores. In this specific scenario, there is a deadlock
 
 ##### semaphore dependencies within processes
 
-![](lecture_9/7870cf5c4b22f85785361433b56cc833.png)  
+![](lecture_9-images/7870cf5c4b22f85785361433b56cc833.png)  
 Image 1: Arrows denote dependencies; B and C cannot occur until A finishes. S_{AB} is a semaphore
 
 Assume all semaphores are initialized to 0.

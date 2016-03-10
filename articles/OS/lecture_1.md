@@ -12,7 +12,7 @@ Layers of a computer system
   * OS kernel
   * hardware
 
-![](overall_idea_of_OS/fb90f8d87985444b5b6aea553714ca8d.png)
+![](overall_idea_of_OS-images/fb90f8d87985444b5b6aea553714ca8d.png)
 
 1) Applications use libraries  
 1') Libraries can access OS kernel  
@@ -67,7 +67,7 @@ Virtualization is a single piece of hardware that acts as though there are multi
 * virtual memory management: virtualization allows each process  to have its own memory, splitting main memory into numerous chunks
 
 
-![](overall_idea_of_OS/a018d1177be0a274ec4672ab952707a9.png)
+![](overall_idea_of_OS-images/a018d1177be0a274ec4672ab952707a9.png)
 
 An example of virtualization is in the above picture where the original CPU creates 2 virtual CPU's. Each virtual CPU is connected to 1 virtual machine and to 1 printer.
 
@@ -78,7 +78,7 @@ spooling (for printing): a type of buffering for the printer. Placing a print jo
 #### instruction level concurrency
 Concurrency is basically making multiple things happen at the same time. Interweaving processes at the assembly level can cause *race conditions*, where something is edited twice and the changes aren't synchronized correctly.
 
-![](overall_idea_of_OS/ae8a5fbbd529d0db9f19d2e966265227.png)
+![](overall_idea_of_OS-images/ae8a5fbbd529d0db9f19d2e966265227.png)
 
 Process 1 increments count, while process 2 decrements count.
 The assembly for process 1 would look like
