@@ -43,7 +43,7 @@ challenges
 
 ##### How does Cassandra store rows?
 
-![](lecture_7/0a4bcaf526d0c19ee07e42bc1da397b0.png)
+![](lecture_7-images/0a4bcaf526d0c19ee07e42bc1da397b0.png)
 
 Cassandra is a ring. It puts all its nodes in a ring. (1, 2, 3 in pic)
 

@@ -4,7 +4,7 @@ Lecture 2
 
 ## HTTP and Networks
 Network Layers
-![](lecture_2/e5752cd01dc8c83b806c63507d053335.png)
+![](lecture_2-images/e5752cd01dc8c83b806c63507d053335.png)
 
 Steps for fetching a page
 
@@ -44,7 +44,7 @@ An example is www.google.com/?q=stuff
 ## Apache and threading
 We are using Apache with mod_wsgi and python
 
-![](lecture_2/1c52b0c9b1d995eafdd8ff77d38e364a.png)
+![](lecture_2-images/1c52b0c9b1d995eafdd8ff77d38e364a.png)
 
 Apache creates a server with a main process. The main apache process runs a bunch of child processes. Each child process is written in python. When requests come in, they are routed to the child processes. Each child process creates a new thread for each request. The threads all concurrently talk to the database.
 

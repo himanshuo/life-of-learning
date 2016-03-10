@@ -46,7 +46,7 @@ Sites serve billions of page view per day. Each page view ends up requiring mult
 
 
 ### Technology limitations
-![](lecture_5/ace0eb832b1f27e0362a5e7386f29b96.png)
+![](lecture_5-images/ace0eb832b1f27e0362a5e7386f29b96.png)
 
 ### Physical limitations
 Speed of light is a limitation because it governs how fast information can move between locations.

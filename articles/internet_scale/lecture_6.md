@@ -2,10 +2,10 @@ Lecture 6 - Databases, pt2
 ============================
 
 ### Types of solutions
-![](lecture_6/e64468a9420fecc0d40ea2edc1f1dbe1.png)
+![](lecture_6-images/e64468a9420fecc0d40ea2edc1f1dbe1.png)
 
 
-![](lecture_6/0f463d2a60c401df3281c180628c94fb.png)
+![](lecture_6-images/0f463d2a60c401df3281c180628c94fb.png)
 sharded - how split apart the database is
 
 
@@ -21,7 +21,7 @@ Clients need strategy to know which machines store which data
 Want to avoid "hot spots" by sending equal load to all shards
   * eg. make sure highly accessed users/listings on different shards
 
-![](lecture_6/eb8904fcef95798695423637bbafa371.png)
+![](lecture_6-images/eb8904fcef95798695423637bbafa371.png)
 The image is a sample partitioning system to determine which data is on which shard.
 
 Problems can occur
@@ -39,7 +39,7 @@ Ensure consistency by making sure sets of updates are ACID.
 Usually enforced by locking rows that are affected by query/update
 * locks out other users so lowers performance
 
-![](lecture_6/1ad2f61b8c26115d756c77334ba9012b.png)
+![](lecture_6-images/1ad2f61b8c26115d756c77334ba9012b.png)
 
 ### Replication
 make copies of data
