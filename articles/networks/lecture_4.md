@@ -13,7 +13,7 @@ Lecture 4
 * non-persistant (prior to v1.1) - once client finishes loading, the session is closed. For each request, a new connection is needed
 
 
-![](lecture_4/b6469241837a8d4ff173a8ea0818cba1.png)
+![](lecture_4-images/b6469241837a8d4ff173a8ea0818cba1.png)
 
 This image reveals that
 1. the original client sends a syn message.

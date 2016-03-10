@@ -13,7 +13,7 @@ There are two types of Packet Switches - *routers* and *link-layer switches*.
 Most packet switches use *store-and-forward transmission* in which the packet switch stores an incoming packet until all of its bits are stored properly on the switch and only then does it forward the packet to the next switch or end system.
 
 
-![](network_core_basics/ad94e80b1ee29e1840a0e271396de588.png)
+![](network_core_basics-images/ad94e80b1ee29e1840a0e271396de588.png)
 
 In the above image, the transmission rate is R bit/sec and each packet contains L bits. Thus:
 
@@ -54,7 +54,7 @@ Thus circuit switching requires establishing a proper functioning connection bet
 
 Since transmission has been reserved for the sender-to-receiver connection (circuit), the sender can transfer the data at the *guaranteed constant rate*.
 
-![](network_core_basics/79556b23c52205e73e573e94adf68cac.png)
+![](network_core_basics-images/79556b23c52205e73e573e94adf68cac.png)
 
 In this picture, the top left computer wants to connect to the bottom right computer using a circuit switch. To do so, the two establish a dedicated *end-to-end connection*.
 

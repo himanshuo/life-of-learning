@@ -84,7 +84,7 @@ The socket interface implements the following functions (note that I added on to
 
 Sockets may seem somewhat confusing, but they are no different than writing to a file. Your application reads/writes to a file in the same way it read/writes to a socket. Thus *a socket is just a data structure*.
 
-![](Application_Layer/fa9ab612a2b9f42b3fcd9294228424e8.png)
+![](Application_Layer-images/fa9ab612a2b9f42b3fcd9294228424e8.png)
 This image shows the communication between the client and server via sockets. The client and server have a logical connection via a socket.
 Information Flow:
 1. logical connection is established between client and server
@@ -115,7 +115,7 @@ There is no way to determine socket address of client until client contacts you.
 *client*  
 Client also has two sets of sockets - local (client) and server.
 
-The local IP address is chosen by OS. OS chooses port number as well, however, it must verify it with the remote server. 
+The local IP address is chosen by OS. OS chooses port number as well, however, it must verify it with the remote server.
 
 
 *testing*  
@@ -134,7 +134,7 @@ In order to support multi-homing, SCTP uses Border Gateway Protocol (BGP) can be
 SCTP also supports multi-streaming. Multi-streaming is when you have multiple streams of data coming in. The order that the individual bits of a given stream or the order of the streams themselves is not important. This is useful for multimedia applications.
 
 ### 3 way handshake
-![](Application_Layer/ac23ef1739e007c6e774e8d390341848.png)
+![](Application_Layer-images/ac23ef1739e007c6e774e8d390341848.png)
 
 The sender sends a SYN packet. The reciever than replies with the same SYN packt but with a ACK packet appended onto it. The sender then completes the handshake by sending an ACK packet.
 
@@ -142,7 +142,7 @@ The sender sends a SYN packet. The reciever than replies with the same SYN packt
 ### HTTP (Hyper-text transport protocol)
 HTTP is used to send data as web pages across Internet. It is a pure client-server paradigm.
 
-![](Application_Layer/7fabf944cc269a83f665449052f103a0.png)
+![](Application_Layer-images/7fabf944cc269a83f665449052f103a0.png)
 
 The key ideas from the picture are:
 * the user inputs data into the browser which the browser than manipulates and uses to display information to the user

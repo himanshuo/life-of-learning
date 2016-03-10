@@ -31,7 +31,7 @@ Note that if **m=2**, then **max window size = 2 ^(m-1) = 2** and **buffer size 
 
 To illustrate that the window size cannot be greater, we will make max window size = 3 in this **INVALID** example.
 
-![](lecture_12/e0bcc15ab8f2d0aee001f239a60febb1.png)
+![](lecture_12-images/e0bcc15ab8f2d0aee001f239a60febb1.png)
 
 Key:
 * The yellow means that that packet has been sent

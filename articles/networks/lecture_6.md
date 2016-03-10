@@ -204,13 +204,13 @@ Notable parts:
 
 SMTP for outgoing mail; POP3/
 
-![](lecture_6/3f15675fcdd4e5584bbc59a41f65a888.png)
+![](lecture_6-images/3f15675fcdd4e5584bbc59a41f65a888.png)
 
 If you want to instead use HTTP (one side), then you have to
 * change the SMTP client on the MTA (message transfer agent) on that side to be a HTTP
 * change the MUA (mail user agent) on that side to be HTTP
 
-![](lecture_6/99bf9cce083ba4c59fc69daf67cfe8a6.png)
+![](lecture_6-images/99bf9cce083ba4c59fc69daf67cfe8a6.png)
 
 If you want to instead use HTTP on both sides, then you have to
 * change the SMTP client on the MTA (message transfer agent) on that both sides to be HTTP
@@ -230,7 +230,7 @@ NVT seems to be SPECIFIC for Telnet
 
 NVT (network virtual terminal) was created to act as a universal encoding. The idea is to convert local text into NVT text. Then, the receiver can convert from NVT to its own local text.
 
-![](lecture_6/3146bc39ff622d720295abe3a1e23483.png)
+![](lecture_6-images/3146bc39ff622d720295abe3a1e23483.png)
 
 * you work in your local character on your local machine
 * the telnet client converts outgoing traffic into NVT

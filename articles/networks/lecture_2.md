@@ -7,7 +7,7 @@ Packet Switching (uniprocessor)
 
 ## Example Network System
 
-![](class_2/36245959c2ae6f238ce9b06788004b7a.png)
+![](class_2-images/36245959c2ae6f238ce9b06788004b7a.png)
 
 In this network, the multiple ISP's each make up a backbone of the internet. Each one of those global providers are fed by local providers. The *peering point* is where different ISP comes to exchange services. What they end up doing is making it so that customers from ISP A can use the services of a different ISP B for free in exchange for the ISP B customers getting ISP A's services for free.
 
@@ -32,7 +32,7 @@ Key ideas for human communication
 * say bye when finished talking
 
 
-![](class_2/8c8fc13f1ecda39e7eec369ac667a787.png)
+![](class_2-images/8c8fc13f1ecda39e7eec369ac667a787.png)
 
 2 Key Principles for Protocol design
 * opposite function occur at each layer
@@ -40,8 +40,8 @@ Key ideas for human communication
 * symmetric
   * the layers to the left are in the same order as the layers to the right
 
-![](class_2/f998367e246dab8b6927b1d8c5f1dcef.png)
-![](class_2/5b72fae38e7d3d3d98a5df1a096403de.png)
+![](class_2-images/f998367e246dab8b6927b1d8c5f1dcef.png)
+![](class_2-images/5b72fae38e7d3d3d98a5df1a096403de.png)
 
 The above photos show a real TCP/IP example.  
 Firstly, note that the top photo is showing the basic network structure that is being used in this system - A wants to send a packet to B and along the way is a switch that connects to a router. That router is then connected to another switch which finally connects to the destination B.  

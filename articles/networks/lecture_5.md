@@ -18,7 +18,7 @@ Can use regular expression such as * to select multiple files. For example, you 
 * mget - get multiple files at once
 
 ##### Components
-![](lecture_5/3952289ec8ab0198846553143c753f3c.png)
+![](lecture_5-images/3952289ec8ab0198846553143c753f3c.png)
 Three components to a FTP client
 * user interface - this is the ftp prompt
 * control process - exchange commands (rg. USER, PASS, ...)
@@ -97,7 +97,7 @@ If you get "5xy:permanent negative reply"
 ##### Examples
 ftp>get /usr/user/johnsmith/reports/file1
 
-![](lecture_5/6a5f26aab80659ad91d95c6f489dc547.png)
+![](lecture_5-images/6a5f26aab80659ad91d95c6f489dc547.png)
 Things to note
 * each type of control information is sent one step at a time. This makes FTP very slow.
 * This example is using record STRU (structure) and thus you are sending multiple records
@@ -108,7 +108,7 @@ Things to note
 
 ### Email
 
-![](lecture_5/2d342fe2b6715273d7009bdf287bee62.png)  
+![](lecture_5-images/2d342fe2b6715273d7009bdf287bee62.png)  
 Key Ideas
 * MUA (Mail User Agent)
 * MTA (Message Transfer Agent)

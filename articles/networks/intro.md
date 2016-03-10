@@ -70,7 +70,7 @@ The two most prevalent types of broadband residential access are *digital subscr
 ##### DSL
 DSL internet access is usually attained from the local telephone company. Thus DSL modems use the existing telephone lines to exchange data with digital subscriber line access multiplexers (DSLAM).
 
-![](intro/a7ecf7e4bdbb27244e21fd6429e74bf8.png)
+![](intro-images/a7ecf7e4bdbb27244e21fd6429e74bf8.png)
 
 When you have DSL, you are actually using a phone line to connect to the internet. On the customer side, you have a splitter that only receives telephone data and splits that up between phone and internet data (going from central office to home). It also takes in home phone and home internet data sends it via the phone line (going from home to central office). On the telephone company side, DSLAM converts between telephone and internet messages.
 
@@ -79,7 +79,7 @@ The DSL transmission rates for upstream and downstream are different. Thus the a
 ##### Cable Internet Access
 cable television companies use their existing cable tv infrastructure.
 
-![](intro/412acee62b3fd795492678dbff0c148f.png)
+![](intro-images/412acee62b3fd795492678dbff0c148f.png)
 
 When you have Internet access via cable, your home is connected with a coaxial cable to a fiber node. Each fiber node is then connected to the cable companies cable model termination system (CMTS) via fiber cables. CMTS is then connected to the Internet.
 
@@ -92,7 +92,7 @@ CMTS converts the analog signals sent from the cable models in the homes into di
 ##### fiber to the home (FTTH)
 This is an emerging technique where fiber cables are connected directly from the central office to the home. This is supposed to be super fast. This is what Verizon FIOS is.
 
-![](intro/beefb3cc81bc862a74a8941d36d05163.png)
+![](intro-images/beefb3cc81bc862a74a8941d36d05163.png)
 
 There are two optical-distribution network architectures that perform this splitting - active optical networks (AONs) and passive optical networks (PONs). AONs are basically switched ethernet. PONs are a bit different.
 
