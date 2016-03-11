@@ -2,7 +2,7 @@ Chapter 1 - Introduction
 =========================
 Operating system is a program that manages a computer's hardware.
 
-![](chapter_1/4ec1bce8544f6e7ef5e0a7e9b99c7f58.png)
+![](chapter_1-images/4ec1bce8544f6e7ef5e0a7e9b99c7f58.png)
 
 ### What Operating Systems do
 
@@ -34,7 +34,7 @@ CPU can load instructions only from memory so any programs that are run must be 
 
 Secondary storage (including hard disk drives) handles both of the issues with main memory, however, it has much slower access time.  
 
-![](chapter_1/1379b55c436db5037922adfb378ad380.png)
+![](chapter_1-images/1379b55c436db5037922adfb378ad380.png)
 
 
 ### IO  Structure

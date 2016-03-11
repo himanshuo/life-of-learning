@@ -53,4 +53,4 @@ rate of data transfer
 ### latency
 the delay before a transfer of data begins following an instruction for its transfer
 ### memory hierarchy
-![](class_4_terms/f09a84fd32110b41568ba2d5a0fc7fa4.png)
+![](class_4_terms-images/f09a84fd32110b41568ba2d5a0fc7fa4.png)

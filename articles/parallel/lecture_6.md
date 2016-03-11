@@ -5,7 +5,7 @@ HTC is when you have a bunch of jobs that are fairly independent and you just ru
 
 These are called "embarrassingly parallel", "pleasingly parallel", "bag of tasks", or "parameter sweep problems".
 
-![](lecture_6/9eded1e7adf6c0822f653773b475c879.png)
+![](lecture_6-images/9eded1e7adf6c0822f653773b475c879.png)
 
 ##### General HTC Issues
 Overhead per job is substantial. You can usually get around this by bundling jobs up.
@@ -34,15 +34,15 @@ Rendering animations
 4. Mapping
 
 ### Boundary value Problem
-![](lecture_6/74cf5ec34f259bc8d366027225b700c4.png)
+![](lecture_6-images/74cf5ec34f259bc8d366027225b700c4.png)
 What happens to the temperature of the rod over time?
 
-![](lecture_6/8f65c2ce46c073ebca83f89851f1ff82.png)
+![](lecture_6-images/8f65c2ce46c073ebca83f89851f1ff82.png)
 
 Rod cools as time progress. At time 0, highest temperature. At time increases, temperature decreases. Note that the location on rod affects the temperature because locations closer to the ends will get colder faster.
 
 
-![](lecture_6/d5b0e871334121a05de68f8dc7d451bd.png)
+![](lecture_6-images/d5b0e871334121a05de68f8dc7d451bd.png)
 
 This table is about figure out as time increases, what is the temperature of the rod at various spaces?
 
@@ -61,11 +61,11 @@ The *Partitioning* step involves us
     * cur point = f(left neighbor at t-1, cur point at t-1, right neighbor at t-1)
 * decompose the entire domain into a 2d set of points that we want to calculate.
 
-![](lecture_6/5306ed1e510aacc6f16b2df49b50247a.png)
+![](lecture_6-images/5306ed1e510aacc6f16b2df49b50247a.png)
 
 The *Communication* step involves identifying communication pattern between primitive tasks. In this case, each interior primitive task has three incoming and three outgoing channels. This makes sense because each point is the result of the neighboring points in the row right below it.
 
-![](lecture_6/b3e2367499646ebab9c0dc62adc2e494.png)
+![](lecture_6-images/b3e2367499646ebab9c0dc62adc2e494.png)
 
 The *Agglomeration and Mapping* steps involves determining how we can join the communications efficiently.
 
@@ -107,7 +107,7 @@ Note that this is a simplification of reality because caching and managing memor
 
 ### Reduction Problem
 
-![](lecture_6/5436a0e6afd081b53604e8ff5d9c340a.png)
+![](lecture_6-images/5436a0e6afd081b53604e8ff5d9c340a.png)
 Note that the associate operator can be +, -, /, * , ...
 
 Performing each term sequentially is slow. You want to speed this up by doing each operation in parallel.
@@ -122,10 +122,10 @@ Basically this turns a O(n) problem into O(lg(n))
 
 We will do *parallel reduction evolution* which is basically just computing a portion of the problem and then passing the result to someone else. Think divide and conquer.
 
-![](lecture_6/27e15af4c81ab7f78c74723819ab1bf8.png)
+![](lecture_6-images/27e15af4c81ab7f78c74723819ab1bf8.png)
 
 Each circle is a single calculation. At each step you do the given computations in parallel. Following the steps will yield a binomial tree of calculations. This tree will look like:  
-![](lecture_6/c3560c33e53f97f98089fb8c9f6633f8.png)
+![](lecture_6-images/c3560c33e53f97f98089fb8c9f6633f8.png)
 
 Typically you will end up agglomeration on this which will group a set of terms together and do them sequentially and then parallelize the results of these.
 

@@ -28,7 +28,7 @@ bandwidth=rate of data transfer (bits/sec) from node to node
 latency=time delay (sec/bit) between start to finish of data transfer
 
 ##### Shared medium
- ![](lecture_4/c42486e9b5b9dca05c1053192a5fb86b.png)
+ ![](lecture_4-images/c42486e9b5b9dca05c1053192a5fb86b.png)
 
 Key features of shared medium interconnection networks
 * only one message is passed at a time
@@ -41,7 +41,7 @@ An example of shared medium interconnection network is ethernet.
 
 
 ##### Switched medium
-![](lecture_4/2f0e2df5e936f7ecda501ce0969e7e29.png)
+![](lecture_4-images/2f0e2df5e936f7ecda501ce0969e7e29.png)
 
 Key features of switched medium interconnection networks
 * point-to-point messages between pairs of processors
@@ -80,7 +80,7 @@ Again, the criteria is
 * number of edges
 
 ##### 2D meshes
-![](lecture_4/86c0fb8ad4cf330b42322fbabe993afa.png)
+![](lecture_4-images/86c0fb8ad4cf330b42322fbabe993afa.png)
 
 
 
@@ -120,7 +120,7 @@ Motivation for processor array:
 
 An example Processor array diagram:
 
-![](lecture_4/66d21e14288a85d06cfa79fc3535daa8.png)
+![](lecture_4-images/66d21e14288a85d06cfa79fc3535daa8.png)
 
 Things to note:
 * front end computer talks to backend processor array
@@ -162,7 +162,7 @@ The benefit of this is that it avoids the three problems of processor arrays
 * maintain efficiency in condition code
 
 
-![](lecture_4/a22e90f8b361b57ebde58f2d59cb592e.png)
+![](lecture_4-images/a22e90f8b361b57ebde58f2d59cb592e.png)
 
 This image shows the difference between a single processor system versus a multiprocessor system. Basically, the multiprocessor duplicates the CPU/cache memory system numerous times. It connects all of them via the bus.
 
@@ -190,29 +190,29 @@ Processors can communicate by reading and writing shared data values
 
 ##### Cache coherence problem
 Cache coherence problem:
-![](lecture_4/f6437a3037cdc7c6c48c1221498f439b.png)
+![](lecture_4-images/f6437a3037cdc7c6c48c1221498f439b.png)
 
-![](lecture_4/5e48bb3fd8ca85983b9f1ce5afeb4aaa.png)
+![](lecture_4-images/5e48bb3fd8ca85983b9f1ce5afeb4aaa.png)
 
-![](lecture_4/ec668cdfde7ef4a3a180ec9a210386e0.png)
+![](lecture_4-images/ec668cdfde7ef4a3a180ec9a210386e0.png)
 
-![](lecture_4/87e56f043b4852f5223c7fea0b2b0af8.png)
+![](lecture_4-images/87e56f043b4852f5223c7fea0b2b0af8.png)
 
 write invalidate protocol:
-![](lecture_4/9c4f86b2839b30ba88813910a326fbdb.png)
+![](lecture_4-images/9c4f86b2839b30ba88813910a326fbdb.png)
 
-![](lecture_4/beaca9d029ac62bc20dfeef851405f35.png)
+![](lecture_4-images/beaca9d029ac62bc20dfeef851405f35.png)
 
-![](lecture_4/ba2d0531845904eb00999ee8ec023ee7.png)
+![](lecture_4-images/ba2d0531845904eb00999ee8ec023ee7.png)
 
-![](lecture_4/08f8d3f8b0cc696fc85ee44c4dd21581.png)
+![](lecture_4-images/08f8d3f8b0cc696fc85ee44c4dd21581.png)
 
 Basically, problem is: cache for a given CPU will not know what has happened to other CPU's and how it is affecting real memory
 
 Solution is: have each cache repeatedly check if someone is writing to the memory location that you have cached. If so, then invalidate your cache value.
 
 #### distributed multiprocessor
-![](lecture_4/9906f56a7947112b3e00e8d989676ce1.png)
+![](lecture_4-images/9906f56a7947112b3e00e8d989676ce1.png)
 
 Distributed multiprocessors distribute primary memory among processors.
 
@@ -241,7 +241,7 @@ Processors in a multicomputer interact via message passing
 You can have either *commercial multicomputers* or *commodity clusters*
 
 *An asymmetrical multicomputer*  
-![](lecture_4/15280e1a7dcd33566fde8431243a2ade.png)
+![](lecture_4-images/15280e1a7dcd33566fde8431243a2ade.png)
 
 Notably, front end computer connects directly to interconnection network which connects to numerous other computers
 
@@ -257,7 +257,7 @@ Disadvantages to asymmetrical multicomputers
 * every application requires development of both front end and back end
 
 *Symmetrical Multicomputer*  
-![](lecture_4/1be2b9ece645adde7b905ccd56e65456.png)
+![](lecture_4-images/1be2b9ece645adde7b905ccd56e65456.png)
 
 features
 * multiple access points to computer.

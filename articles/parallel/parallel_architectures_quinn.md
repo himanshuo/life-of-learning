@@ -12,7 +12,7 @@ Interconnection networks allow processors to access shared memory or to send mes
 ##### Shared versus Switched Media
 Processors in a parallel computer may communicate over a shared or a switched interconnection medium.
 
-![](parallel_architectures_quinn/7b0dae0b639c801267d305e81eafd070.png)
+![](parallel_architectures_quinn-images/7b0dae0b639c801267d305e81eafd070.png)
 
 A *shared medium*
 * allows only one message to be sent at a time.
@@ -56,7 +56,7 @@ You need to evaluate network topologies to determine their effectiveness in impl
 ##### 2D Mesh Network
 2D mesh network is a direct topology in which switches are arranged into 2D lattice.
 
-![](parallel_architectures_quinn/df7b24afbbbd9fe21aa19c8576866299.png)
+![](parallel_architectures_quinn-images/df7b24afbbbd9fe21aa19c8576866299.png)
 Note the squares are processors and circles are switches. This is a direct topology because each switch is connected to at least 1 processor.
 
 Evaluating this network using the 4 criterion:
@@ -67,7 +67,7 @@ Evaluating this network using the 4 criterion:
 * Constant edge length - The edge length is variable in both pics (bad).
 
 ##### Binary Tree Network
-![](parallel_architectures_quinn/28c1f1c0446b27e0b721285d0223e7b8.png)
+![](parallel_architectures_quinn-images/28c1f1c0446b27e0b721285d0223e7b8.png)
 
 Note that the circles are switches and the squares are processors. Thus the switches are actually arranged as a tree, and the the processors simply attach to the leaves of the tree.
 
@@ -98,7 +98,7 @@ Evaluating this network using the 4 criterion:
 * Constant edge length - no. this is bad.
 
 ##### Hypertree Network
-![](parallel_architectures_quinn/17e7b2bbf214d1b0054fae6b580cc15d.png)
+![](parallel_architectures_quinn-images/17e7b2bbf214d1b0054fae6b580cc15d.png)
 Indirect topology
 
 This is like a binary tree but has degree(number of children a node has) k and depth d.
@@ -111,12 +111,12 @@ Evaluating this network using the 4 criterion:
 
 ##### Butterfly Network
 
-![](parallel_architectures_quinn/0b7d17909cd3270f980944e018b80cd5.png)
+![](parallel_architectures_quinn-images/0b7d17909cd3270f980944e018b80cd5.png)
 
 Indirect topology.
 Each row is called a rank. Each rank contains n nodes.
 
-![](parallel_architectures_quinn/af76036e808ce734162cf7eb7efaf42b.png)
+![](parallel_architectures_quinn-images/af76036e808ce734162cf7eb7efaf42b.png)
 
 To route a message from a processor to another:
 * each switch picks off the lead bit from a message
@@ -146,7 +146,7 @@ Note that this section is entirely on processor arrays, as the pipelined vector 
 ##### Architecture and Data-parallel Operations
 A key concept in processor arrays is that there are lots of operations that can be done in parallel since you are basically performing the same operation on a large vector of data.
 
-![](parallel_architectures_quinn/47fc5f88579617c41eb41e1542c22e39.png)
+![](parallel_architectures_quinn-images/47fc5f88579617c41eb41e1542c22e39.png)
 
 A generic processor array has a front-end computer. This front-end computer has
 * single processor
@@ -176,7 +176,7 @@ Processors in the Processor Array all are synchronized - they all perform comput
 In order to counteract this issue, each processor has a masking bit that allows it to "opt-out" of performing an instruction.
 
 Masking also allows for conditionally executed parallel operations. For example:
-![](parallel_architectures_quinn/0a64f6a44499466af972988607180f19.png)
+![](parallel_architectures_quinn-images/0a64f6a44499466af972988607180f19.png)
 This example shows how a simple if then statement would work in a parallel process.
 
     if(arr[i]!=0){
@@ -215,7 +215,7 @@ Multiprocessors are better than processor arrays in that:
 * do not lose efficiency when encountering conditional code while executing code in parallel
 
 ##### Centralized Multiprocessors
-![](parallel_architectures_quinn/3026214c97cc51a9056c28d3c5178c6b.png)
+![](parallel_architectures_quinn-images/3026214c97cc51a9056c28d3c5178c6b.png)
 
 centralized multiprocessors are like uniprocessors but have additional CPUs added onto the bus. All processors share primary memory. This architecture is called *uniform memory access (UMA)* or a *symmetric multiprocessor (SMP)* because all the memory is in one place and has the same access time from every processor.
 
@@ -228,7 +228,7 @@ There are two key problems to solve with centralized multi-processors - *cache c
 *Cache Coherence Problem*  
 Replicating data across multiple caches reduces contention among processors for shared data. However, each processors has its own view of memory through cache thus you have to make sure that each view is the same as what is actually in memory.
 
-![](parallel_architectures_quinn/c6ba6681836253d44f7df59cf5059f4a.png)
+![](parallel_architectures_quinn-images/c6ba6681836253d44f7df59cf5059f4a.png)
 This image shows how this problem can occur. A wrote to memory and then B received from memory. By now, both A and B are using cache in order to figure out what is in memory. Now, when B writes to cache which writes to memory, B is okay. But, A still thinks memory has a 7. This is bad.
 
 A solution to the cache coherence problem is called *"snooping."*  Snooping refers to a set of protocols which basically makes the cache monitor the bus to see which cache blocks are being requested. If a cache block requested is the one that the current cache uses, then the current cache block invalidates its cache. Thus the next time someone wants to use this cache, it will require this cache to go into memory.

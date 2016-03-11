@@ -2,7 +2,7 @@ Lecture 5
 =============
 
 ### Basic States
-![](lecture_5/cee0192f08b89d5c88c22a41a8b810f9.png)
+![](lecture_5-images/cee0192f08b89d5c88c22a41a8b810f9.png)
 
 The above diagram shows all the different states that a process is in.
 Things to note from diagram
@@ -96,7 +96,7 @@ A batch process is an example of a that is likely going to be in block_s.
 
 
 ### Linux (4 states)
-![](lecture_5/38fd179efc09518119c6bbec13bb8133.png)
+![](lecture_5-images/38fd179efc09518119c6bbec13bb8133.png)
 
 
 This diagram shows process states in Linux.
@@ -125,7 +125,7 @@ It probably does lots of things, but for now, just know that it's job is to term
 
 
 ### Virtual Address Space
-![](lecture_5/45a6f62e266dcc49ae632d3baee026d1.png)
+![](lecture_5-images/45a6f62e266dcc49ae632d3baee026d1.png)
 
 stack is used for function calls
 

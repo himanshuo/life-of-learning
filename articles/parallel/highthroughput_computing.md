@@ -37,11 +37,11 @@ Normally, a simple bash file with specific input considerations, a given command
 This is when you take large amounts of data files and perform some calculation based on them. It is usually a good idea to create a control script which iterates through all the files in a data directory and creates a job script for each file and runs it. The job script that you create should be based on a template.
 
 Job Script Template:  
-![](highthroughput_computing/2554088f946a1429bc9c2ac7d3c2b9d5.png)
+![](highthroughput_computing-images/2554088f946a1429bc9c2ac7d3c2b9d5.png)
 
 Control Script:
-![](highthroughput_computing/d856f061366666ea1589177eb86cc796.png)
-![](highthroughput_computing/96a0c46bf15a7e30e96b54ba6112fc08.png)
+![](highthroughput_computing-images/d856f061366666ea1589177eb86cc796.png)
+![](highthroughput_computing-images/96a0c46bf15a7e30e96b54ba6112fc08.png)
 A key line to note is the qsub line which substitutes the variables inside the job script template for the desired values as per the loop in the control script.
 
 #####  Problem Decomposition

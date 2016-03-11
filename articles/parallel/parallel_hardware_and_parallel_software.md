@@ -111,21 +111,21 @@ Multiple instruction, multiple data (MIMD) systems support multiple simultaneous
 
 There are two main types of MIMD systems - *shared-memory systems* and *distributed-memory systems*.
 
-![](parallel_hardware_and_parallel_software/d4ba2f672c41f464b649e7cd89617ec2.png)
+![](parallel_hardware_and_parallel_software-images/d4ba2f672c41f464b649e7cd89617ec2.png)
 
 In shared-memory systems, a collection of autonomous processors is connected to a shared memory system via an interconnection network, and each processor can access each memory location. The communication is usually done via some shared data structure.
 
 Most common shared-memory systems use one or more *multicore* processors (processors that have multiple CPUs or cores built into a single chip). Within shared-memory systems, there are *uniform memory access (UMA)* and *nonuniform memory access (NUMA)*.
 
-![](parallel_hardware_and_parallel_software/41e74eadb89ebc6a70f462f8331146c6.png)
+![](parallel_hardware_and_parallel_software-images/41e74eadb89ebc6a70f462f8331146c6.png)
 
 UMA systems connect all processors directly to main memory. The time to access all the memory locations is the same for all cores in this system. UMA systems are also easier to program since you don't need to worry about different access times for different memory locations.
 
-![](parallel_hardware_and_parallel_software/53cfc06cd353531875b40132682782d9.png)
+![](parallel_hardware_and_parallel_software-images/53cfc06cd353531875b40132682782d9.png)
 
 In NUMA systems, each processor has a direct connection to a block of main memory. Special hardware has to be built in order to allow all processors to access each others blocks of memories. In this system, a memory location to which a processor is directly connected can be accesses faster by this processor than other processors. This makes it more complicated to program these machines, but you do have the benefit of knowing that some memory locations can be accesses faster.
 
-![](parallel_hardware_and_parallel_software/2de12c8a6a23f1de92cd09ff34605321.png)
+![](parallel_hardware_and_parallel_software-images/2de12c8a6a23f1de92cd09ff34605321.png)
 
 In distribute memory systems, each processor is paired with its own private memory. The processor / memory pairs communicate with each other using a interconnection network. Thus the processor/memory pairs usually have some explicity functions or some explicit way to send messages to each other. A processor / memory pair does not have explicit access to anothers memory, however, can affect another via these message or functions.  
 

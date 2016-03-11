@@ -4,8 +4,8 @@ Lecture 2
 ### Floating Point Operation per Second (FLOPS)
 Modern computer has 5 to 25 giga flops
 ### Von Neummann machine
-![](lecture_2/7c5e56151bee8bf516a3ccf724f86d6b.png)
-![](lecture_2/1c26d28794812543aaddd426da87a0b9.png)
+![](lecture_2-images/7c5e56151bee8bf516a3ccf724f86d6b.png)
+![](lecture_2-images/1c26d28794812543aaddd426da87a0b9.png)
 Von Neumann architecture is a simplified architecture with a single CPU and sequential instructions. There is also no pipelining.
 
 It does has memory, cpu, and bus. It cycles through instructions sequentially.
@@ -26,7 +26,7 @@ This should only take 10 bytes. However, if the two ints are word aligned (assum
 
 ##### Memory
 The memory hierarchy is:
-![](lecture_2/a75bcd3742a764607b05c9f1bf31eaff.png)
+![](lecture_2-images/a75bcd3742a764607b05c9f1bf31eaff.png)
 
 
 The registers are usually under program control.  
@@ -60,7 +60,7 @@ Vector machines have
 * accesses entire vectors from registers/memory at once
 * computations that are done on vectors in a single cycle
 
-![](lecture_2/f97ad5e1cfaa6a6d7e7d443fd6a242c4.png)
+![](lecture_2-images/f97ad5e1cfaa6a6d7e7d443fd6a242c4.png)
 The picture above is a sawtooth curve. As you increase the vector length of the registers, the performance increases but not linearly. If the length of your array is the same as the vector length of the registers, then you get the best performance. This is the peaks of the curve. If you are off by just one, then your performance is very bad and your at the troughs of the curve.
 
 ### Floating Point
@@ -107,6 +107,6 @@ The load on a machine is the number of processes running on the machine. If you 
   * gives you realtime (clock time), user time (time user spends on command), and sys time (time for given command only)
 * gprof
     * profiler
-    * gives you call graphs, time spent in each function, number of times each function/code is executed 
+    * gives you call graphs, time spent in each function, number of times each function/code is executed
     * example:
       * g++ -pg myprog.c -o myprog

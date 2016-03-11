@@ -5,7 +5,7 @@ A thread is one of the independent tasks that a process can perform. You can hav
 
 A thread is inside the address space of a process. Thus multiple threads can all easily share memory.
 
-![](lecture_7/bd7b9d743e76f4c05181ee49a18c46ce.png)
+![](lecture_7-images/bd7b9d743e76f4c05181ee49a18c46ce.png)
 
 ### Process vs. Thread
 |Process|Thread|
@@ -123,7 +123,7 @@ You can have a thread for each pass. Since the passes have a assembly order, you
 
 ##### many to one  
 
-![](lecture_7/e3c0934325c2a1d593d3b9e55585574a.png)
+![](lecture_7-images/e3c0934325c2a1d593d3b9e55585574a.png)
 
 There are multiple threads running in a process in user mode. They are all mapped onto one kernel thread.
 
@@ -145,7 +145,7 @@ The problem with many to one is that concurrency is low.
 An example of an OS that does this is solaris.
 
 ##### one to one
-![](lecture_7/fff36e7bf3eb36a3d33c3a07d8cc60aa.png)
+![](lecture_7-images/fff36e7bf3eb36a3d33c3a07d8cc60aa.png)
 
 one user thread maps to one kernel thread.
 
@@ -167,7 +167,7 @@ many user level threads multiplexes to the Kernel thread of smaller or equal num
 
 developers can create as many user threads as necessary and the corresponding Kernel threads can run in parallels on a multiprocessor.
 
-![](lecture_7/d837e39a559b6388d74152f02b242b4e.png)
+![](lecture_7-images/d837e39a559b6388d74152f02b242b4e.png)
 
 This requires modifying kernel.
 

@@ -94,7 +94,7 @@ Steps to use Socket
 
 
 Server flow versus client flow:    
-![](lecture_6/2e16abfb68bb26da4c93ca57ff5bba68.png)
+![](lecture_6-images/2e16abfb68bb26da4c93ca57ff5bba68.png)
 
 Key ideas for image
 * The blue is the server flow.

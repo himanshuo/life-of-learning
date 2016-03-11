@@ -22,7 +22,7 @@ Can get full information on them at
     https://computing.llnl.gov/tutorials/pthreads/
 
 ##### Multithreading
-![](lecture_8/afce0aac18e80270573ad3292f3f4958.png)
+![](lecture_8-images/afce0aac18e80270573ad3292f3f4958.png)
 
 ##### creating threads
 int pthread_create(pthread_t * thread, const pthread_attr_t * attr, void * (* start_routine)(void * ), void * arg )
@@ -54,7 +54,7 @@ pthread_join is blocking.
 ##### Thread interactions
 Worker threads talk to each other. All interactions are done by having one or more threads wait for one or more threads.
 
-![](lecture_8/1f1f7e2e3ad4b9a14f07835b4f77c170.png)
+![](lecture_8-images/1f1f7e2e3ad4b9a14f07835b4f77c170.png)
 
 A pthread mutex can be used here to make sure that the shared data is accessed one at a time - mutual exclusion.
 
@@ -66,7 +66,7 @@ int pthread_mutex_unlock(pthread_mutex * mutex)
 * a worker calls lock before access shared resource and calls unlock when done.
 * caller waits until the mutex gets unlocked if it was not already unlocked
 
-![](lecture_8/e212405f305a0851ec5aafd5069fbcd8.png)
+![](lecture_8-images/e212405f305a0851ec5aafd5069fbcd8.png)
 
 all render threads must wait for the communication thread to retrieve webpage contents. In order to do this, you can use a Pthread condition variable along with a mutex.
 
@@ -87,7 +87,7 @@ TODO: http://stackoverflow.com/questions/1136371/pthread-and-wait-conditions
 TODO: write a usage example
 
 
-![](lecture_8/8ec3804d7b4cd1d16ef65972dbb8139e.png)
+![](lecture_8-images/8ec3804d7b4cd1d16ef65972dbb8139e.png)
 A semaphore can be used to make sure that consumer is run only when the producer is not putting an item in the queue.
 
 

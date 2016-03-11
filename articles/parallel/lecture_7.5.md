@@ -29,7 +29,7 @@ The best possible parallel execution time occurs when all potential parallel por
 A key thing to note here is the assumption that the parallel portion of the computation is divided perfectly among the processors. If this is not the case, then you will have larger execution time and thus speedup is smaller.
 
 From this, you can create the speedup inequality:  
-![](Quinn_ch7/9a9ae5e27fa6d8d8dc6e471fdbf4c665.png)  
+![](Quinn_ch7-images/9a9ae5e27fa6d8d8dc6e471fdbf4c665.png)  
 This inequality is telling us that the speedup will be <= ratio of (largest sequential execution time) / (smallest possible parallel execution)
 
 
@@ -43,18 +43,18 @@ The *efficiency* of a parallel program is a measure of processor utilization. We
 *Efficiency = speedup/number_of_processors_used*  
 
 When you substitute in the definition of efficiency, you get:  
-![](Quinn_ch7/d99d454fd5600c29a37210a91cc0bdd5.png)
+![](Quinn_ch7-images/d99d454fd5600c29a37210a91cc0bdd5.png)
 
 Efficiency is ε(n,p)
-![](Quinn_ch7/5b817f8c4c329b454a489234500bfac7.png)
+![](Quinn_ch7-images/5b817f8c4c329b454a489234500bfac7.png)
 This inequality gives us an upper bounds for efficiency.
 The overall bounds for efficiency are: 0 <= ε(n,p) <= 1
 
 ## Amdahl's Law
-![](Quinn_ch7/f64f88de9ff7fb6a48b051f88f1a084e.png)
-![](Quinn_ch7/1d791c0ebbd61a29f08b817b41b5d772.png)
+![](Quinn_ch7-images/f64f88de9ff7fb6a48b051f88f1a084e.png)
+![](Quinn_ch7-images/1d791c0ebbd61a29f08b817b41b5d772.png)
 
-![](Quinn_ch7/a7b77e9f1e3fcde93156947608911916.png)
+![](Quinn_ch7-images/a7b77e9f1e3fcde93156947608911916.png)
 
     speedup <= 1/(sequential + parallel/processors)
 
@@ -63,9 +63,9 @@ Amdahl's law ignored overhead associated with introduction of parallelism.
 
 By taking into account the communication time overhead, we realize that Amdahl's law overestimates the speedup.
 ### The Amdahl Effect
-![](Quinn_ch7/2cb9b2b6ba45836600749beff2257d5c.png)
+![](Quinn_ch7-images/2cb9b2b6ba45836600749beff2257d5c.png)
 
-![](lecture_7.5/c78835a8cf5425449cb34a4200f1577a.png)
+![](lecture_7.5-images/c78835a8cf5425449cb34a4200f1577a.png)
 
 * time required for parallel overhead has lower order of complexity than parallel time / processors
 * as n increases, parallel time / processors becomes much more important than parallel overhead
@@ -117,4 +117,4 @@ M(n) = memory required for problem of size n
 M(f(p))/p shows how memory usage per processor must increase to maintain same efficiency
 
 
-![](lecture_7.5/f63c0ac850f7650fe4155c02f6165720.png)
+![](lecture_7.5-images/f63c0ac850f7650fe4155c02f6165720.png)

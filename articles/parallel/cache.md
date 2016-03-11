@@ -22,6 +22,6 @@ Once you fetch line from main memory, where should you store it in cache? The tw
 
 Fully associative cache places the new line at any location in the cache. Direct mapped cache places the cache line in a unique location in the cache to which it will be assigned. Intermediate cache mapping techniques are called n-way set associative.
 
-![](parallel_hardware_and_parallel_software/4dbec71e7be10f2f199d0b7406a2392f.png)
+![](parallel_hardware_and_parallel_software-images/4dbec71e7be10f2f199d0b7406a2392f.png)
 
 For fully associative cache or n-way set associative cache, you also have to determine which of the potential lines you want to  *evict* when you add a new line into cache. The most common scheme to determine this is *least recently used*. Note that this does not apply for direct mapped cache since there is only one possible line you can replace.

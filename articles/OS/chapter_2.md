@@ -36,7 +36,7 @@ There are 6 major types of system calls:
 * communications
 * protection
 
-![](chapter_2/8bcb0357aea50f37c4e6a9e6a114d42e.png)
+![](chapter_2-images/8bcb0357aea50f37c4e6a9e6a114d42e.png)
 
 
 ### OS Structure
@@ -45,7 +45,7 @@ There are 6 major types of system calls:
 Unstructured systems like MS-DOS and early unix kernel existed because at that time, things were very primitive. All the code was shoved into one file and this is bad. We instead want a modular design.
 
 ##### Layered Approach
-![](chapter_2/59d923a91975dcdb5a09fc4f7ae9edf6.png)
+![](chapter_2-images/59d923a91975dcdb5a09fc4f7ae9edf6.png)
 
 The advantages of this system are:
 * simplicity of construction and debugging

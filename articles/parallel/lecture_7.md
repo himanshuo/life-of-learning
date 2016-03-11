@@ -42,11 +42,11 @@ A thread shares with other threads:
 * os resources and state
 
 ### Single versus multithreads
-![](lecture_7/fcbdfefbf1a82d9cd604f624c8058949.png)
+![](lecture_7-images/fcbdfefbf1a82d9cd604f624c8058949.png)
 
 Each thread has its own registers and stack. Each thread shares code, data, files.
 
-![](lecture_7/9b590e66428bca03459b372bd34cd894.png)
+![](lecture_7-images/9b590e66428bca03459b372bd34cd894.png)
 
 threads share the processes original stack. This means that you have to be careful with how much you put on each thread, because you can overwrite other stack without knowing.
 
@@ -71,11 +71,11 @@ communication is via shared variables that occur in some shared namespace (addre
 This is called **explicit** synchronization.
 You have to do shared memory synchronization yourself.
 
-![](lecture_7/3e99ec4a139f8095d5f746b9d01917ba.png)
+![](lecture_7-images/3e99ec4a139f8095d5f746b9d01917ba.png)
 
 *communication through time* - a thread writes value to memory location and reads it again later
 
-![](lecture_7/5cae7698e744d9475befa30855739937.png)
+![](lecture_7-images/5cae7698e744d9475befa30855739937.png)
 
 *communication through space* - a thread writes value to memory location and a different thread reads it
 
