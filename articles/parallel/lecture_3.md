@@ -116,7 +116,7 @@ Yes, this is more code and doesn't look as pretty, but because there is no inter
 
 *example equation simplification*
 
-![](lecture_3/7efa8cfa9d2559d3d16544f0bd1cdb9e.png)
+![](lecture_3-images/7efa8cfa9d2559d3d16544f0bd1cdb9e.png)
 
 *inline keyword*
 An inline function is a function whose body is placed inside its calling function rather than having to branch to it. 'inline' keyword gives a hint to the compiler to inline a function. However, this keyword might be obsolete nowadays since many compilers (when optimizing) already figure out and perform this optimization.
