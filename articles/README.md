@@ -9,11 +9,11 @@ if there is a file:
 
 then all images for this file are stored in  
 
-    articles/Networking/myfile/...
+    articles/Networking/myfile-images/...
 
 thus do not store anything inside
 
-    articles/Networking/myfile/
+    articles/Networking/myfile-images/
 
 
 **Enjoy, and remember - Ideas Win!**
