@@ -1,4 +1,4 @@
-AWK
+AWK SED GREP Quick-Use Examples
 ====
 
 ### Print 1st column from file
@@ -22,8 +22,8 @@ AWK
 
     ls folder | awk '{print "mv "$1" "$1}' | sed s/old/new/2 | sh
 
-*
-
+* the $1 is NOT inside the quotes. the input to the print command is: "mv "+$1+" "+$1
+* this sed command simply replaces the old value to the new value
 
 ### syntax
 
