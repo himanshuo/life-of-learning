@@ -57,17 +57,28 @@ Thus, we should have a **max window size = 2 ^ (m-1)**
 
 
 #### Properly working example of Selective Repeat Protocol
-m=3
-max window size = 2^(m-1) = 4
-buffer size = 2^m = 8
+m=3  
+max window size = 2^(m-1) = 4  
+buffer size = 2^m = 8  
+
+![](lecture_12-images/5aeed36a795c00b1b8df47e4cd37733b.png)
 
 
+Key:
+* The yellow means that that packet has been sent
+* red outline/shading reveals the window for the receiver
+* green means that received packet that is in middle of window
+* Sf and Sn specific window for sender
+* Rn specifies window for receiver
+* The initial window is only at 0 for sender
+* The initial window is from 0-2 at receiver
 
 Flow:
+
 1. packet 0 is sent and marked as sent
 2. packet 0 is received thus receiver window is slid by 1
 3. acknowledgement for packet 0 is sent
-4. acknowledgement for packet 1 is received and thus sender slides window by 1
+4. acknowledgement for packet 0 is received and thus sender slides window by 1
 5. packet 1 is sent and marked as sent
 6. packet 1 is lost
 7. since packet 1 never came to the receiver, the receiver does nothing related to it
@@ -86,67 +97,172 @@ Flow:
 20. the receiver also moves its window all the way up to packet 4 because packets 2 and 3 have already been acknowledged as being received.
 21. the process continues...
 
+Thus packet 1 was sent and acknowledged out of order.
+
+##### Bidirectional
+You can make selective repeat protocol bidirectional by simply making sender the receiver and vice versa. This is called **piggybacking**.
 
 
-##### bidirectional
-You can make selective repeat protocol bidirectional by simply making sender the receiver and vice versa.
-  called piggybacking
-  must add
-
-
-
-3 protocols:
-stop and wait
-G...
-selective repeat
+### we learned 3 protocols
+* Stop and Wait - handles only 1 packet at a time
+* Go back to N
+* Selective Repeat (SR) - handles multiple packets at a time
 
 
 ### UDP
-What does UDP do?
-* all packets are independent. thus you want to use stop and wait.
-* udp does support checksum. you can enable or disable it. Default is disable.
-* no need to establish a connection
-* you have to add payload
+Features of UDP
+* connectionless, not reliable
+* does not establish connection
+* does not support proper error control(checksum doesn't count), flow control, or congestion control
+* does have checksum, but this is not proper error control
+
+**All packets are independent for UDP. You do not use any of the protocols for UDP**.
+
+UDP does support checksum. You can enable or disable it. Default is disable.
+
+DNS server actually uses UDP
 
 
-UDP header format
-* uses 8 bytes
-udp does not support flow control, congestion control, or proper error control (checksum is sort of it but not really)
+#### UDP header format
+uses 8 bytes
 
-Applications that use UDP:
+![](lecture_12-images/812351c749cd35b2a0b6bca93cba4fb0.png)
+
+* Each box is 2 bytes
+* total length includes header size + payload size
+
+##### sample udp header
+CB84 000D 001C 001C
+* 0xCB84 -> 52100 -> source port number is 52100. This is some private dynamic port
+* 0x000D -> 13 -> destination port number is 13. This is the well defined datetime process
+* 0x001C -> 28 -> total length = 28
+  * Header is 8 bytes. Total length is 28 bytes. Thus payload = 28-8 = 20 bytes
+* 001C -> 001C is checksum
+
+#### How to work with checksum
+Steps:
+
+1. sender creates a pseudo header
+2. sender uses pseudo UDP header + real UDP header + payload to calculate checksum
+3. sender puts this checksum into the checksum field of the real UDP header
+4. receiver creates pseudo header (by extracting information from received UDP packet, including real UDP header)
+5. receiver creates a checksum using its created pseudo header + real UDP header + payload
+6. receiver checks if its generated checksum matches what the checksum in the real UDP header
+
+This adds a level of reliability.
+
+##### pseudo header
+![](lecture_12-images/af313d66500c3759da0deba85b9c409c.png)
+
+Key features of pseudo header
+* src ip addr (32 bits)
+* dest ip addr (32 bits)
+* 00000000 padding (8 bits)
+* Protocol (8 bits)
+  * 71 - UDP
+  * 6 - TCP
+* total length (16 bits)
+
+src and dest ip addr, protocol number, and total length all come directly from actual UDP header.
+
+
+##### Applications that use UDP:
+* DNS
 * SNMP (simple network management protocol)
 * multimedia applications
 * broadcasting
+* routers can exchange routing table information using UDP
 
 
 ### TCP
-* does all duplex(bidirectional) communications
+TCP does all duplex (bidirectional) communications. This means sender and receiver can send/receive information at the same time.
 
-3 phases:
-  * connection establishment using 3 way handshaking
-  * data transfer
-  * connection termination
+TCP has 3 phases:
+
+1. connection establishment using 3 way handshaking
+2. data transfer
+3. connection termination
 
 TCP uses
 * multiple timers
-* GBN + SR
+* a combination of GBN + SR to send/receive segments
   * SR for each particular packet
   * following packet number is expected from ACK
 * cumulative and selective ACKs
-* supports retransmission of lost, corrupted packets (combination of GBN and SR, not exactly the same)
+* supports retransmission of lost, corrupted packets
 
-TCP is reliable. How do you make it reliable?
-* ACK packets
-  * allows you to
+TCP is reliable because you use ACK packets.
 
 
-Numbering system is interesting.
+#### Numbering systems
 * sequence numbers
-  * use byte number for sequence numbers.
-  *
+  * use byte number for sequence numbers
 * ACK numbers
+  * use (last byte number for current packet) + 1 for ACK numbers
+
+![](lecture_12-images/9236eec2d93ae8877732a80be83e6aa5.png)  
+This image shows sample packets P0-P3 in a window. P0 starts with byte number 0 and ends with byte number 99. ...
+
+One of the key ideas is that sequence numbers just use byte numbers. Thus P0 has sequence number 0. P1 has sequence number 100. And so on.
+
+ACK number is last byte number for current packet+1. The receiver sends this to the sender. In the above picture, when the receiver receives P0, it sends back ACK 100.
+
+In the above picture,
+* P0 has sequence number 0
+* P1 has sequence number 100, and ACK number 100
+* P2 has sequence number 200, and ACK number 200
+
+**sender/receiver accepts a packet as long as sequence number of packet is in its window**
 
 
-header : 20-60 bytes
-  * 20 bytes normal, but can have optional extras (40 bytes of options)
-  * first 20 bytes have
+Note the picture uses even 100 increments. This is not necessarily. Each packet can be of arbitrary size.
+
+#### Header Format for TCP
+![](lecture_12-images/3c31fb718f91bb91450e93040df1b0a7.png)
+
+Features
+* header, as a whole, is 20-60 bytes.
+* source port number (16 bits)
+* destination port number (16 bits)
+* sequence number (32 bits)
+* ACK number (32 bits)
+  * the sequence number of the *next* packet I am expecting = last byte number of current packet + 1
+* HLEN (header length) (4 bits)
+  * each number from 0-15 represents a word(4 bytes)
+  * thus (2^4) * 4 = 64 different values
+  * This header can be 20-60 bytes. Thus, 64 different values is more than enough to represent length of entire header
+  * NOTE: total length is stored in the IP datagram in network layer for TCP
+* reserved (6 bits)
+  *
+* URG (1 bit)
+  * urgent flag
+  * if set to 1, then urgent pointer is valid
+* ACK (1 bit)
+  * if 1, then this is an ACK packet
+* PSH (1 bit)
+  * if you have a large window, you can end up accumulating packets
+  * if you pump packets out by waiting for window to be done, then you will experience discontinuity.
+  * if 1, then as soon as you accumulate packet, you pump it out. This is good for multimedia applications
+* RST (1 bit)
+  * reset
+  * abort connection
+* SYN (1 bit)
+  * for handshaking
+* FIN (1 bit)
+  * for termination phase
+* window size (16 bit)
+* checksum (16 bit)
+  * mandatory in TCP
+  * calculated in the same
+* urgent pointer (16 bit)
+  * tells you what part of packet is urgent
+  * urgent pointer is just offset in packet that is urgent
+  * what 'urgent' means is dependent on specific use case
+* options (up to 40 bytes)
+
+### Key Differences between UDP and TCP with regards to Transport Layer
+|UDP|TCP|
+|---|---|
+|total length header includes header size + payload size|total length header includes header size only. The header size+payload size is inside the datagram in network layer.|
+|uses no protocol |uses combination of SR + GBN|
+|checksum is optional (default is no checksum)|checksum is required|
