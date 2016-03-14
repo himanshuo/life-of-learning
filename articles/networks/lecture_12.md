@@ -143,10 +143,10 @@ CB84 000D 001C 001C
 Steps:
 
 1. sender creates a pseudo header
-2. sender uses pseudo UDP header + real UDP header + payload to calculate checksum
+2. sender uses pseudo UDP header + payload to calculate checksum
 3. sender puts this checksum into the checksum field of the real UDP header
 4. receiver creates pseudo header (by extracting information from received UDP packet, including real UDP header)
-5. receiver creates a checksum using its created pseudo header + real UDP header + payload
+5. receiver creates a checksum using its created pseudo header + payload
 6. receiver checks if its generated checksum matches what the checksum in the real UDP header
 
 This adds a level of reliability.
