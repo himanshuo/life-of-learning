@@ -86,3 +86,8 @@ For the receiver, there seems to be only the ready state. While in the ready sta
 
 There is an example using stop and wait. It has the same concepts as selective repeat protocol in lecture 12, but with window size =1  
 TODO: use example from his notes for stop and wait
+
+
+Once the network is thick(high bandwidth) and long (long runtime delay)
+* bandwidth is a product. represent volume of pipe. 20 sec to 
+*
