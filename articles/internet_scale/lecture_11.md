@@ -148,3 +148,5 @@ frequently evaluated by human judgement. you ask humans
 Recall - probability correct documents were in the recall set (no false negatives)
 
 Precision - probability only correct documents were in the recall set (no false positives)
+
+left off around 36:00 min 
