@@ -56,13 +56,21 @@ Note that there is only 0 and 1 in this sequence. Thus, x+1 means 0 if x=1.
 
 
 ##### States
-  Save a copy at sender.
 
-  If timer runs out when you are in blocking state, then resend packet in window. Then restart timer. Thus remain in blocking state.
+For the sender, the states are
 
-  If corrupted ACK arrives, discard the ACK packet. Still in blocking state.
+![](lecture_10-images/4efefc593dd6a798310ca10035ddc3cb.png)
 
-  Slide send window forward. Start=start+1
-
-
-How receiver handles
+* start -> ready
+  * this occurs when request comes from application
+* ready -> blocking
+  * request packet with sequence number s. s is a pointer to the only slide in the window that is suitable for use with stop and wait
+  * save a copy of the packet. save so that if the packet is lost, you can resend it
+  * start timer
+* blocking -> blocking (timer runs out)
+  * resend the packet and restart the timer
+* blocking -> blocking (corrupted ACK packet comes in)
+  * discard it
+* blocking -> ready
+  * this occurs if ACK with sequence number s+1 arrives.
+  * slide the sent window forward by 1
