@@ -3,3 +3,13 @@ in a
 sameple file
 for understanding basic ed
 while reading the book
+
+![](class_2_terms/5e331351b7971ec7cac55eeaa5e9d1e9.png)
+
+
+sed s/!/!/2 ed_learn.txt
+
+sed s/\!/\!/2 ed_learn.txt
+
+
+sed s/\!\[\]/\!/2 ed_learn.txt
