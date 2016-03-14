@@ -26,7 +26,7 @@ Receiver side has variables Rn
 
 **timer starts after the last packet in the window is sent**. Once the timeout occurs, you start sending from the **leftmost side** again. You only send packets that have **not already been acknowledged**
 
-##### Why do we have a max window size?
+#### Why do we have a max window size?
 Note that if **m=2**, then **max window size = 2 ^(m-1) = 2** and **buffer size = 2^m = 4**
 
 To illustrate that the window size cannot be greater, we will make max window size = 3 in this **INVALID** example.
@@ -56,14 +56,12 @@ Understand Flow of Image:
 Thus, we should have a **max window size = 2 ^ (m-1)**
 
 
-##### Properly working example of Selective Repeat Protocol
+#### Properly working example of Selective Repeat Protocol
 m=3
-
 max window size = 2^(m-1) = 4
-
 buffer size = 2^m = 8
 
-IMAGE
+
 
 Flow:
 1. packet 0 is sent and marked as sent
