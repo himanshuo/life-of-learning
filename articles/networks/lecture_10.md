@@ -74,3 +74,15 @@ For the sender, the states are
 * blocking -> ready
   * this occurs if ACK with sequence number s+1 arrives.
   * slide the sent window forward by 1
+
+For the receiver, there seems to be only the ready state. While in the ready state, different things can occur.
+* packet comes in which has sequence number equal to r_old
+  * deliver current packet to application
+  * slide receiver window forward by 1. thus r_new = r_old+1
+  * send ACK with ACK number r_new
+* packet comes in with sequence number != r_old
+  * discard the packet
+  * send ACK r_old back to sender
+
+There is an example using stop and wait. It has the same concepts as selective repeat protocol in lecture 12, but with window size =1  
+TODO: use example from his notes for stop and wait
