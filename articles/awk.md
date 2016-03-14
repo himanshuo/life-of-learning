@@ -26,9 +26,3 @@ AWK SED GREP Quick-Use Examples
 * this sed command simply replaces the old value to the new value
 
 ### syntax
-
-
-- [ ] ok
-- [ ] ok
-- [ ] ok
-- [ ] ok
