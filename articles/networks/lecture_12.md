@@ -120,8 +120,6 @@ Features of UDP
 
 UDP does support checksum. You can enable or disable it. Default is disable.
 
-DNS server actually uses UDP
-
 
 #### UDP header format
 uses 8 bytes
