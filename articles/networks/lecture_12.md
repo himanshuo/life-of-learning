@@ -16,7 +16,7 @@ Sender side has variables Sf and Sn
 * Sn = end of window
 
 Receiver side has variables Rn
-* Rn = start of window
+* Rn = the packet expected to be recieved. This will be the start of the window.
 * The end of the receiver window is Rn + (max window size - 1)
 
 
