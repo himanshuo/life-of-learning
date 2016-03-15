@@ -215,7 +215,7 @@ In the above picture,
 **sender/receiver accepts a packet as long as sequence number of packet is in its window**
 
 
-Note the picture uses even 100 increments. This is not necessarily. Each packet can be of arbitrary size.
+Note the picture uses even 100 increments. This is not necessary. Each packet can be of arbitrary size.
 
 #### Header Format for TCP
 ![](lecture_12-images/3c31fb718f91bb91450e93040df1b0a7.png)
