@@ -24,7 +24,7 @@ Receiver side has variables Rn
 
 **Packets can be received out of order**
 
-**There is a unique timer for each packet sent. It is started as soon as the packet is sent. The first timer to start will be the first to go off.**. Once the timeout occurs, you start sending from the **leftmost side** again. You only send packets that have **not already been acknowledged**
+**There is a unique timer for each packet sent. It is started as soon as the packet is sent. The first timer to start will be the first to go off**. Once the timeout occurs, you start sending from the **leftmost side** again. You only send packets that have **not already been acknowledged**
 
 #### Why do we have a max window size?
 Note that if **m=2**, then **max window size = 2 ^(m-1) = 2** and **buffer size = 2^m = 4**
@@ -55,6 +55,7 @@ Understand Flow of Image:
 
 Thus, we should have a **max window size = 2 ^ (m-1)**
 
+The problem starts at P2 (right after ACK1 fails). If we had the proper max window size of 2, then P0 would be sent instead of P2. The receiver's window would have the first 1 and the second 0. Thus it would accept the second 0, but NOT slide the window forward since the first 1 has not yet come in. 
 
 #### Properly working example of Selective Repeat Protocol
 m=3  
@@ -243,7 +244,7 @@ Features
   * if 1, then this is an ACK packet
 * PSH (1 bit)
   * if you have a large window, you can end up accumulating packets. You pump packets out once the current window is done. This is slow.
-  * if 1, then as soon as you get a packet, you pump it out. This is good for multimedia applications. This can lead to discontinuity of packets. 
+  * if 1, then as soon as you get a packet, you pump it out. This is good for multimedia applications. This can lead to discontinuity of packets.
 * RST (1 bit)
   * reset
   * abort connection
