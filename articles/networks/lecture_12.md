@@ -240,9 +240,8 @@ Features
 * ACK (1 bit)
   * if 1, then this is an ACK packet
 * PSH (1 bit)
-  * if you have a large window, you can end up accumulating packets
-  * if you pump packets out by waiting for window to be done, then you will experience discontinuity.
-  * if 1, then as soon as you accumulate packet, you pump it out. This is good for multimedia applications
+  * if you have a large window, you can end up accumulating packets. You pump packets out once the current window is done. This is slow.
+  * if 1, then as soon as you get a packet, you pump it out. This is good for multimedia applications. This can lead to discontinuity of packets. 
 * RST (1 bit)
   * reset
   * abort connection
