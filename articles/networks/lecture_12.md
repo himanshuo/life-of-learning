@@ -20,11 +20,11 @@ Receiver side has variables Rn
 * The end of the receiver window is Rn + (max window size - 1)
 
 
-**packets can be sent and acknowledged out of order**
+**Packets can be sent and acknowledged out of order**
 
-**packets can be received out of order**
+**Packets can be received out of order**
 
-**timer starts after the last packet in the window is sent**. Once the timeout occurs, you start sending from the **leftmost side** again. You only send packets that have **not already been acknowledged**
+**There is a unique timer for each packet sent. It is started as soon as the packet is sent. The first timer to start will be the first to go off.**. Once the timeout occurs, you start sending from the **leftmost side** again. You only send packets that have **not already been acknowledged**
 
 #### Why do we have a max window size?
 Note that if **m=2**, then **max window size = 2 ^(m-1) = 2** and **buffer size = 2^m = 4**
