@@ -16,15 +16,15 @@ Sender side has variables Sf and Sn
 * Sn = end of window
 
 Receiver side has variables Rn
-* Rn = start of window
+* Rn = the packet expected to be recieved. This will be the start of the window.
 * The end of the receiver window is Rn + (max window size - 1)
 
 
-**packets can be sent and acknowledged out of order**
+**Packets can be sent and acknowledged out of order**
 
-**packets can be received out of order**
+**Packets can be received out of order**
 
-**timer starts after the last packet in the window is sent**. Once the timeout occurs, you start sending from the **leftmost side** again. You only send packets that have **not already been acknowledged**
+**There is a unique timer for each packet sent. It is started as soon as the packet is sent. The first timer to start will be the first to go off.**. Once the timeout occurs, you start sending from the **leftmost side** again. You only send packets that have **not already been acknowledged**
 
 #### Why do we have a max window size?
 Note that if **m=2**, then **max window size = 2 ^(m-1) = 2** and **buffer size = 2^m = 4**
@@ -120,8 +120,6 @@ Features of UDP
 
 UDP does support checksum. You can enable or disable it. Default is disable.
 
-DNS server actually uses UDP
-
 
 #### UDP header format
 uses 8 bytes
@@ -214,10 +212,12 @@ In the above picture,
 * P1 has sequence number 100, and ACK number 100
 * P2 has sequence number 200, and ACK number 200
 
+**initial sequence number (ISN)**: the first sequence number. In the above picture, ISN=0.
+
 **sender/receiver accepts a packet as long as sequence number of packet is in its window**
 
 
-Note the picture uses even 100 increments. This is not necessarily. Each packet can be of arbitrary size.
+Note the picture uses even 100 increments. This is not necessary. Each packet can be of arbitrary size.
 
 #### Header Format for TCP
 ![](lecture_12-images/3c31fb718f91bb91450e93040df1b0a7.png)
@@ -242,9 +242,8 @@ Features
 * ACK (1 bit)
   * if 1, then this is an ACK packet
 * PSH (1 bit)
-  * if you have a large window, you can end up accumulating packets
-  * if you pump packets out by waiting for window to be done, then you will experience discontinuity.
-  * if 1, then as soon as you accumulate packet, you pump it out. This is good for multimedia applications
+  * if you have a large window, you can end up accumulating packets. You pump packets out once the current window is done. This is slow.
+  * if 1, then as soon as you get a packet, you pump it out. This is good for multimedia applications. This can lead to discontinuity of packets. 
 * RST (1 bit)
   * reset
   * abort connection
