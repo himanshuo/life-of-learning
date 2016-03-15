@@ -12,11 +12,11 @@ buffer size = 2^(m)
 The buffer size and max window size is the same for the sender and receiver.
 
 Sender side has variables Sf and Sn
-* Sf = start of window
-* Sn = end of window
+* Sf = start of buffer
+* Sn = end of buffer
 
 Receiver side has variables Rn
-* Rn = start of window
+* Rn = start of buffer
 * The end of the receiver window is Rn + (max window size - 1)
 
 
