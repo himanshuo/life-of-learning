@@ -1,6 +1,6 @@
 habitrpg/
-├── bower.json
-├── common
+├── bower.json - js package manager  
+├── common - shared resources useful for multiple habatica repos.
 │   ├── audio  - mp3 and ogg files for various themes  
 │   ├── browserify.js
 │   ├── css
@@ -17,144 +17,23 @@ habitrpg/
 │   ├── locales - files specifying texts to use for given locals.
 │   ├── README.md
 │   └── script
-│       ├── constants.js
-│       ├── content
-│       │   ├── appearance
-│       │   │   ├── backgrounds.js
-│       │   │   ├── hair
-│       │   │   │   ├── bangs.js
-│       │   │   │   ├── base.js
-│       │   │   │   ├── beard.js
-│       │   │   │   ├── color.js
-│       │   │   │   ├── flower.js
-│       │   │   │   ├── index.js
-│       │   │   │   └── mustache.js
-│       │   │   ├── index.js
-│       │   │   ├── prefill.js
-│       │   │   ├── sets.js
-│       │   │   ├── shirt.js
-│       │   │   ├── size.js
-│       │   │   └── skin.js
-│       │   ├── constants.js
+│       ├── constants.js - defines max health, level, and stat points
+│       ├── content - js to handle game elements
+│       │   ├── appearance - js to handle appearance
+│       │   ├── constants.js - item, events, classes, gear lists
 │       │   ├── faq.js
 │       │   ├── gear
-│       │   │   ├── armor.js
-│       │   │   ├── back.js
-│       │   │   ├── body.js
-│       │   │   ├── eyewear.js
-│       │   │   ├── gear-helper.js
-│       │   │   ├── head-accessory.js
-│       │   │   ├── head.js
-│       │   │   ├── index.js
-│       │   │   ├── sets
-│       │   │   │   ├── armoire.js
-│       │   │   │   ├── base.js
-│       │   │   │   ├── healer.js
-│       │   │   │   ├── mystery.js
-│       │   │   │   ├── rogue.js
-│       │   │   │   ├── special
-│       │   │   │   │   ├── index.js
-│       │   │   │   │   ├── special-backer.js
-│       │   │   │   │   ├── special-contributor.js
-│       │   │   │   │   └── special-wondercon.js
-│       │   │   │   ├── warrior.js
-│       │   │   │   └── wizard.js
-│       │   │   ├── shield.js
-│       │   │   └── weapon.js
-│       │   ├── index.js
+│       │   ├── index.js -
 │       │   ├── mystery-sets.js
 │       │   ├── spells.js
 │       │   └── translation.js
 │       ├── count.js
 │       ├── cron.js
 │       ├── fns
-│       │   ├── autoAllocate.js
-│       │   ├── crit.js
-│       │   ├── cron.js
-│       │   ├── dotGet.js
-│       │   ├── dotSet.js
-│       │   ├── getItem.js
-│       │   ├── handleTwoHanded.js
-│       │   ├── index.js
-│       │   ├── nullify.js
-│       │   ├── predictableRandom.js
-│       │   ├── preenUserHistory.js
-│       │   ├── randomDrop.js
-│       │   ├── randomVal.js
-│       │   ├── ultimateGear.js
-│       │   └── updateStats.js
 │       ├── i18n.js
 │       ├── index.js
 │       ├── libs
-│       │   ├── appliedTags.js
-│       │   ├── countExists.js
-│       │   ├── dotGet.js
-│       │   ├── dotSet.js
-│       │   ├── encodeiCalLink.js
-│       │   ├── friendlyTimestamp.js
-│       │   ├── gold.js
-│       │   ├── index.js
-│       │   ├── newChatMessages.js
-│       │   ├── noTags.js
-│       │   ├── percent.js
-│       │   ├── planGemLimits.js
-│       │   ├── preenHistory.js
-│       │   ├── preenTodos.js
-│       │   ├── refPush.js
-│       │   ├── removeWhitespace.js
-│       │   ├── silver.js
-│       │   ├── splitWhitespace.js
-│       │   ├── taskClasses.js
-│       │   ├── taskDefaults.js
-│       │   ├── updateStore.js
-│       │   └── uuid.js
-│       ├── ops
-│       │   ├── addPushDevice.js
-│       │   ├── addTag.js
-│       │   ├── addTask.js
-│       │   ├── addWebhook.js
-│       │   ├── allocate.js
-│       │   ├── allocateNow.js
-│       │   ├── blockUser.js
-│       │   ├── buy.js
-│       │   ├── buyMysterySet.js
-│       │   ├── buyQuest.js
-│       │   ├── buySpecialSpell.js
-│       │   ├── changeClass.js
-│       │   ├── clearCompleted.js
-│       │   ├── clearPMs.js
-│       │   ├── deletePM.js
-│       │   ├── deleteTag.js
-│       │   ├── deleteTask.js
-│       │   ├── deleteWebhook.js
-│       │   ├── disableClasses.js
-│       │   ├── equip.js
-│       │   ├── feed.js
-│       │   ├── getTag.js
-│       │   ├── getTags.js
-│       │   ├── hatch.js
-│       │   ├── hourglassPurchase.js
-│       │   ├── index.js
-│       │   ├── openMysteryItem.js
-│       │   ├── purchase.js
-│       │   ├── readCard.js
-│       │   ├── rebirth.js
-│       │   ├── releaseBoth.js
-│       │   ├── releaseMounts.js
-│       │   ├── releasePets.js
-│       │   ├── reroll.js
-│       │   ├── reset.js
-│       │   ├── revive.js
-│       │   ├── score.js
-│       │   ├── sell.js
-│       │   ├── sleep.js
-│       │   ├── sortTag.js
-│       │   ├── sortTask.js
-│       │   ├── unlock.js
-│       │   ├── update.js
-│       │   ├── updateTag.js
-│       │   ├── updateTask.js
-│       │   └── updateWebhook.js
+│       ├── ops - js for game operations
 │       ├── public
 │       │   ├── config.js
 │       │   ├── directives.js
@@ -238,17 +117,6 @@ habitrpg/
 │   │               ├── POST-tasks.test.js
 │   │               └── PUT-tasks_id.test.js
 │   ├── api-legacy
-│   │   ├── api-helper.js
-│   │   ├── challenges.js
-│   │   ├── chat.js
-│   │   ├── coupons.js
-│   │   ├── inAppPurchases.js
-│   │   ├── party.js
-│   │   ├── pushNotifications.js
-│   │   ├── README.md
-│   │   ├── score.js
-│   │   ├── subscriptions.js
-│   │   └── todos.js
 │   ├── common
 │   │   ├── algos.mocha.js
 │   │   ├── count.js
