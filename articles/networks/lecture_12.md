@@ -212,6 +212,8 @@ In the above picture,
 * P1 has sequence number 100, and ACK number 100
 * P2 has sequence number 200, and ACK number 200
 
+**initial sequence number (ISN)**: the first sequence number. In the above picture, ISN=0.
+
 **sender/receiver accepts a packet as long as sequence number of packet is in its window**
 
 
