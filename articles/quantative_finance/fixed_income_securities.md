@@ -37,7 +37,51 @@ Bonds generally offer a lower return on investment because they guarantee income
 
 bonds are a type of fixed-income security
 
+##### Features of a bond
+The *principal*, *maturity*, and *coupon* of a bond are fixed.
+  * principal - original loan value
+  * maturity - when is principal to be paid out
+  * coupon - annual interest rate paid on a bond
 
+In the US treasury, there are several categories of bond maturities
+  * very short - **Money Market instruments** have maturities of less than a year
+  * short - **bills** mature between 1 - 5 years
+  * medium - **notes** mature between 6-12 years
+  * long - **bonds** mature in more than 12 years
+
+
+There are also various types of coupons.
+  * zero coupon bond - bond that pays no coupons
+  * fixed coupon bond - bond that pays fixed amount per time period
+  * floating rate bond - bond that payed a fixed spread above a money market reference rate.
+    * for example, a bond can pay out USD LIBOR + 0.20%. Thus the market reference is USD LIBOR and the fixed rate about it is the 0.20%.  
+    * USD LIBOR is avg interbank interest rate bank in the London money market, which trades in USD. Yes. London.
+
+
+##### Yield
+yield is the rate of return from investing in a bond
+
+yield to maturity(YTM) is the total return anticipated on a bond if the bond is held until the end of its lifetime.
+
+current yield is annual interest payment divided by the current market price of the bond. This represents the return an investor would expect if they purchased the bond and held it for a year.
+
+
+##### credit rating
+probability that the bondholders will receive the amounts promised at the due dates.
+
+an issuer that is more credit worthy will be able to obtain a lower yield for its bonds.
+
+The US Treasury bonds are often deemed the safest investment opportunity, and could be used to determine a risk-free interest rate.
+
+
+##### Bond versus Stock
+Bonds and stocks are often compared.
+
+A bond is a form of a debt that the issuing entity promises to repay at some point of the time in future.
+
+A stock is a share in the ownership of a business.
+
+Thus there is a large difference.
 
 ### debt security
 debt security = issuer owes holder a debt.
