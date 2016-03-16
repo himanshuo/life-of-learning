@@ -88,7 +88,7 @@ If the SYN-ACK packet is lost, then client will get no response and will retry. 
 **The ACK packet is verified by the first data packet**. The first data packet contains extra information in it to allow the server to know whether the ACK packet is lost or delayed. If it is lost or delayed, the server/client simply stop caring about it.
 
 
-##### 3 way handshake when ACK packet is lost   
+### data transfer when ACK packet is lost   
 IMAGE
 
 Steps:
@@ -105,4 +105,56 @@ Steps:
   * it pulls 1000 bytes, representing only the data part of the packet
 4. client sends another request
   * sequence number 9001
-  * ACK 15001 because  
+  * ACK 15001 because 15000 is the last packet sent from server   
+  * 'A' ACK, 'P' PUSH
+5. server responds
+  * seq 15001 because previous seq that server sent was 15000.
+  * ack 10001 because previous packet the the server recieved ended on 10000. 10000+1=10001.
+  * 'A' ACK because acknowledging previous packet
+  * 'P' PUSH because sending data
+  * sending 2000 bytes of data in this case
+6. client responds
+  * seq 10001 because current packet starts on 10001
+  * ack 17001 because previous packet server sent ended on 17000. 17000+1=17001.
+  * 'A' acknowledgement. No 'P' because this is not sending any data.
+
+Fun Hint: packets that are sent that have no data in them (SYN, SYN-ACK, ACK) have data size 0. Thus following packets will have previous_packet_seq + 1.
+
+Fun Hint: packets that are sent after a data packet will have x data size. Thus the packet will have seq previous_packet_seq + x (this accounts for the fact that the previous_packet_seq number contributes to the packet size. Thus no +1 is needed.)
+
+Piggybacking is shown in this picture whenever you have both 'A' and 'P' in the same packet.
+
+### Connection Termination
+There are 2 ways to close the connection
+  * 3 way handshaking
+  * 4 way handshaking (also called half-close)
+    * this is when client wants to close the connection but server still has something to send
+
+#### 3 way handshaking
+IMAGE
+
+Steps:
+
+1. **active close** by client means that the client initiates closing of the connection.
+2. the client transport sends the closing packet
+  * 'F' for FIN means client is initiating the close
+3. servers process sees the FIN packet by the client and allows the transport layer to start closing the connection. The server process telling the server transport to do this is called **passive close**.
+4. the server sends the response
+5. client sees the server response on the client transport and does a **connection close**
+6. client sends a final packet.
+7. upon seeing final packet in server transport, server does a connection close.
+
+If the last packet fails, then we simply don't care, as per the specifications. The server just closes itself eventually.
+
+
+FUN FACT: if you get confused about what the SEQ is, just remember that the previously recieved packet must have had a ACK value. That value is the same as the SEQ value you are currently sending.
+
+##### window size
+Window size for sender is entirely determined by receiver. The receiver tells the sender what window size it should have.
+
+Why? Because only the receiver knows what an effective window size would be for it to receive packets. The criteria that the receiver uses is whatever the window size can be used to do congestion control and flow control effectively.
+
+IMAGE
+
+* when the left edge of the window moves right, the window closes
+* when the right edge of the window moves right, the window opens
