@@ -30,6 +30,9 @@ Locations:
 * Indus Valley Civilization is in northwest India (border of India/Pakistan)
 * Ganges River is in Northeast India
 
+
+### Ancient Civilizations (2000-500 BCE)
+
 ##### Indus Valley Civilization
 ![](overview-images/5483547a4fb8cab6039d5c85e3af1e68.png)
 
@@ -50,4 +53,27 @@ It's key features were
 * multistoried houses
 * municipal system
 
-The civilization started to gradually decline around 1700 BCE. It is unclear why. The cities were simply abandoned overtime. 
+The civilization started to gradually decline around 1700 BCE. It is unclear why. The cities were simply abandoned overtime.
+
+
+##### Vedic Period(1500 BCE - 500 BCE)
+The Vedic period is when the start of modern day Hindi culture gets started. The Indo-Aryan culture of north-west India sprang up during this time period. The Rigveda (oldest Vedic text and Hindu sacred text) was written during this time. The text describes the culture of this time.
+
+The four varnas, or social classes, sprang up around this time.
+
+![](overview-images/527e7777ec0f53cd90ef39eab32ab3e7.png)
+
+Notably, the vedic culture started in north-west India, and then expanded south. With this expansion, the indiginous people of the south became excluded from the culture.
+
+The small tribal units and fiefdoms turned into monarchial, state level polities. As the vedic culture spread, sanskritization started to occur. Sanskritization is people starting to adapt their local culture to religious and social life as described by Brahmanic norms.
+
+**Kuru kingdom**  
+The first state-level society of the Vedic society thus became the Kuru kingdom. They are the ones to start the iron age of India. They were in the northern part of the ganges river.
+
+**Panchala kingdom**  
+When the Kuru kingdom started to decline, the vedic center of India moved to the Panchala kingdom. It was to the east of the Kuru Kingdom    
+
+**Videha kingdom**  
+During the late Vedic period, the Videha kingdom emerged as a new Vedic culture. It was to the east of the Panchala kingdom, in modern day Bihar and Nepal.
+
+The Mahabharata and Ramayana epics both were created during this time.
