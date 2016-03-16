@@ -52,4 +52,57 @@ Features
 3. connection termination
 
 
-### connection 
+### 3 way handshaking for TCP
+IMAGE
+
+Key:
+  * client and server both have a process running and a transport layer that handles the sending of communications between the two
+  * each of the boxes that are being sent across are called **segments** in the transport layer.
+Steps:
+
+1. server goes through **passive open**.
+  * this just means that the server is going to allow connections. The passive part means that the server is listening for connections rather than making them.
+  * notably, the server process has to tell the transport process to start listening
+2. **active open** for client
+  * client makes a connection to server
+  * the sequence number is random
+  * no ack number
+  * 's' means that it is a SYN packet. The 'syn' flag is 1.
+3. server responds with ACK+SYN
+  * seq is random
+  * ack is 1+last byte of current packet thus 1+8000=8001
+  * 's' SYN
+  * 'A' ACK
+4. the transport layer of the client sends a syn to finalize the connection
+  * seq is 8001 because previous seq + 1 = 8000+1=8001
+  * **ack = 15001 because it is acknowledging the packet that the server sent it. cur seq + 1 = 15000+1=15001**
+  * 'A' ACK
+
+
+You generally can refer to these packets as the SYN, SYN-ACK, ACK packets.
+
+If the SYN packet is lost, then the client will get no response and try again. Thus the SYN packet is verified by the SYN-ACK packet.
+
+If the SYN-ACK packet is lost, then client will get no response and will retry. At the same time, the server will never get a ACK packet and so will resend the SYN-ACK packet. Thus the SYN-ACK packet is verified by the ACK packet.
+
+**The ACK packet is verified by the first data packet**. The first data packet contains extra information in it to allow the server to know whether the ACK packet is lost or delayed. If it is lost or delayed, the server/client simply stop caring about it.
+
+
+##### 3 way handshake when ACK packet is lost   
+IMAGE
+
+Steps:
+
+1. assume connection has been established via 3-way handshake, however, the ACK packet is lost.
+2. client sends a request
+  * sequence number is 1+last byte of previous packet = 1+8000. Note that it is the same as the failed ACK packet (in the previous image).
+  * ACK number is 15001 to acknowledge the SYN-ACK packet from the server (in previous image).
+  * 'A' for ACK
+  * 'P' for PUSH (assuming this is a multimedia type transmission so push it out right away)
+  * data part uses up bytes 8001 to 9000. **payload size = total length - header length**. **header length = IP header length + TCP header length**.
+    * Note, that the TCP header already contains total length so you never really have to actually do the header length = IP header + TCP header calculation.    
+3. server process *pulls* the data from the server transport.
+  * it pulls 1000 bytes, representing only the data part of the packet
+4. client sends another request
+  * sequence number 9001
+  * ACK 15001 because  
