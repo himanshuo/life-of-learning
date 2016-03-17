@@ -60,4 +60,7 @@ ACK:
 
 rules for generating acknowledgements
   * when A sends a data segment to B, A must include (piggyback) an ACK given the next sequence number it expects to receive
+    * reduces traffic
+  * when receiver has no data to send and it receives an in order segment and the previous segment has already been acknowledged, the receiver delays sending an ack segment until another segment arrives or until a period of time (eg. 500 ms) has passed
+    * saves number of ack segments
   * 
