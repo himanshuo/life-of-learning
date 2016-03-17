@@ -50,6 +50,8 @@ Features
   * 3-way handshaking
 2. data transfer
 3. connection termination
+  * 3 way handshaking
+  * 4 way handshaking (half-close)
 
 
 ### 3 way handshaking for TCP
