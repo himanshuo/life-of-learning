@@ -30,5 +30,34 @@ sender will sent 0 window size to tell the reciever that it is no longer sending
   * solved via Nagels algorithm
 * reciever side
   * this is syndome on recieveer side. let solve the problem different.
+  * solved via a. clark's solution
+  * solved also by delay ACK
+    * creates another problem - timer will run out so will resend what it already sent
 
- 
+
+##### nagels algorithm
+max segment size(MSS)
+576 - 1500 bytes
+
+wait until ACK comes back or until max segment size is reached
+
+
+### Error Control for TCP
+Problems that can occur:
+  * corrupted segments
+  * lost segments
+  * out of order segments
+  * duplicates
+
+Tools:
+  * checksum
+  * timer
+  * acknowledgement segments
+
+ACK:
+  * cumulative ack's (positive)
+  * selective ack's (SACK's)
+
+rules for generating acknowledgements
+  * when A sends a data segment to B, A must include (piggyback) an ACK given the next sequence number it expects to receive
+  * 
