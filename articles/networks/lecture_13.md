@@ -158,3 +158,4 @@ IMAGE
 
 * when the left edge of the window moves right, the window closes
 * when the right edge of the window moves right, the window opens
+* *you do not want the distance between the two to be too small else you will have problems with how many packets you are acknowledging*
