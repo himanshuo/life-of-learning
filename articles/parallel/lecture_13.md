@@ -1,49 +1,73 @@
 Lecture 13 - MPI Basics
 ==========
+### What is MPI
+Message Passing Interface (MPI) is a set of standards for message passing systems.
+
 ### Message passing concepts
-link-level versus interface level - if you define something in link-level then you are basically affecting how references to things are creating. Not how the objects actually are.
+MPI is defined only at **interface-level**
+  * interface-level - if use things defined in .h file then you can combine your code with any other code that uses  the same .h file (same library)
+  * link-level - can combine program that has been compiled using some library and link the compiled code with other programs that use other implementations of the same compiled code
+  * the key difference is that if you are working with multiple platforms, then a data structure will look very different internally.  At the interface-level, all you are saying is that the data structures on the two systems must be named the same thing. At the link-level, the actual data structures internally must be the same.  
   * thus can't take something in MPI and port it to another platform
   * this means that you have to compile on multiple different programs
 
-nodes are connected by an interconnection network (IN)
+nodes are connected by an interconnection network
+  * a node has processors and memory
   * n nodes, k processes
-  * process are address space disjoin - processes share nothing
+  * the k processes are distributed among the n nodes
+  * processes are address space disjoint - processes share nothing
   * processes communicate by sending/receiving messages.
   * A message is an array of, possibly typed, bytes
-  * May be more than one process per node – but that is not relevant to model
+  * May be more than one process per node
   * data coercion - convert data from one format to another
-    * you have to do a lot of data coercion to work with multiple nodes
+    * you have to do a lot of data coercion to work with multiple nodes since each node can be a completely different platform
+    * thus it is really useful to have the bytes be typed as the conversion/coercion becomes much more mainstream
 
+##### physical view
 ![](lecture_13-images/ef6c1dd940bf9c5b39591652beda6b70.png)
-* processor talks to interconnection network
+* processors talk amongst each other using interconnection network
 
+##### logical view
 ![](lecture_13-images/5919cca23b81c9281cf1ead776815a85.png)
-* have processes 0-n-1.
-* looks like direct connection logically
-* can send any message to anything else
-* can send up to 256 bytes
-* each machine needs sufficient
+  * have processes 0 to (n-1)
+  * the processes are fully connected to each other - any process can talk to any other process
+  * looks like direct connection logically
+  * can send any message to any other node
+  * logically there seems to be few limitations and everything seems simple, but this is not the case as seen by the physical view. Still, the above notes logical view features are kept.
+    * one of the caveats is that there is usually a limit to how much data can be transferred logically. This allows the physical to not break completely.
+    * another caveat is that each machine needs sufficient memory to hold the messages coming into it
+
+
 
 ![](lecture_13-images/3b2ec4710990d6d4dc5ba61330a3af32.png)
-* to get data from left to right, you copy data from system to buffer.
-* then, buffer transfers to target machine buffer
-* target machine buffer then sends it to destination program
-* there can be more copying going around in this transfer that are not shown
-* if you send directly, then less copying
+  * to get data from left to right
+    1. copy data from left to buffer
+    2. transport buffer to another machines buffer
+    3. other machines buffer copies it over to the right machine
+  * there can be more copying going around in this transfer that are not shown
+  * if you send directly, then less copying
 
 ![](lecture_13-images/12864a0b979fab965699577d5b3014ef.png)
-* all processes happening in parallel
-* send to j -> receive from i takes time
+  * all processes happening in parallel
+  * "send to j" -> "receive from i" takes time
+  * it is key to understand that the time to transfer the data is very important. If this time is very slow, then it can make the program very slow.
 
-
-
-### MPI basics, init, send/receive
+### Basic MPI Pattern
 Send(addr destination, char * data, int length)
+  * used for sending message
+  * destination specifies destination address.
+  * data is just a raw pointer to data.
+  * length is the size of the data
+
+Send can be
   * Synchronous or asynchronous
     * Synchronous - blocks to until the buffer is full  
     * asynchronous - does not block
-    * randez-vous -
-  * Buffered or unbuffered - buffering means that you have more copying of data from one memory location to the buffer to the receiver
+      * randez-vous - if you send something and the buffer size is 0, then you cannot proceed until something receives. There is 0 buffer so can't just store it in the buffer.
+      * if buffer =1, then you can have 1 message in buffer thus 1 process can quickly just drop off in buffer and forget about it
+  * Buffered or unbuffered
+    * unbuffered can be beneficial since buffered requires more copying of data. You have to copy from src to buffer and then buffer to dest.
+    * thus, buffered is slower
   * Reliable or unreliable
     * MQ and TCP are reliable.
     * UDP/IP not reliable
@@ -54,30 +78,22 @@ Receive( addr * source, char * buf, int * length)
   * Buffered or non-buffered
   * From anyone, or from a particular source
 
-hint: It's good to set up a recieve and then check to see if message arrives.
+### Example MPI process
+Problem: how to get max age among numerous processes
 
-##### how to get max age among numerous processes
-
-assume multiple processes representing 1 person each  
-want to figure out max age
-
-key questions:
-* how many tasks there are?
-  * you can send broadcast and ask who exists. SLOW
-  * have all processes send to 1 master process
-
-You have to think about the algorithm you choose very carefully
-
-Possible ways
-* master/slave
-* ring
-* tree
+First step is to determine how many tasks there are.
+  * you can broadcast and ask who exists. This is slow because you will have 30 choose 2 messages (pairs of 2 from 30)!
+  * master/slave - have all processes send to 1 master process
+    * requires that all processes know some well known address
+  * ring
+  * tree
 
 ##### initialize MPI
 when mpi is run the number of processes is determined and fixed for the lifetimeof the program
-  -mpirun -np 16 myprog
+  * -mpirun -np 16 myprog
+  * mpicc will run mpi programs on rivanna
 
-each process is running a copy of your program
+each process runs a copy of your program
 
 each copy has its own global variables, stack, heap, and PC. It also has MPI library.
 
@@ -274,6 +290,8 @@ this is pleasingly parallel
 ### Homework 4
 `VERY HARD`
 Start as soon as possible.
+
+hint: It's good to set up a recieve and then check to see if message arrives.
 
 ##### Common problems people make in this hw
 * processes have to exchange information. do NOT have both processes waiting for each other.
