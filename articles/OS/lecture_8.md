@@ -1,6 +1,5 @@
 Lecture 8 - Process Synchronization
 =============
-
 ### race conditions
 A race condition when separate processes manipulate the same information at the same time and so it becomes difficult to determine what the actual value of the information should be.
 
