@@ -107,10 +107,10 @@ deadlock recovery
 * the current state of process
 
 
-SKIP ch6.
-going to do ch7.
+SKIP ch6 and.
+going to do ch8.
 
-ch 7 - memory management
+ch 8 - memory management
 
 
 logical-to-physical address binding/assignment
