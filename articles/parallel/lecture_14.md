@@ -260,53 +260,62 @@ Thus the considerations you have to think about are:
       * hardware trick: you have to establish the connection by sending packets. if message is short enough, then simply send the message instead of establishing path.
 
   * this equation usually only holds on an idle network
-  * this equation is really a function of application topology, network topology, and number of processors. 
+  * this equation is really a function of application topology, network topology, and number of processors.
 
-
-As grain size(time spend computing / time spent communicating) shrinks, performance decreases.
+##### key ideas
+grain size = time spent computing / time spent communicating
+  * As grain size shrinks (more time spent communicating), performance decreases.
 
 As alpha increases, performance goes down.
+
 2 networks can exist in super computer.
   * alphas can be very different between networks
   * not all applications are equally sensitive to alpha
   * if length of message is long, then large alpha affects program a lot.
-  * if focus of application is on communication, then large alpha affects program a lot
+  * if focus of application is on communication, then large alpha affects program a lot more
 
-If we hold the amount of computation fixed and increase the nmber of processors then
+`if alpha is relatively larger than beta (high initial cost), then you want to focus on reducing the number of messages sent`.
+
+`if beta is relatively larger than alpha (high cost with increasing data size), then you want to focus on reducing how much data is sent per communication`
+
+
+If we hold the amount of computation fixed and increase the number of processors then
 
 
 ![](lecture_14-images/c7d8d1b72ffd085000e349779d003c83.png)
+  * this is a very typical performance curve
+  * for each given problem size (100x100 or 200x200...)
+    * performance is linear at first
+    * then it plateaus
+    * then you have too much communication and it slows down
+    * thus once you are at peak, you should *no  longer add processors*
+  * increasing problem size has same thing, but at larger increments.
 
 
-### Moral of story
+##### Moral of story
 we must balance computation ratio with relative speed of the network and processor
 
-YAGG - larger grain imples less parallelisls
+YAGG - larger grain implies less parallelism
 
 
 ### hw help
 if you do it as horizontal blocks(rows), then it is much easier.
 
 iters_per_cell - we  have 2 plates (old,new). he is saying that you do an extra for loop
-    the point is to make computations slower. we are trying to make it more granular. observer differences in parameters.  
+  * the point is to make computations slower. we are trying to make it more granular. observer differences in parameters.  
+
     for i iterations:
-      for ...  <- add this. DO NOT do this extra dumb operation in the most inner for loop else it will.
+      for ...  <- add this. DO NOT do this extra dumb operation in the most inner for loop else it will. no useful work being done. just redoing work already done.
         do_iter
 
-boundary_thickness - you want extra row from bottom and top of row. Because you will need them from
-  ghost cells and boundary cells explained in book
-  whether this is a good idea or not is dependent on alpha
-    alpha is low on rivanna so less computation is better.
+boundary_thickness - you want extra row from bottom and top of row. Because you will need them from neighboring blocks.
+  * cur block needs to receive 1 row from below and 1 row from above.
+  * cur block needs to send top row up 1 block and bottom row down 1 block  
+  * ghost cells and boundary cells explained in book
+   * whether this is a good idea or not is dependent on alpha
+    * alpha is low on rivanna so less computation is better. You want to send more messages.
 
 we are doing 1d decomposition
-
-
-first thing to do is cache block
-then,
-
-for iters:
-  do communication
-  compute
 
 avoid zipper
 
@@ -314,6 +323,3 @@ to change granularity level, change iters_per_cell past 1.
 
 Ways to make it scream
 * asynchronous send and asynchronous receive
-
-
-### Sample MPI programs
