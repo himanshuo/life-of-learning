@@ -93,11 +93,11 @@ when mpi is run the number of processes is determined and fixed for the lifetime
   * -mpirun -np 16 myprog
   * mpicc will run mpi programs on rivanna
 
-each process runs a copy of your program
+each process runs a copy of your program (SIMD)
 
 each copy has its own global variables, stack, heap, and PC. It also has MPI library.
 
-KEY: `do not mess with argc and argv before calling MPI_Init`
+For each copy, you want to first call MPI_Init
 
     MPI_Init (&argc, &argv);
 
@@ -105,21 +105,20 @@ KEY: `do not mess with argc and argv before calling MPI_Init`
 * This is not necessarily first executable statement.
 * You need to allow system to do any necessary setup.
 * establishes default communicator
+* `do not mess with argc and argv before calling MPI_Init`
 
-###### Communicators
-Communicator: opaque object that provides message-passing environment for processes
 
-We only have to use MPI_COMM_WORLD
-
-MPI_COMM_WORLD
-  * default communicator
-  * Includes all processes
-
-We can create new communicators, but won't in this class
+##### Communicators
+Communicator - communication context. this simply provides the message-passing environment for processes to talk to each other
+  * default: MPI_COMM_WORLD
+  * can create new communicators, but won't for this class
+  * a given communicator will be for all processes on system
+  * a communicator generally is a subset of all tasks to talk to. MPI_COMM_WORLD is for all tasks
 
 ![](lecture_13-images/ab9f7b6abe158a75c5cfea38cde3bfab.png)
-* note each process is address space disjoint
-* you can rank processes
+  * default MPI_COMM_WORLD communicator
+  * each process is address space disjoint
+  * each process has a rank (id)
 
 
 ##### Determine number of processes
@@ -137,12 +136,12 @@ We can create new communicators, but won't in this class
 * rank is returned through second argument
 * process rank range is 0-(p-1)
 
-##### Shuttingdown mpi
+##### Shutting down MPI
 
     MPI_Finalize()
 
 * Call after all other MPI library calls
-* Allows system to free up MPI resources
+* Allows system to free up MPI resources (shuts down all hardware channels )
 
 
 ##### Sample program
@@ -169,8 +168,7 @@ We can create new communicators, but won't in this class
       MPI_Finalize();
     }
 
-NOTE: we have NO CLUE what the order of the print statements is
-
+We have no clue about what order the print statements will occur
 
 ##### MPI_Send
 
@@ -183,12 +181,14 @@ NOTE: we have NO CLUE what the order of the print statements is
       MPI_Comm      comm
     )
 
-all of these args are contiguous in memory
-* datatype
-* dest - rank of destination
-* tag -
-* comm -
+MPI_Send sends data from one process to another
+  * message  - contiguous vector of bytes to send
+  * datatype - MPI data type
+  * dest - rank of destination
+  * tag - optional tag for message. A process can say that it only wants to receive messages with a given tag
+  * comm - communicator
 
+The total amount of data that is sent is sizeof(datatype) * amount of objects to send
 
 This is a Synchronous send. You know that the message has been sent when the function returns. Thus, when you return from send, you can use the buffer again.
 
@@ -208,10 +208,8 @@ If this were asynchronous send, then you have to wait until your data is sent.
           MPI_Status   * status
     )
 
-* datatype
 * count - number of data types
-* THUS, max amount of memory being sent are: datatype * count
-
+* THUS, max amount of memory being sent are: sizeof(datatype) * count
 
  You can use status field to know whether asynchronous call is done or not.
 
@@ -233,14 +231,17 @@ If this were asynchronous send, then you have to wait until your data is sent.
     …
 
 
-MUST BE IN CORRECT ORDER. recieve before send. if you fail to do this, then deadlock will occur.
+`MUST BE IN CORRECT ORDER`. Receive before Send. If you fail to do this, then deadlock will occur.
 
 
 ##### inside MPI_send and MPI_Recv
 
 ![](lecture_13-images/e5cf63a97af49fbd58fb0aa550ea2437.png)
-????
-
+* left program memory sends data to left system buffer
+  * push operation
+* left system buffer -> right system buffer
+* right system buffer -> right program memory
+  * pull operation
 
 ##### Return from MPI_Send
 Function blocks until message buffer free
@@ -264,7 +265,7 @@ KEY: bad code may work on small sample size. the deadlock will likely not occur 
 
 Deadlock: process waiting for a condition that will never become true
 
-Easy to write send/receive code that deadlocks
+Easy to write send/receive code that deadlocks. A few ways a deadlock will occur are:
   * Two processes: both receive before send
   * Send tag doesn’t match receive tag
   * Process sends message to wrong destination process
@@ -275,16 +276,21 @@ Easy to write send/receive code that deadlocks
 This is a simple static work distribution with no communication.
 
 ##### Circuit satisfiability
-Circuit satisfiability is NP-complete
-No known algorithms to solve in polynomial time
-We seek all solutions
-We find through exhaustive search
-16 inputs  65,536 combinations to test
+Circuit satisfiability is NP-complete. There are no known algorithms to solve in polynomial time. We find through exhaustive search of all possible solutions.
+
+16 inputs -> 65,536 combinations to test
 
 ![](lecture_13-images/9be1320487e1e8b575ce229076ba71eb.png)
-this is pleasingly parallel
+  * this is pleasingly parallel
 
-
+##### Solution using cyclic (interleaved) allocation
+assume p processes  
+each process gets every pth piece of work. For example,
+* p0: 0,5,10
+* p1: 1,6,11
+* p2: 2,7
+* p3: 3,8
+* p4: 4,9
 
 
 ### Homework 4
@@ -296,16 +302,20 @@ hint: It's good to set up a recieve and then check to see if message arrives.
 ##### Common problems people make in this hw
 * processes have to exchange information. do NOT have both processes waiting for each other.
   * you want half of processes to wait, and then other half send
-  * mistake people make is that you exchange data sequentially left to right. This is slow.
+  * if you exchange data sequentially left to right, then things will be super slow - called *zipper*
+* we have NO CLUE what the order of the print statements in the program will be
 
 
 
-
-
-
-#### Other Tips
+##### Other Tips
 * start with 8 processes and work up from there
 * want to make sure logic works for boundaries and then
 * to get all data in 1 file
   * either figure out offset for each node's content in the file
   * simpler thing, at end of computation, node dumps to file  
+* put fflush() after every printf
+* it is much cheaper to send a vector than a series of scalars
+* when in doubt, minimize number of scalars
+* Usually it is just as fast to reduce on vector as on scalar
+* all processes **must** get to reduction point. If one of the processes doesn't have this point, then program will deadlock.
+* REQUIRED: show time, perfect speed improvement (original time / num processors), and speedup in tables and even charts.
