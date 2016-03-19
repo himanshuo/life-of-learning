@@ -321,3 +321,4 @@ to change granularity level, change iters_per_cell past 1.
 
 Ways to make it scream
 * asynchronous send and asynchronous receive
+* you have to pipeline, so that each block asynchronously communicates the top and bottom rows and then does its internal communications 
