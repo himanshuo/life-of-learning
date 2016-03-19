@@ -315,8 +315,6 @@ boundary_thickness - you want extra row from bottom and top of row. Because you 
    * whether this is a good idea or not is dependent on alpha
     * alpha is low on rivanna so less computation is better. You want to send more messages.
 
-we are doing 1d decomposition
-
 avoid zipper
 
 to change granularity level, change iters_per_cell past 1.
