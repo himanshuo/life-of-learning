@@ -231,7 +231,7 @@ Assume you are process i. Only n processes can be the requesting to go into crit
         j = (j+1) %n;
       }
 
-      
+
     }while(true);
 
 
@@ -243,3 +243,6 @@ Assume you are process i. Only n processes can be the requesting to go into crit
 # monitors
 # Synchronization examples
 # Alternative Approaches
+
+# Topics Covered in Class
+I covered the following topics in chapter 5. Race condition and atomic execution, hardware solution (enable and disable timer run out interrupt and test-and-set), software solution including Peterson's solution, semaphores (general/counting semaphores and binary semaphores), producer-consumer problem, readers-writers problem, dining philosophers problem, monitors (entry points, condition variables, and signaler queue), C code for the producer-consumer problem using condition variables.

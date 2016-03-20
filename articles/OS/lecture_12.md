@@ -108,9 +108,9 @@ deadlock recovery
 
 
 SKIP ch6 and.
-going to do ch8.
+going to do ch7.
 
-ch 8 - memory management
+ch 7 - memory management
 
 
 logical-to-physical address binding/assignment
