@@ -293,32 +293,20 @@ sharing -
 protection
 
 
-##### Review Questions Answered
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-
 ### Topics covered in Lecture
-I covered topics today (03/15) in class for logical-to-physical address binding including static binding and dynamic binding, contiguous memory allocation including fixed/static partitioning and variable/dynamic partitioning, garbage collection, coalescing, and implementation of variable partitioning using a doubly-linked list with tag fields. You can also find the materials in the book in chapter 7 (sections 7.1 and 7.3).
+* logical-to-physical address binding including static binding and dynamic binding,
+* contiguous memory allocation including fixed/static partitioning and variable/dynamic partitioning,
+* garbage collection,
+* coalescing, and
+* implementation of variable partitioning using a doubly-linked list with tag fields.
+* You can also find the materials in the book in chapter 7 (sections 7.1 and 7.3).
 
-I will cover topics this coming Thursday (03/17) for bitmap approach for implementing variable partitioning, the buddy system, and virtual memory management (paging systems). You can also find the materials in the book in chapters 7 and 8 (sections 7.5 and 8.8).
+* bitmap approach for implementing dynamic/variable partitioning
+* the buddy system,
+* virtual memory management (paging systems).
+* You can also find the materials in the book in chapters 7 and 8 (sections 7.5 and 8.8).
 
-I will also review project 2 this coming Thursday.
+* review project 2
 
-I reviewed project 2 today (03/17). I also covered topics for the bitmap approach for implementing dynamic/variable partitioning and the buddy system.
-
-The next topic I will cover this coming Tuesday (03/22) will be chapter 8 (virtual memory management) on paging systems. You can find the materials in the book in sections 7.5, 7.6, 8.1, and 8.2.
+* chapter 8 (virtual memory management) on paging systems.
+* sections 7.5, 7.6, 8.1, and 8.2.
