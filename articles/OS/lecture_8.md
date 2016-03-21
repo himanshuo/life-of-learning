@@ -9,6 +9,7 @@ There are 2 reasons why a race condition occurs
 
 ### Example revealing shared resource usage race condition
 Note that this is actually from end of lecture 7, but yea, its a totally new topic so i put it here.
+
     Process 1:
       while(1){
         disable();
