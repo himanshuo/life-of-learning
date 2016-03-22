@@ -66,3 +66,21 @@ phi(l) = probability of message crossing exactly l links
 V_cl = link message intensity
 LV = sum(l=1 -> l=l_max, l*phi(l))
 V_cl = LV / num links
+
+
+##### uniform
+BUS
+
+lmax = 1
+phi(1) = 1
+LV = 1
+
+V_cl = 1/1 = 1
+
+optimal granularity is thus: S_pe / S_cl = V_cl / V_pe = 1 / (1/k) = k
+bus doesnt scale because ???
+
+
+
+##### sphere of locality
+##### decreasing probability
