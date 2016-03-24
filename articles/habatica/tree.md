@@ -1,5 +1,5 @@
 habitrpg/
-├── bower.json - js package manager  
+├── bower.json - js package manager    
 ├── common - shared resources useful for multiple habatica repos.
 │   ├── audio  - mp3 and ogg files for various themes  
 │   ├── browserify.js
