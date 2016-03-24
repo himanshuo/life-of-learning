@@ -48,7 +48,7 @@ granularity
   * thus V_pe =1/k (visit ratio)
     * have k nodes. What is probability that you will go to a particular node?
       * uniform routing: 1/k
-      * ? routing: 1/k because you will pick among only k things. Nodes are uniformmaly distributed
+      * ? routing: 1/k because you will pick among only k things. Nodes are uniformaly distributed
         * assumoption: network looks same no matter where you are
 * V_peS_pe = S_pe / k
 * assertion: "system is balanced when V_peS_pe = V_clS_cl"
