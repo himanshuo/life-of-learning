@@ -4,9 +4,8 @@ Process Synchronization - ch 5
 # Background
 
 Processes can execute concurrently, but may be interrupted at any time therefore only partially completing execution.
-Concurrent access to shared data may result in data inconsistency.
 
-Maintaining data consistency requires ways to ensure orderly execution of cooperating processes.
+Concurrent access to shared data may result in data inconsistency. Maintaining data consistency requires ways to ensure cooperating processes are executed in the order that they were intended.
 
 For example, consider the producer/consumer problem using a counter:
 
@@ -70,6 +69,15 @@ Thus bounded waiting just means a limit on the number of processes that can be i
 ##### preemptive vs. non-preemptive
 Note that the solution has two different approaches depending on whether the kernel is preemptive or non-preemptive.
 
+preemptive = process can be preempted (moved from runnng state to blocked state) by kernel
+
+non-preemptive = process runs until it exits kernel mode, blocks or voluntarily yields CPU.
+
+Both are similar. Both refer to moving from running to blocked state. Difference is that preemptive means that *something other than the process (namely the kernel)* is allowed to preempt the process. non-preemptive means that only the process can do it.
+
+
+A non-preemptive kernel is essentially free from race conditions because only the kernel process running can change the data while the kernel process is running.
+
 ### Petersons solution
 assume that load and store are machine-language instructions that are atomic (cannot be interrupted).
 
@@ -95,7 +103,7 @@ Also assume that there are only two processes i and j. This can be extended to m
 
       critical section
 
-      flag[i] = false;// process i is no longer ready to run the critical section
+      flag[i] = false;// process i is no longer ready to run the critical
       remainder section  
     }while(true);
 
@@ -103,7 +111,7 @@ This meets the three required criteria to be a true solution to the critical-sec
 
 * mutual exclusion - only 1 process enters into critical section at a time because Process i only enters critical section if either flag[j]=false (other processes are not in critical section) or if turn=i (it is process i's turn to enter critical section)
 * progress - always looking for next process to come into critical section
-* bounded-waiting - there is a list that determines how many processes can be waiting for chance to go to critical section
+* bounded-waiting - there is a list that determines how many processes can be waiting for chance to go to critical section. That list is the flag array. At the same time, turn has a limited range of values.
 
 # Synchronization Hardware
 many system provide hardware support for implementing the critical section code
@@ -112,7 +120,8 @@ many system provide hardware support for implementing the critical section code
 All of these solutions are based on idea of **locking** - protecting critical regions via locks
 
 But how do you have locks in a uniprocessor? you disable interrupts.
-* currently current code would run without preemption
+  * currently running code would execute without preemption
+  * this is inefficient on multiprocessor systems.
 
 You generally dont want to have concurrent code in uniprocessors because the overhead of locking (by disabling interrupts) makes things too slow. Plus this is not scalable.
 
@@ -133,6 +142,7 @@ Two ways to implement atomic hardware instructions
       release lock
         remainder section
     } while (TRUE);
+
 
 ### test_and_set lock
 
@@ -156,15 +166,15 @@ Two ways to implement atomic hardware instructions
 To understand this, think a single process is trying to access the lock to run its critical section. There are numerous other processes that exist out there. The lock variable will either be true or false when the code for this process starts running.
 
 When lock starts out as false
-1. lock=false means that the lock is open and any process, including the current process, can use it.
-2. the while(...) will return false and thus the critical section in the code can be run
-3. the test_and_set function will make the value of lock be true thus signaling to others that the lock is not available for them to use
-4. when the critical section is done, the lock will be set to false again signaling that the lock is available for use to others
+  1. `lock=false` means that the lock is open and any process, including the current process, can use it.
+  2. the `while(...)` will return false and thus the critical section in the code can be run
+  3. the test_and_set function will make the value of lock be true thus signaling to others that the lock is not available for them to use
+  4. when the critical section is done, the lock will be set to false again signaling that the lock is available for use to others
 
 When lock starts out as true
 1. lock=true means that some other process is using the lock, thus the current process can't use it
-2. the while(...) evaluates to true thus you cannot move forward
-3. the * target= true line in the test_and_set code is basically doing nothing right now since the lock is already true.
+2. the `while(...)` evaluates to true thus you cannot move forward
+3. the `* target=` true line in the test_and_set code is basically doing nothing right now since the lock is already true.
 4. the process will continue to check repeatedly until the lock becomes false.
 5. once the lock is false, the section above on when locks starts out as false applies.  
 
@@ -209,15 +219,16 @@ compare_and_swap allows you to know which process is locking. The expected value
 
 
 ### Bounded-waiting mutual exclusion with test_and_set
-Assume you are process i. Only n processes can be the requesting to go into critical section state. This state is called the 'waiting' state as defined by the the 'waiting' array in this program.  
+Assume you are process i. Only n processes can be in the 'requesting to go into critical section' state. This state is called the 'waiting' state as defined by the the 'waiting' array in this program.  
 
+    //assume inside process i
     do{
       waiting[i] = true; //you are in waiting state
       // this section reduces to:
       // while(waiting[i] && test_and_set(&lock))
-      // which basically blocks until both
-      // 1. the lock is available for your use
-      // 2. you are in the waiting state
+      // which basically blocks unless
+      // 1. you are ready to go into the critical-section OR
+      // 2. it is your turn to go into the critical-section
       key=true;         
       while(waiting[i] && key){
         key = test_and_set(&lock)
@@ -235,11 +246,87 @@ Assume you are process i. Only n processes can be the requesting to go into crit
     }while(true);
 
 
+* this is thus basically the same as Peterson's solution but with different variable names and using a specific types of locks
 
 
 # Mutex Locks
+mutex lock has two key functions
+  * `acquire()` is used to acquire a lock
+    * blocks until you acquire the lock
+  * `release()` is used to release a lock
+  * both acquire and release are atomic
+
+mutex locks are commonly implemented using **busy-waiting**. Busy-waiting simply runs a while loop that runs for however it takes the condition to be true. An example of a lock that uses busy-waiting is a **spinlock**
+
+code for acquire
+
+    acquire() {
+     while (!available); //busy wait
+     available = false;
+    }
+
+code for release
+
+    release() {
+           available = true;
+        }
+
+code to use mutex lock
+
+    do {
+        acquire lock
+           critical section
+        release lock
+          remainder section
+     } while (true);
+
 # Semaphores
-# Classic problems of syncrhonization
+Semaphore S is just an integer variable that can only be accessed via `wait` and `signal` functions
+  * wait is also called P()
+  * signal is also called V()
+
+
+code for wait
+
+    wait(S){
+      while (s<=0); //busy wait
+      s--;
+    }
+
+
+code for signal
+
+    signal(S){
+      s++;
+    }
+
+wait(S)
+  * if S >=1 -> value--, caller proceeds
+  * if S <1 -> value--, calling thread is blocked and placed on a queue
+
+signal(S)
+  * if S >=1 -> S++, caller continues
+  * if S < 1 -> there are 2 cases:
+    * if no thread is waiting -> S is set to 1
+    * if there are threads waiting -> one thread is released
+
+##### counting semaphore
+integer value can range over an unrestricted domain
+
+##### binary semaphore
+integer value can only be 0 or 1
+  * this is the same as a mutex lock
+
+### semaphore implementation
+You can have the problem where the wait and signal functions are called at the same time.
+  * this is basically just the critical-section problem
+  * thus you can solve this problem using busy-waiting
+
+
+
+
+
+# Classic problems of synchronization
 # monitors
 # Synchronization examples
 # Alternative Approaches
