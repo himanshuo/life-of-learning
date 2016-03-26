@@ -1,8 +1,8 @@
-Chapter 1 - Introduction
-=========================
+Introduction to Operating Systems
+================
 Operating system is a program that manages a computer's hardware.
 
-![](chapter_1-images/4ec1bce8544f6e7ef5e0a7e9b99c7f58.png)
+![](intro-images/4ec1bce8544f6e7ef5e0a7e9b99c7f58.png)
 
 ### What Operating Systems do
 
@@ -34,7 +34,7 @@ CPU can load instructions only from memory so any programs that are run must be 
 
 Secondary storage (including hard disk drives) handles both of the issues with main memory, however, it has much slower access time.  
 
-![](chapter_1-images/1379b55c436db5037922adfb378ad380.png)
+![](intro-images/1379b55c436db5037922adfb378ad380.png)
 
 
 ### IO  Structure
@@ -145,7 +145,7 @@ Protection and security require being able to distinguish between users, usually
 ### Computing Environments
 ##### Traditional Computing
 
-### Key Terms (this list is NOT EXHAUSTIVE - i got lazy)
+### Key Terms
 
 *firmware* = EEPROM memory from where startup programs and other system programs are stored.  
 *middleware* = software frameworks that provide additional services to application developers.

@@ -20,10 +20,10 @@ The logical address space is made up of **base registers** and **limit registers
   * base register - minimum memory address user can access (closer to 0)
   * limit register - maximum memory address user can access (closer to max memory address possible)
 
-![](chapter_7-images/7b87ef1e5bab906412d1c588973ade50.png)
+![](main_memory-images/7b87ef1e5bab906412d1c588973ade50.png)
 
 
-![](chapter_7-images/15ba22bf118465ce9fc3b6228197fd6d.png)
+![](main_memory-images/15ba22bf118465ce9fc3b6228197fd6d.png)
   * shows how hardware addresses are protected using the base and limit registers  
 
 
@@ -51,7 +51,7 @@ The compiled code addresses are bound to relocatable addresses at three differen
     * this is where the base and limit registers come in play.
 
 ### There are multiple steps that occur when processing a User Program
-![](chapter_7-images/5535508b0cd1f16746c7728ec0b20d6f.png)
+![](main_memory-images/5535508b0cd1f16746c7728ec0b20d6f.png)
 
 ### Logical vs. Physical Address Space
 **logical addresses spaces are bound to physical address spaces**
@@ -72,7 +72,7 @@ There are many ways(or schemes) to do the mapping.
 User program deals with logical addresses only and never sees the real physical addresses
   * execution time binding occurs when reference is made to location in memory
 
-![](chapter_7-images/fa78ab88afee1d7d3ca1db2c9cbd089f.png)
+![](main_memory-images/fa78ab88afee1d7d3ca1db2c9cbd089f.png)
   * A sample simple scheme uses a relocation register which just adds a base value to address
     * physical memory addr = base register + virtual memory addr
 
@@ -113,7 +113,7 @@ ready queue - queue of ready-to-run processes which have memory images on disk. 
 
 The swapped process may not swap back in to the same physical addresses, however, the virtual address will remain the same.
 
-![](chapter_7-images/7aaf907086413177a90cc0e778074128.png)
+![](main_memory-images/7aaf907086413177a90cc0e778074128.png)
   * this image shows swapping
 
 ##### context switch time when swapping
@@ -164,7 +164,7 @@ The amount of multiprogramming you can do is limited by the number of partitions
   * **coalescing**  - combining newly freed memory with adjacent free partitions
 
 
-![](chapter_7-images/7bea52c6654512f8c9f3f793e7cdf854.png)
+![](main_memory-images/7bea52c6654512f8c9f3f793e7cdf854.png)
   * process 8 exits and creates a hole
   * process 5 arrives and is allocated some space
 
@@ -213,11 +213,11 @@ A problem is a collection of segments. A segment can be any of
   * symbol table
   * common block
 
-![](chapter_7-images/558ee2dd20ae3c5ac5af87b2537d20f3.png)
+![](main_memory-images/558ee2dd20ae3c5ac5af87b2537d20f3.png)
   * this is how user sees a program
   * there is a logical address for each of these things
 
-![](chapter_7-images/5a331b79d58dd0143c873b984e65ee46.png)
+![](main_memory-images/5a331b79d58dd0143c873b984e65ee46.png)
   * this shows how the segments could be laid out in physical memory
 
 

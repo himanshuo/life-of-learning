@@ -321,12 +321,123 @@ integer value can only be 0 or 1
 You can have the problem where the wait and signal functions are called at the same time.
   * this is basically just the critical-section problem
   * thus you can solve this problem using busy-waiting
+  * however, busy-waiting is not optimal because it is only good for when you are spending a tiny amount of time in the critical section.
+    * this is because busy-waiting uses up system resources instead of allowing other programs to run and use their resources.
+  * solution is to use waiting queue
+
+Each semaphore has an associated waiting queue. Each entry in the waiting queue has
+  * value (int)
+  * pointer to next record in list
+
+Each semaphore also has two functions
+  * block() - place process on appropriate waiting queue
+  * wakeup() - remove one process from waiting queue and put it inside the ready queue
+
+
+The idea is that there is a waiting queue for the semaphore. Each time you call wait(), block() may be called to put the calling thread inside the queue. Each time you call signal(), wakeup may be called to remove a process from the queue.
+
+NOTE: the waiting queue is `different` from the list where processes are stored when the value inside wait() < 1. The waiting queue is specifically used to implement `blocking`.
+
+
+code for a semaphore without busy wait
+
+    typedef struct{
+      int value;
+      struct process * list;
+    } semaphore
+
+    wait(semaphore * S) {
+      S->value--;
+      if (S->value < 0) {
+        add this process to S->list;
+        block();
+      }
+    }
+
+    signal(semaphore * S) {
+       S->value++;
+       if (S->value <= 0) {
+          remove a process P from S->list;
+          wakeup(P);
+       }
+    }
+
+### Deadlock
+Deadlock is when 2 or more processes are waiting indefinitely for an event that can be caused by only one of the waiting processes
+
+Sample Deadlock code
+
+    P0            P1
+      wait(S)       wait(Q)
+      wait(Q)       wait(S)
+      ...           ...
+      signal(S)     signal(Q)
+      signal(Q)     signal(S)
+
+* note that the two used semaphore Q and S in reverse order.
+* one way to ensure no deadlock is to use semaphores in the same order in all processes/threads.
+
+### Starvation
+starvation is indefinite blocking
+
+a process may never be removed from the semaphore queue in which it is suspended. This occurs because other processes keep coming in and getting the requested resource before this process does.
+
+Notably, the resource is actually being used. If the other processes stop using the resource, the starved process will actually stop waiting and use the resource.
+
+### priority inversion
+priority inversion is when a higher priority task has a lock but then a lower priority process preempts the higher priority process. In doing so, the lower priority process has just taken over the higher priority process which is bad.
+
+This is solved by the priority-inheritance protocol - increase priority of process A to max if any other process is waiting for a resource that process A has.
+  * thus current process A will keep hold of the resource and all the other processes will remain in their appropriate priority
 
 
 
 
 
 # Classic problems of synchronization
+### bounded-buffer problem
+n buffers, each buffer can hold 1 item.
+
+code sample
+
+      // mutex = take control of buffer
+      // full = how much you can add to buffer
+      // empty = how many spots left to write in buffer
+      semaphore mutex=1, full=0, empty=n;
+
+      //producer
+      do {
+        wait(empty);  // write if there is room to write in buffer
+        wait(mutex);  // take control of buffer
+           ...
+        // add next produced to the buffer
+           ...
+        signal(mutex); //release buffer
+        signal(full);   // note that the buffer has values to read from
+      } while (true);
+
+
+      //consumer
+      do{
+        wait(full); //wait until you can consume from buffer
+        signal(mutex); // take control of buffer
+        //consume item from buffer
+        signal(mutex); // release buffer
+        signal(empty); // note that buffer has read a value thus an extra write spot has opened up
+      }
+
+
+### readers and writers problem
+data set is shared among number of concurrent processes
+  * readers - only read data
+  * writers - read and write data
+
+problem - allow multiple readers to read at the same time
+  * only single writer can access shared data at the same time
+  
+
+### dining-philosophers problem
+
 # monitors
 # Synchronization examples
 # Alternative Approaches
