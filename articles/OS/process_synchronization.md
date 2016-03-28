@@ -391,8 +391,35 @@ This is solved by the priority-inheritance protocol - increase priority of proce
   * thus current process A will keep hold of the resource and all the other processes will remain in their appropriate priority
 
 
+### Common Mistakes when using semaphores
+Calling signal and then wait leads to problems
+
+Calling wait and then wait again leads to problems
+
+Forgetting to call wait and/or signal will lead to problems.
 
 
+ALWAYS ALWAYS ALWAYS, call wait(S) and then signal(S)
+
+
+### Semaphores can be implemented with Mutexes
+
+variables used
+
+    semaphore mutex; //initially=1
+    semaphore next; //initially=0
+    int next_count = 0;
+
+
+wait() can be implemented using
+
+    //body of wait()
+    if(next_count>0)
+      signal(next)
+    else
+      signal(mutex)
+
+    x_count--;
 
 # Classic problems of synchronization
 ### bounded-buffer problem
@@ -434,13 +461,204 @@ data set is shared among number of concurrent processes
 
 problem - allow multiple readers to read at the same time
   * only single writer can access shared data at the same time
-  
+
+The shared data among threads is going to be
+  * data set
+  * semaphore rw_mutex (initialized to 1)
+    * means that current thread can either read or write to data set
+  * semaphore mutex (initialized to 1)
+    *
+  * int read_count (initialized to 0)
+
+writer code
+
+    do {
+          wait(rw_mutex);
+               ...
+          // writing is performed
+               ...
+          signal(rw_mutex);
+     } while (true);
+
+
+reader code
+
+    do {
+           wait(mutex); // mutex for read_count
+           read_count++;
+           if (read_count == 1) //if any reader, then can't write
+              wait(rw_mutex);
+           signal(mutex);
+               ...
+           // reading is performed
+               ...
+           wait(mutex);
+           read count--;
+           if (read_count == 0) //if no readers, then can write
+           signal(rw_mutex);
+           signal(mutex);
+       } while (true);
+
+
 
 ### dining-philosophers problem
+philosophers have 2 actions
+  * eat
+    * in order to eat, need to pick up chopsticks
+  * think
+
+assume 5 philosophers sitting in a circle
+
+shared data
+  * bowl of rice (data set)
+  * chopsticks (semaphore S. initialized to 1. max of 5)
+
+philosopher code
+
+    //assume this code is run in philosopher i
+    do {
+      wait(chopstick[i]);     //pick up chopstick
+      wait(chopstick[(i+1)%5])//pick up neighboring chopstick
+
+      //eat
+
+      signal(chopstick[i]);     //drop chopsticks
+      signal(chopstick[(i+1)%5])
+
+      //think
+    }while(TRUE)
+
+Scenario:
+
+  1. think until the left fork is available; when it is, pick it up;
+  2. think until the right fork is available; when it is, pick it up;
+  3. when both forks are held, eat for a fixed amount of time;
+  4. then, put the right fork down;
+  5. then, put the left fork down;
+  6. repeat from the beginning.
+
+This is a normal, sensible scenario. However, think about it, step 1 checks out for all of them. None of them can get to step 2.
+
+##### How to handle the deadlock for philosophers problem
+Allow max 4 philosophers at a time
+
+allow philosopher to pick up forks only if both left and right forks are available (picking up must be done in critical section)
+
+Use an assymetric solution
+  * odd numbered philosopher picks up first left chopstick and the right chopstick
+  * even numbered philosopher picks up right and then left  
 
 # monitors
-# Synchronization examples
+monitors are a high level abstract data type used synchronization
+
+![](process_synchronization-images/7be0421e3efd6e44ead2f6e5158ed7a0.png)
+  * the oval is the monitor
+  * only 1 process can be active within the monitor at one time
+  * there are multiple queues that are input to the monitor
+    * each condition variable defines a new queue input to the monitor
+    * the condition variables are the shared variables
+
+sample monitor code layout
+
+    monitor monitor-name {
+    	// shared variable declarations
+
+      procedure P1 (…) { …. }
+    	procedure Pn (…) {……}
+
+        Initialization code (…) { … }
+    }
+
+### condition variables
+condition variables are simply blocking points. They block until they are released.
+  * wait() - when a process invokes wait(), the process is suspended until signal()
+  * signal() - resumes one of the processes that invoked wait()
+    * any one of the wait() processes can be invoked. There is no order.
+    * if there is no wait() process, then signal() doesn't do anything
+
+
+
+### (signal and wait) vs. (signal and continue)
+if process Q calls wait() and then P later calls signal()
+  * Q can start running now.
+  * HOWEVER, P is already running. You can only have 1 thing running. So which one runs? P or Q? Both have equal logical reason to run.
+
+Signal and wait - P waits for Q to be done
+
+Signal and Continue - Q waits for P to be done
+
+### Monitor Solution to Dining Philosophers
+
+    monitor DiningPhilosophers{
+      enum {THINKING, HUNGRY, EATING} state[5];
+      condition self[5];
+
+      initialization_code() {
+        //everyone is thinking (not eating)
+	       for (int i = 0; i < 5; i++)
+	       state[i] = THINKING;
+	     }
+
+       void test (int i) {
+         //if left and right is not eating and you are hungry
+         // THEN signal that you can pickup
+       	        if ((state[(i + 4) % 5] != EATING) &&
+       	        (state[i] == HUNGRY) &&
+       	        (state[(i + 1) % 5] != EATING) ) {
+       	             state[i] = EATING ;
+       		    self[i].signal () ;
+       	        }
+          }
+
+
+      void pickup(int i){
+        //say that you are hungry.
+        // try to eat
+        //if you are not eating, wait.
+        state[i]=HUNGRY;
+        test(i);
+        if (state[i]!=EATING) self[i].wait;
+      }
+
+      void putdown(int i){
+        state[i] = THINKING;
+        //signal that the left and right have been put down
+        test((i+4)%5);
+        test((i+1)%5);
+      }
+
+    }
+
+
+### conditional wait
+x.wait(c) where x = condition, c= priority
+  * process with lowest number (highest priority) is scheduled next
+
+
+
 # Alternative Approaches
+### transactional memory
+sequence of read-write operation to memory that are atomic
+  * a given function either works OR fails. No inbetween
+    * if fails, then all of its changes are rolledback
+
+### openmp
+compiler directives and API that support parallel programming
+
+    void update(int value)
+       {
+        #pragma omp critical
+        {
+          count += value
+        }
+        }
+
+the pragma line is turned into code that openmp uses to do cool parallel stuff
+
+### functional programming languages
+functional languages do not maintain state
+
+variables are all immutable and cannot change state once they have been assigned a value
 
 # Topics Covered in Class
 I covered the following topics in chapter 5. Race condition and atomic execution, hardware solution (enable and disable timer run out interrupt and test-and-set), software solution including Peterson's solution, semaphores (general/counting semaphores and binary semaphores), producer-consumer problem, readers-writers problem, dining philosophers problem, monitors (entry points, condition variables, and signaler queue), C code for the producer-consumer problem using condition variables.
