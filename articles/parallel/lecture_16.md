@@ -116,8 +116,3 @@ w/4 is almost a constant so its pretty fast.
 
 hypercubes were built entirely around this idea. hypercubes are toruses with w=2.
   * this is why we had binary addressing for hypercube
-
-### spanning bus hypercube
-assume uniform
-
-l_max = D
