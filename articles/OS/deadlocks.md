@@ -63,9 +63,7 @@ You can restrain the ways a request n be made. The way to go about this is to ma
     * make it so that a process requests all its resources before executing anything and that it releases them at the end
       * problem with this is that if there is a small amount of total resources, then you can have starvation(a process waits indefinitely because it doesn't stop waiting for resources)
   * no preemption
-    * a process released all its resources when it requests another resources
-    * when some other process wants a resource that you currently have, you put that resource into you start considering that resource as something you are waiting for. ???
-    * ????
+    * if a process is running and needs to wait on some resource, it releases ALL of its currently held resources. It thus is now waiting for ALL of the resources it needs (both the ones it still needs and the ones it just releassed). You only restart the process when ALL of the resources it needs are available.
   * circular wait
     * impose a total ordering of all resource types. This means that whenever a process requests resources, it MUST request them and release in some predetermined order.
       * NOTE: this is the EASIEST thing to do
@@ -118,7 +116,14 @@ In the above code, you can have 2 processes both running the same transaction co
 ### Deadlock Avoidance
 Each process has a max number of resources it needs and currently used resources. You want to schedule giving resources to make sure you are always in a 'safe state'
 
-A 'safe state' is when you have enough resources so that the ENTIRE SEQUENCE of processes can request resources in an order so that each request can be honored. This requires finding a sequence where you have enough resources to give to each process so that the number of released resources when that process finishes is enough to satisfy the next iteration.
+A 'safe state' is when
+  1. you have a sequence of processes
+    * this sequence MUST include ALL of the processes in the system
+  2. you go through the sequence of processes
+    * you have enough resources to allocate to max amount of resources that that process can ask for
+    * you collect the resources when that process is done
+    * you have enough resources for the next process
+    * this must be true for ALL of the processes in the sequence
 
 If you are in a safe state, you want to make sure you remain in a safe state.
 
@@ -156,3 +161,22 @@ You basically keep track of
   * the number of resources of each type still needed for each process
 
 need = max - allocated for a specific type of resource for a given process
+
+![](deadlocks-images/43f9eef3038c83607a3e76465d8e8a99.png)
+
+![](deadlocks-images/2e649ace8fc5060f0f1b848ff03ea43b.png)
+
+The sequence <P1, P3, P4, P0, P2> is in safe state since
+  * it contains all the processes in the system
+  * i can go in the order defined by the sequence and make sure that I have enough resources to satisfy a maximum request by the current process in the sequence.
+    * note: i may have to collect resources from done processes
+    * note: because there are multiple types of resources (A, B, C), I have to make sure that there are enough resources for all three types
+
+
+### Deadlock Detection
+![](deadlocks-images/a905bbc6c122541ce1329ced67705e7c.png)
+  * can create a wait-for graph from a resource allocation graph
+    * wait-for graph simply says that P1 is waiting for P2.
+  * if there is a cycle in the wait-for graph, then there is a deadlock
+
+The algorithm is to simply check the wait-for graph periodically. If the graph has cycles, then deadlock.
