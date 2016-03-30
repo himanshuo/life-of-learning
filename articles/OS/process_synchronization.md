@@ -50,7 +50,13 @@ Code illustrating problem
     } while(true);
 
 
+3 requirements for critical section problem
+  * mutual exclusion
+  * progress (in terms preemption)
+  * bounded waiting
+
 The solution to the critical section problem involves *mutual exclusion*, *progress*, and *bounded waiting*.
+
 
 
 ##### mutual exclusion
@@ -58,11 +64,7 @@ only 1 process can execute in the critical section at a time
 ##### progress
 if no process is executing in the critical section and some processes want to enter the critical section, then the selection of which process to enter into the critical section *cannot be postponed indefinitely*.
 ##### Bounded Waiting
-1. a process makes a request to enter the critical section
-2. only x other processes are allowed to request to enter their critical sections
-3. the process's request is granted
-
-Bounded waiting is step 2 in this system.
+A limit on the queue of processes trying to request access to the critical section.
 
 Thus bounded waiting just means a limit on the number of processes that can be in the critical-section request state at a given time.
 
