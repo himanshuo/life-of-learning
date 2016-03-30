@@ -55,4 +55,104 @@ You can recover from a deadlock
 You can just pretend that a deadlock will never occur. Most OS's do this. Unix does this. This is cray-cray.
 
 ### Deadlock Prevention
-You can restrain the ways a request n be made. 
+You can restrain the ways a request n be made. The way to go about this is to make any one of the 4 necessary conditions for deadlocks be false.
+  * mutual exclusion
+    * for shareable resources, you don't need mutual exclusion. shareable resources are basically read-only resources
+  * hold and wait
+    * guarantee that whenever a process requests a resource, it is not already holding any resources
+    * make it so that a process requests all its resources before executing anything and that it releases them at the end
+      * problem with this is that if there is a small amount of total resources, then you can have starvation(a process waits indefinitely because it doesn't stop waiting for resources)
+  * no preemption
+    * a process released all its resources when it requests another resources
+    * when some other process wants a resource that you currently have, you put that resource into you start considering that resource as something you are waiting for. ???
+    * ????
+  * circular wait
+    * impose a total ordering of all resource types. This means that whenever a process requests resources, it MUST request them and release in some predetermined order.
+      * NOTE: this is the EASIEST thing to do
+
+
+### example of deadlock in code
+
+    // thread one runs in this function
+    void * do_work_one(void * param) {
+      pthread_mutex_lock(&first_mutex);
+      pthread_mutex_lock(&second_mutex);
+      // Do some work
+      pthread_mutex_unlock(&second_mutex);
+      pthread_mutex_unlock(&first_mutex);
+      pthread_exit(0);
+    }
+
+    // thread two runs in this function
+    void * do_work_two(void * param){
+      pthread_mutex_lock(&second_mutex);
+      pthread_mutex_lock(&first_mutex);
+      // Do some work
+      pthread_mutex_unlock(&first_mutex);
+      pthread_mutex_unlock(&second_mutex);
+      pthread_exit(0);
+    }
+* mutual exclusion - done by the fact that you lock mutexes before doing work
+* hold and wait - each process has a mutex and also waits for another mutex
+* no preemption - process 1 does not force process 2 to release resources. Or vice versa.
+* circular wait - p1 waits on p2. p2 waits on p1.
+
+### deadlock example with lock ordering
+
+    void transaction(Account from, Account to, double amount){
+       mutex lock1, lock2;
+       lock1 = get_lock(from);
+       lock2 = get_lock(to);
+       acquire(lock1);
+          acquire(lock2);
+             withdraw(from, amount);
+             deposit(to, amount);
+          release(lock2);
+       release(lock1);
+    }
+
+you can have deadlocks within a **single** process simply because you reverse the order of locks
+
+In the above code, you can have 2 processes both running the same transaction code and have a deadlock. If process1 transfers from account A to B and process2 transfers from B to A then you will have deadlock.
+
+### Deadlock Avoidance
+Each process has a max number of resources it needs and currently used resources. You want to schedule giving resources to make sure you are always in a 'safe state'
+
+A 'safe state' is when you have enough resources so that the ENTIRE SEQUENCE of processes can request resources in an order so that each request can be honored. This requires finding a sequence where you have enough resources to give to each process so that the number of released resources when that process finishes is enough to satisfy the next iteration.
+
+If you are in a safe state, you want to make sure you remain in a safe state.
+
+If you are in unsafe state, then you can potentially enter deadlock. Thus avoid unsafe states.
+
+Thus deadlock avoidance is done simply by avoiding unsafe states.
+
+
+### Avoidance algorithms
+If you have a single instance of a resource, then you can use resource-allocation graph algorithm
+
+If you have multiple instances of a resource type, you can use the bankers algorithm
+
+### Resource-Allocation graph algorithm for deadlock avoidance
+You use the same resource allocation graph as mentioned above, but add a **claim edge** to it. A claim edge is when a process may request a resource.
+
+When the process actually requests the resource, it turns into a request edge. When the process request leads to the process allocating the resource, it turns into assignment edge (reverse direction of line).
+
+![](deadlocks-images/c83911bfb76e593a2cd4290ef716573b.png)
+  * unsafe state in resource-allocation graph
+  * all this algorithm does is avoid cycles. Thus in the current configuration, the algorithm will not allocate resource 2 to process 1 because it leads to a cycle.
+
+
+### Banker's Algorithm
+If you have multiple instances of a resource type, you can use the bankers algorithm
+
+Each process must beforehand tell you how many resources it may have to wait for.
+
+When a process gets all its resources, it must return them in a finite amount of time.
+
+You basically keep track of
+  * the number of available resources of each type
+  * the maximum amount of resources of each type for each process
+  * the number of resources allocated of each type for each process
+  * the number of resources of each type still needed for each process
+
+need = max - allocated for a specific type of resource for a given process
