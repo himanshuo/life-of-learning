@@ -220,6 +220,12 @@ A problem is a collection of segments. A segment can be any of
 ![](main_memory-images/5a331b79d58dd0143c873b984e65ee46.png)
   * this shows how the segments could be laid out in physical memory
 
+##### Segmentation architecture
+logical address consists of a two tuple: <segment number, offset>
+
+segment table - maps 2d physical addresses. each table entry has
+  * base - starting physical address segments reside in memory
+  * limit - length of segment 
 
 ##### Basic Method
 ##### Segmentation Hardware
@@ -307,6 +313,3 @@ protection
 * You can also find the materials in the book in chapters 7 and 8 (sections 7.5 and 8.8).
 
 * review project 2
-
-* chapter 8 (virtual memory management) on paging systems.
-* sections 7.5, 7.6, 8.1, and 8.2.
