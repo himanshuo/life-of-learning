@@ -33,6 +33,16 @@ the system libraries functionalities for which you do not need full kernel mode 
 system utilities perform individual specialized management tasks
 
 # Kernel Modules
+kernel modules are sections sections of kernel code that can be compiled, loaded, and unloaded independent of the rest of the kernel.
+
+Common things that kernel modules do are implementing
+  * a device driver
+  * a filesystem
+  * a networking protocol
+
+There is a module interface so that third parties can write and distribute kernel modules themselves.
+
+Kernel modules allow linux system to be setup with standard minimal kernel.
 
 # Process Management
 # Scheduling
