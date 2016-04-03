@@ -27,10 +27,8 @@ TCP congestion control
       * 3 duplicate ACKs
     * first one is more dangerous. the 3 duplicate ACKs mean that atleast you received three 3 packets.
 
-4 basic congestion policies
+3 basic congestion policies
   * slow start with exponential increase  
     * make cwnd very small (MSS - maximum segment size).
     * initialize to 1
   * congestion avoidance
-  * fast recovery
-  * 
