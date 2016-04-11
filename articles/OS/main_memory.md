@@ -63,7 +63,6 @@ physical address - address seen by the memory unit. This is the actual spot in m
 Compile-time and load-time address binding schemes do not distinguish between logical and physical addresses. Execution-time addressing binding schemes see logical and physical addresses differently.  
 
 
-
 ### memory-management unit (MMU)
 MMU is the hardware device that maps virtual to physical addresses at runtime.
 
@@ -184,12 +183,10 @@ Solutions
 * worst-fit - allocate the *largest* hole. Requires searching entire list.
 
 
-
-
 ### Fragmentation
 external fragmentation - allocated memory is stored in non-contiguous locations
 
-internal fragmentation - allocated memory may be slightly larger than requested memory. This size difference is memory internal to a partition but is not being used.
+internal fragmentation - allocated memory may be slightly larger than requested memory. This happens because you have bookkeeping information about the allocated memory. This size difference is memory internal to a partition but is not being used.
 
 50-percent rule - analysis done on first fit dynamic storage allocation reveals that half of all blocks are lost to fragmentation. This then yields that 1/3 of all blocks may be unusable.
 
@@ -225,18 +222,102 @@ logical address consists of a two tuple: <segment number, offset>
 
 segment table - maps 2d physical addresses. each table entry has
   * base - starting physical address segments reside in memory
-  * limit - length of segment 
+  * limit - length of segment
 
-##### Basic Method
-##### Segmentation Hardware
+Segment-table base register (STBR) - points to segment table's location in memory
+
+Segment-table length register(STLR) - indicates number of segments used by a program
+
+Note: segment number must be *less than* STLR
+
+
+Segmentation architecture has built in protection
+  * each segment in segment table has a validation bit
+  * each segment has read/write/execute privileges
+
+Segments vary in length
+
+
+![](main_memory-images/a81f982cf320b0f146f5a14bcab590f4.png)
+  * CPU provides logical address
+  * logical addresses has segment number(s) and offset(d)
+  * the segment table is found at (base, base+limit)
+  * go down s spots in segment table to find correct segment entry
+    * verify that s is less than the limit
+  * physical address = lookup(s) + d  
+
 ### Paging
+Segmentation allows the physical address space of a process to be non-contiguous. Paging is another memory-management scheme that does the same. However, paging avoids external fragmentation and the need for compaction, whereas segmentation does not.
+
+Thus the benefits of paging are
+  * all the benefits of segmentation (physical space of a process can be non-contiguous)
+  * no external fragmentation
+  * no varying sized memory chunks and thus no need for compaction
 
 ##### Basic Method
-frames -
-pages -
-page number
-page offset
-page table
+Divide physical memory into fixed-size blocks called **frames**
+
+Divide logical memory into blocks of same size called **pages**
+
+Keep track of all free frames
+
+To run a program of size N pages, you need to find N free frames and then load the program
+
+A **page table** is used to translate logical to physical addresses.
+
+The backing store is split into pages.
+
+You still have internal fragmentation.
+
+##### Address Translation Scheme for Paging
+![](main_memory-images/a30d70f61695a9a0211f107789080750.png)
+  * page number p is an index into the page table. The page table contains base address of each page in physical memory.
+  * page offset d is combined with the base address to define the physical memory address that is sent to the memory unit to look for.
+  * thus, physical address = page_table_lookup(p) + d. page_table_lookup(p)=base_address+p
+  * the logical address space has length 2^m, thus you can have 2^m pages. Each page has length 2^n.
+
+![](main_memory-images/106c8be8645c5a0bf78ea356cbd5d3a6.png)
+  * physical address = combine the page table lookup of p with the same offset.
+
+![](main_memory-images/fef7a78a8c35ddc21a484032d03b65ce.png)
+  * logically, you see pages next to each other.  
+  * the page table can then map them to various spots in the physical memory
+  * the physical memory is thus segmented
+
+![](main_memory-images/d0156d008420ad0b00517d621adbde64.png)
+  * the logical address has 16 bytes, page size of 4, thus 4 pages in logical address space.
+  * 4 entries in page table since there are 4 pages in the logical address space
+  * *offset (d) can be 0-3, thus n=2*
+  * frame size is always equal to page size
+  * physical memory has 32 bytes, and frame size of 4, thus there are 8 frames
+  * each page table entry is >=3 bytes because there are 8 frames to represent.
+    * The > part comes in because each page table entry also protection and validation bits.
+  * in this case, the logical addresses size is 4 (m=4). Thus there are m-n=4-2=2 bits for the page table. Thus you can only have 4 page table entries
+
+##### Calculating Internal Fragmentation
+Given:  
+
+* page size = 2048 bytes
+* process size = 72,766 bytes
+
+You will have 72766 = 35 pages + 1086. Thus you have 1086 bytes left over
+
+Internal Fragmentation = 2048 - 1086 = 962 bytes of internal fragmentation
+
+##### Fragmentation cases
+Worst Case Fragmentation:  `1 frame - 1 byte`
+
+Average Case Fragmentation: `1/2 frame size`
+
+Thus it may seem like small frame sizes are good, since you will not have as much fragmentation. However, each page table entry takes memory to track, so having too small of a frame size won't work.
+
+
+##### Key Ideas to note in the Paging model of Segmentation
+A process view and physical view are very different
+
+The implementation itself makes it so that a process can only access its own memory
+
+
 
 framing table
 
@@ -286,7 +367,6 @@ clustered page tables
 sparse
 
 ##### Inverted Page Tables
-##### Oracle SPARC Solaris
 
 
 ### Summary
@@ -297,19 +377,3 @@ relocation -
 swapping -
 sharing -
 protection
-
-
-### Topics covered in Lecture
-* logical-to-physical address binding including static binding and dynamic binding,
-* contiguous memory allocation including fixed/static partitioning and variable/dynamic partitioning,
-* garbage collection,
-* coalescing, and
-* implementation of variable partitioning using a doubly-linked list with tag fields.
-* You can also find the materials in the book in chapter 7 (sections 7.1 and 7.3).
-
-* bitmap approach for implementing dynamic/variable partitioning
-* the buddy system,
-* virtual memory management (paging systems).
-* You can also find the materials in the book in chapters 7 and 8 (sections 7.5 and 8.8).
-
-* review project 2
