@@ -67,24 +67,48 @@ Thus you want to consider the features of a communication network. These include
 
 ### Key Assumptions for Calculations
 * message = unit of work
-  * message traverses some number of links
-  * on each link, link will take some time to process
-* computation at nodes is constant
-* S_pe = service time at processing element (node)
-* S_cl = communication time between communication links (in between nodes)
+  * message traverses some number of links (nodes)
+  * on each link, message will take some time to do computations - processing time
+    * processing time is constant at each node
+  * it takes time for message to travel from link to link - communication time
 * assume all nodes have same message routing distribution
   * uniform routing distribution - target of a message is uniformly distributed
+    * can send to self
+    * using this makes calculations much easier
   * nearest neighbor - only send messages to nearest neighbor
-   
+* any switch delays inside a node doesn't matter
+
+### Variables
+* S_pe = service time at Processing Element (node)
+* S_cl = communication time between Communication Links (in between nodes)
+* V_i = visit ratio (how often you visit device i)
+* S_i = amount of service at device i
+* x0 = rate at which we process messages
+
+### Goals
+We are trying to find Performance Bounds.
+
+### Saturation  
+Some devices will saturate before others.
+
+This means that something will eventually not be able to handle more information. It will be full. If no saturation, then you could continuously send more messages and do infinite amount of work.
+
 
 ### Calculations
-Performance bounds
-  * some devices will saturate before others
-  * V_iS_i (visit ratio * amount of server)- average amount of service request at device i by each message
-    * when this is 1, this device is saturated
-    * prob that each will land on it is 1
-  * x0 = rate at which we process messages
-  * x0 <= 1/ V_bS_b  (max ratio of service)
+
+    Average Amount of Service required by each device i by each message = V_i * S_i
+
+* when V_i * S_i is 1, device i is saturated
+  * number of messages going through system is too much for more to handle.
+  * THUS: V_i * S_i == 1 -> device i cannot handle more work  
+  * For Example: S_i = 10% (node i is visited 10% of the time), V_i = 10 (when you visit node i, you do 10 units of work), S_i * V_i = 1. 
+* prob that each will land on it is 1
+
+
+This metric (V_i * S_i) is considered between than the metrics provided above (diameter, bandwidth, ...) because they include the delays at the applications. It still suffers from steady state behavior, just like the metrics above.  
+
+
+  * x0 <= 1/ (V_b * S_b)  (max ratio of service)
     * something on the denominator will eventually be saturated.
     * V_bS_b = max_i(V_iS_i)
 
