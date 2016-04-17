@@ -273,7 +273,7 @@ You still have internal fragmentation.
 ![](main_memory-images/a30d70f61695a9a0211f107789080750.png)
   * page number p is an index into the page table. The page table contains base address of each page in physical memory.
   * page offset d is combined with the base address to define the physical memory address that is sent to the memory unit to look for.
-  * thus, physical address = page_table_lookup(p) + d. page_table_lookup(p)=base_address+p
+  * thus, physical address = page_table_lookup(p)+d
   * the logical address space has length 2^m, thus you can have 2^m pages. Each page has length 2^n.
 
 ![](main_memory-images/106c8be8645c5a0bf78ea356cbd5d3a6.png)
@@ -290,7 +290,7 @@ You still have internal fragmentation.
   * *offset (d) can be 0-3, thus n=2*
   * frame size is always equal to page size
   * physical memory has 32 bytes, and frame size of 4, thus there are 8 frames
-  * each page table entry is >=3 bytes because there are 8 frames to represent.
+  * each page table entry is >= 3 bytes because there are 8 frames to represent.
     * The > part comes in because each page table entry also protection and validation bits.
   * in this case, the logical addresses size is 4 (m=4). Thus there are m-n=4-2=2 bits for the page table. Thus you can only have 4 page table entries
 
@@ -317,43 +317,61 @@ A process view and physical view are very different
 
 The implementation itself makes it so that a process can only access its own memory
 
+### Free Frames
+You have a free frames list which is basically a linked list between free frames. You can use the list to allocate new memory.
+
+There are numerous schemes for how to allocate memory using the free frames.
 
 
-framing table
+### Implementing the Page Table
+The page table is in main memory.
+
+A Page-table base register (PTBR) points to the page table. A Page-table length register (PTLR) indicates the size of the page table.
+
+If you want to access memory, you have to first look into the page table to determine which frame to look for, and then use that generated physical address to look into main memory again.
+
+Thus, you have to make 2 main memory lookups to find anything in memory. This is slow.
+
+To speed things up, you can use a hardware cache called a translation look-aside buffer (TLB). A TLB simply stores recent things that you have looked up in the page table. Then, in the future, when you need to look for something in the page table, you simply look at the TLB. TLB is simply a cache for the page table.  
 
 
-page sizes are always powers of 2 because ...
+Thus the flow of generating the physical address from a logical address looked like the picture below.
 
-##### Hardware Support
+![](main_memory-images/1b3bc795669ea160f2bdabd415a553c4.png)
 
-registers
+### Memory Protection
+A protection bit is given to each frame to indicate whether it is read, write, execute abilities.
 
-page-table base register
+There is also a valid-invalid bit attached to each entry in the page table.
+  * valid = associated page is in the process's logical address space and is thus a legal page
+  * invalid = page is not in the process's logical address space
 
-translation look-aside buffer (TLB)
+Any violations of any of the memory protection bits leads to a trap, that leads to kernel's trap handler being run.
 
-TLB miss
 
-wired down
-
-address-space identifiers (ASIDs)
-
-flushed -
-
-hit ratio
-
-effective memory-access time
-
-##### Protection
-valid-invalid bit
-
-page table length register
 ##### Shared Pages
+You can have shared pages which simply means that there is a single copy of read-only (reentrant) code that is shared among processes.
 
-reentrant code (pure code)
+This is similar to the idea of multiple threads sharing the same process space.
+
+Shared pages are useful for interprocess communication.
+##### private code and data
+along with the shared pages, each process also has its own separate copy of code and data. The pages for the private code and data can be anywhere in its logical address space.
 
 
-### Structure of Page Table
+
+![](main_memory-images/ca5333fc1796e9fe7efbbe648d1afe57.png)
+  * each process has its own logical address space
+  * each process has its own page table
+  * the shared data is only store once in the physical memory. Each process knows where to access it since the page table points to it (3,4,6).
+  * each process also has its own private data
+
+
+### Ways to make Page Table Manageable
+The Page Table can get too big too quickly. Thus there are numerous ways to make the page table much smaller.
+  * Hierarchical Paging
+  * Hashed Page Tables
+  * Inverted Page Tables
 
 ##### Hierarchical Paging
 
