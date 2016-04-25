@@ -1,4 +1,4 @@
-# Assignments Directory Structure
+# Articles Directory Structure
 The subfolders inside a given topic in assignments contain pictures for articles.  Do **NOT** store information files (doc, docx, txt, md) inside folders whose purpose is to store images.  
 
 For example:
