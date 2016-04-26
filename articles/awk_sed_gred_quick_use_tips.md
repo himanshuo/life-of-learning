@@ -25,4 +25,16 @@ AWK SED GREP Quick-Use Examples
 * the $1 is NOT inside the quotes. the input to the print command is: "mv "+$1+" "+$1
 * this sed command simply replaces the old value to the new value
 
+### skip lines when reading input
+
+    ls folder | awk 'NR==3, NR==5 {print $1}'
+
+* NR=The total number of input records seen so far.
+* NR==3, NR==5 is a pattern, {print $1} is an action 
+
+
 ### syntax
+
+    awk 'pattern {action}' input-file > output-file
+
+* the pattern can be a regular expression, boolean condition relating to a column of input, boolean condition using a predefined awk variable (ex. NR)
