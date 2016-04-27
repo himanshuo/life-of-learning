@@ -30,7 +30,7 @@ Currently, I have articles on
 
 They are all in a perpetual state of work in progress (WIP). 
 
-Why is this on Github? Because I want others to *contribute*! Please join me in becoming more informed people! Note, if you contribute, you will get credit both from github by default, and from me! So please, please, please join me in learning all about the world!
+Why is this on Github? Because I want *others* to contribute! Please join me in becoming more informed people! Note, if you contribute, you will get credit both from github by default, and from me! So please, please, please join me in learning all about the world!
 
 
 
