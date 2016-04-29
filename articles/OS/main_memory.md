@@ -374,8 +374,53 @@ The Page Table can get too big too quickly. Thus there are numerous ways to make
   * Inverted Page Tables
 
 ##### Hierarchical Paging
+Hierarchical Paging is breaking up the logical address space into multiple page tables
 
-forward-mapped page table
+For example, you can have a two-level page table. This requires making a page for the page tables.
+
+![](main_memory-images/f9b0815db86283fa46d837f0f98eddb9.png)
+  * two-level page table
+  * the logical address points to the outer page table
+  * the outer page table then points to the page table
+  * the page table then points to memory
+
+*forward-mapped page table* - a two level page table
+
+*clustered page table* - a multilevel page table ( > 2 levels)
+
+**Example: forward-mapped page table**
+
+logical address on a 32 bit machine with 1K page size is divided into (2^10=1K) 10 bits of page offset and 22 bits of page numbers.
+
+the page numbers is further divided because there are two levels of page tables. The second level is 10 bits because it is rightmost. The first level is 12 bits.
+
+![](main_memory-images/bffc62a4a2826bb62dcd4e624b51b6b0.png)
+  * p1 is an index into the outer page table
+  * p2 is displacement within the page of the inner page table
+
+![](main_memory-images/ee2283c6e05f5565924f7cee0636070d.png)
+  * this is how the a two level page table is used to determine physical address
+  * p1 is used to get a page table to look at from outer page table
+  * p2 is used to know how far into page table to look at to get the resulting physical frame
+  * d is used to know how far into the frame to go to get the desired data
+
+  **Example: clustered page table with 64 bit address space**
+
+  logical address on a 64 bit machine with 1K page size is divided into (2^10=1K) 10 bits of page offset and 22 bits of page numbers.
+
+  the page numbers is further divided because there are two levels of page tables. The second level is 10 bits because it is rightmost. The first level is 12 bits.
+
+  ![](main_memory-images/bffc62a4a2826bb62dcd4e624b51b6b0.png)
+    * p1 is an index into the outer page table
+    * p2 is displacement within the page of the inner page table
+
+  ![](main_memory-images/ee2283c6e05f5565924f7cee0636070d.png)
+    * this is how the a two level page table is used to determine physical address
+    * p1 is used to get a page table to look at from outer page table
+    * p2 is used to know how far into page table to look at to get the resulting physical frame
+    * d is used to know how far into the frame to go to get the desired data
+
+
 
 ##### Hashed Page Tables
 hashed page table
